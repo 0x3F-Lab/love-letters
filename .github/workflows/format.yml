@@ -11,28 +11,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.ACTIONS }}
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.8'
 
-      - name: Install Black for Python formatting
-        run: pip install black
+      - name: Install and Run Black (Python Formatter)
+        run: |
+          pip install black
+          black . --check
 
-      - name: Run Black
-        run: black .
-
-      - name: Set up Node.js for Prettier
+      - name: Set up Node.js (For Prettier)
         uses: actions/setup-node@v2
         with:
           node-version: '14'
 
-      - name: Install Prettier for HTML/CSS/JS formatting
-        run: npm install --save-dev --save-exact prettier
-
-      - name: Run Prettier
-        run: npx prettier --write "**/*.{html,css,js}"
+      - name: Install and Run Prettier (For HTML/CSS/JavaScript)
+        run: |
+          npm install --save-dev --save-exact prettier
+          npx prettier --write "**/*.{html,css,js}"
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
