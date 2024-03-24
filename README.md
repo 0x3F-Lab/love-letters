@@ -5,7 +5,7 @@ Agile Web Dev Project
 ```
 git clone https://github.com/Alex-Hawking/CITS3403-Project.git
 
-start virtual env:
+start virtual env (all within src):
 
 python3 -m venv env
 
