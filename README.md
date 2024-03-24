@@ -20,6 +20,16 @@ python3 app.py
 
 Will be on localhost (idk which port)
 
+## Workflow
+
+- New task in project
+- Assign yourself
+- Turn into issue
+- Create branch from issue (MAKE SURE SOURCE IS DEVELOPMENT)
+- Do code for issue
+- Pull request into development
+- Pull request into main
+
 # What we need to add
 
 a description of the purpose of the application, explaining the its design and use.
