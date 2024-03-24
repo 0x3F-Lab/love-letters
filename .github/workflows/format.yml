@@ -1,0 +1,43 @@
+name: Code Formatting
+
+on:
+  push:
+    branches: [ development ]
+  pull_request:
+    branches: [ development ]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install Black for Python formatting
+        run: pip install black
+
+      - name: Run Black
+        run: black .
+
+      - name: Set up Node.js for Prettier
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Prettier for HTML/CSS/JS formatting
+        run: npm install --save-dev --save-exact prettier
+
+      - name: Run Prettier
+        run: npx prettier --write "**/*.{html,css,js}"
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Apply auto-formatting'
+          branch: ${{ github.head_ref }}
+          file_pattern: ./*
+          token: ${{ secrets.ACTIONS }}
