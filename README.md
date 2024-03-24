@@ -5,6 +5,14 @@ Agile Web Dev Project
 ```
 git clone https://github.com/Alex-Hawking/CITS3403-Project.git
 
+start virtual env:
+
+python3 -m venv env
+
+source env/bin/activate
+
+(when done: deactivate)
+
 pip install -r requirements.txt (from src/)
 
 python3 app.py
