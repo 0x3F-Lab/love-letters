@@ -1,16 +1,20 @@
-name: Code Formatting
+name: Auto Format Code
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  format:
+  format-code:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out code
+        uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.ACTIONS }}
@@ -20,25 +24,34 @@ jobs:
         with:
           python-version: '3.8'
 
-      - name: Install and Run Black (Python Formatter)
-        run: |
-          pip install black
-          black . --check
+      - name: Install Black
+        run: pip install black
 
-      - name: Set up Node.js (For Prettier)
+      - name: Run Black
+        run: black . --check --diff
+
+      - name: Apply Black Formatting
+        run: |
+          black .
+          echo "Python files formatted with Black."
+
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '14'
 
-      - name: Install and Run Prettier (For HTML/CSS/JavaScript)
+      - name: Install Prettier
+        run: npm install --global prettier
+
+      - name: Run Prettier
         run: |
-          npm install --save-dev --save-exact prettier
-          npx prettier --write "**/*.{html,css,js}"
+          prettier --write "**/*.{html,css,js,json}"
+          echo "HTML, CSS, JavaScript, and JSON files formatted with Prettier."
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'Apply auto-formatting'
-          branch: ${{ github.head_ref }}
+          branch: ${{ github.ref }}
           file_pattern: ./*
           token: ${{ secrets.ACTIONS }}
