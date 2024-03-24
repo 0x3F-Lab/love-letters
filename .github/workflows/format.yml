@@ -2,11 +2,9 @@ name: Auto Format Code
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   format-code:
@@ -27,9 +25,6 @@ jobs:
       - name: Install Black
         run: pip install black
 
-      - name: Run Black
-        run: black . --check --diff
-
       - name: Apply Black Formatting
         run: |
           black .
@@ -43,7 +38,7 @@ jobs:
       - name: Install Prettier
         run: npm install --global prettier
 
-      - name: Run Prettier
+      - name: Apply Prettier Formatting
         run: |
           prettier --write "**/*.{html,css,js,json}"
           echo "HTML, CSS, JavaScript, and JSON files formatted with Prettier."
