@@ -35,9 +35,9 @@ Will be on localhost (idk which port)
 
 ## ACTIONS
 
-- on push this will auto format code, so make sure you pull the formatted code after pushing
+**on push** to any branch, will automatically format code, so if you do a push (which you should only be doing for big changes), make sure to pull the formatted code a little bit after, this will ensure that the code we are storing on the repo is easy to read and looks good (also make sure you comment your code)
 
-- will also auto request reviews and notify discord of change
+**on pull request** to any branch, will message the discord and will also request everyone to approve changes, ensure AT LEAST 2 approvals before merging (please review properly) 
 
 # What we need to add
 
