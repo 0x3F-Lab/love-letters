@@ -5,15 +5,17 @@ on:
     types: [opened, reopened, synchronize]
 
 jobs:
-    auto-request-review:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Request Review
-          uses: kentaro-m/auto-assign-action@v1.2.0
-          with:
-            repo-token: "${{ secrets.GITHUB_TOKEN }}"
-            number-of-reviewers: 4
-            user-reviewers: "Alex-Hawking,Mitan4E,AkhilG4,Connor2803"
+    request-reviewers:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v2
+          - name: Request review
+            uses: necojackarc/auto-request-review@v0.13.0
+            with:
+              token: ${{ secrets.ACTIONS }}
+              config: '' 
+              reviewers: Alex-Hawking,Mitan4E,AkhilG4,Connor2803
     send-discord-message:
         runs-on: ubuntu-latest
         steps:
