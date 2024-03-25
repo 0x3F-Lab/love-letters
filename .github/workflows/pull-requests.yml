@@ -10,12 +10,12 @@ jobs:
         steps:
           - name: Checkout code
             uses: actions/checkout@v2
-          - name: Request review
+    
+          - name: Auto Request Review
             uses: necojackarc/auto-request-review@v0.13.0
             with:
               token: ${{ secrets.ACTIONS }}
-              config: '' 
-              reviewers: Alex-Hawking,Mitan4E,AkhilG4,Connor2803
+              config: .github/auto_request_review.yml
     send-discord-message:
         runs-on: ubuntu-latest
         steps:
