@@ -9,4 +9,5 @@ def home():
 
 
 if __name__ == "__main__":
+    console.log("Running!")
     app.run(debug=True)
