@@ -1,10 +1,9 @@
 name: Auto Format Code
 
 on:
-  push:
-    branches: [ main, development ]
-  pull_request:
-    branches: [ main, development ]
+    push:
+      branches:
+        - '**'
 
 jobs:
   format-code:
