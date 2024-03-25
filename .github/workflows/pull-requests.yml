@@ -1,0 +1,28 @@
+name: Auto Request Review & Notify Discord
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  request-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request a review from a team
+        uses: peter-evans/create-pull-request-review@v1
+        with:
+          token: ${{ secrets.ACTIONS }}
+          pull-request-number: ${{ github.event.pull_request.number }}
+          reviewers: 'Alex-Hawking,Mitan4E,AkhilG4,Connor2803' 
+
+  send-discord-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send message to Discord
+        uses: rjstone/discord-webhook-notify@v1.0.3
+        with:
+          webhook_url: "https://discord.com/api/webhooks/1221708396684775464/hum7U_0ffADT6dAaSQJMd9uQSqj3LwH5zto_1iH1yx5mNxazk1h_zcdYjrpK9xDGlg1N"
+          message: "A new pull request is ready for review: ${{ github.event.pull_request.html_url }}"
+          username: "GitHub Actions"
+        
+
