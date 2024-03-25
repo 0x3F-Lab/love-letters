@@ -30,6 +30,12 @@ Will be on localhost (idk which port)
 - Pull request into development
 - Pull request into main
 
+## ACTIONS
+
+- on push this will auto format code, so make sure you pull the formatted code after pushing
+
+- will also auto request reviews and notify discord of change
+
 # What we need to add
 
 a description of the purpose of the application, explaining the its design and use.

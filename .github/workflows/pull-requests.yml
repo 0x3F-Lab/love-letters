@@ -22,7 +22,7 @@ jobs:
           - name: Send message to Discord
             run: |
               curl -H "Content-Type: application/json" \
-                   -d '{"content": "A new pull request is ready for review: ${{ github.event.pull_request.html_url }}"}' \
+                   -d '{"content": ":rotating_light: A new pull request is ready for review: ${{ github.event.pull_request.html_url }} :rotating_light: "}' \
                    "https://discord.com/api/webhooks/1221708396684775464/hum7U_0ffADT6dAaSQJMd9uQSqj3LwH5zto_1iH1yx5mNxazk1h_zcdYjrpK9xDGlg1N"
         
 
