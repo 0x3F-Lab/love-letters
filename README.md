@@ -22,11 +22,11 @@ Will be on localhost (idk which port)
 
 ## Workflow
 
-- New task in project
-- Assign yourself
+- New task in project (click on name of issue will open edit panel, make sure to add description)
+- Assign yourself (click on name of issue will open edit panel, assign to you)
 - Turn into issue
-- Create branch from issue (MAKE SURE SOURCE IS DEVELOPMENT)
-- Do code for issue
+- Create branch from issue (MAKE SURE SOURCE IS DEVELOPMENT, should be change source option)
+- Do code for issue (remember auto format on push so pull after)
 - Pull request into development
 - Pull request into main
 
