@@ -15,7 +15,7 @@ jobs:
             uses: necojackarc/auto-request-review@v0.13.0
             with:
               token: ${{ secrets.ACTIONS }}
-              config: .github/auto_request_review.yml
+              config: .github/auto-request-review.yml
     send-discord-message:
         runs-on: ubuntu-latest
         steps:
