@@ -26,9 +26,12 @@ Will be on localhost (idk which port)
 - Assign yourself (click on name of issue will open edit panel, assign to you)
 - Turn into issue
 - Create branch from issue (MAKE SURE SOURCE IS DEVELOPMENT, should be change source option)
+- Drag to in progress column
 - Do code for issue (remember auto format on push so pull after)
 - Pull request into development
 - Pull request into main
+- Close the issue with comments
+- Drag into done column
 
 ## ACTIONS
 
