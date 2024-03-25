@@ -22,13 +22,16 @@ Will be on localhost (idk which port)
 
 ## Workflow
 
-- New task in project
-- Assign yourself
+- New task in project (click on name of issue will open edit panel, make sure to add description)
+- Assign yourself (click on name of issue will open edit panel, assign to you)
 - Turn into issue
-- Create branch from issue (MAKE SURE SOURCE IS DEVELOPMENT)
-- Do code for issue (remember auto format on push)
-- Pull request into development (2 approved reviews)
-- Pull request into main (2 approved reviews)
+- Create branch from issue (MAKE SURE SOURCE IS DEVELOPMENT, should be change source option)
+- Drag to in progress column
+- Do code for issue (remember auto format on push so pull after)
+- Pull request into development
+- Pull request into main
+- Close the issue with comments
+- Drag into done column
 
 ## ACTIONS
 
