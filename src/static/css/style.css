@@ -1,4 +1,99 @@
-.big-red-letters {
-  color: red;
-  font-weight: bolder;
+html, body {
+  font-family: 'Arial', sans-serif;
+  background-color: white;
+  line-height: 1.6;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex; 
+  flex-direction: column;
+}
+
+header {
+  background: grey;
+  color: white;
+  padding: 1rem 0;
+}
+
+.navbar .nav-list {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar .nav-list li {
+  padding: 0 50px;
+}
+
+.navbar .nav-list li a {
+  color: white;
+  font-weight: bold;
+}
+
+.hero {
+  background-image: url('../images/uwa-sunrise-crop.jpg');
+  background-size: cover; /* Cover the entire area */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+
+  flex: 1; 
+  display: flex;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  padding: 0 20px;
+}
+
+.hero .hero-heading {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+.hero .search-form input[type=search] {
+  padding: 10px;
+  margin-right: 10px;
+  width: 500px; /* Adjust as per design */
+}
+
+.hero .search-form button {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+  background-color: #ddd; /* Placeholder for actual background */
+}
+
+.feature-item {
+  text-align: center;
+  padding: 1rem;
+}
+
+.feature-button {
+  padding: 10px 20px;
+  margin-bottom: 1rem;
+}
+
+.feature-description {
+  color: #333;
+}
+
+.content-wrap {
+  flex: 1;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+}
+
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 16px 0;
 }
