@@ -21,7 +21,7 @@ body {
 }
 
 .centered-text {
-  font-size: 4em; 
+  font-size: 5em; 
   font-weight: bold; 
   margin: 0; 
   padding: 0; 
@@ -44,6 +44,15 @@ body {
 
 .card:hover {
   background-color: #cacaca;
+}
+
+/* Background Image */
+
+.middle-section {
+  background-image: url('../images/uwa-sunrise-crop.jpg'); 
+  background-size: cover; 
+  background-position: center; 
+  height: 100vh;
 }
 
 
