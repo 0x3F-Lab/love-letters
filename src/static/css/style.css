@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
   height: 100%; /* Ensure the parent elements cover the full viewport height */
   margin: 0; /* Remove default margins */
 }
@@ -10,29 +11,27 @@ body {
 /* Center Content */
 
 .centered-content {
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center; 
-  align-items: center; 
-  text-align: center; 
-  height: 60vh; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 60vh;
   margin: 0;
   padding: 0;
 }
 
 .centered-text {
-  font-size: 4em; 
-  font-weight: bold; 
-  margin: 0; 
-  padding: 0; 
+  font-size: 4em;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
 }
 
 .subtext {
-  font-size: 1em; 
-  margin-top: 20px; 
+  font-size: 1em;
+  margin-top: 20px;
 }
-
-
 
 /* Navigation Cards */
 
@@ -46,7 +45,6 @@ body {
   background-color: #cacaca;
 }
 
-
 /* Footer */
 
 .footer {
@@ -59,35 +57,33 @@ body {
   padding: 10px 0; /* 10px top and bottom padding */
 }
 
-
 /* Adjustments for smaller screens */
 @media (max-width: 768px) {
   .centered-content {
-      justify-content: flex-start; 
-      height: auto; 
-      padding-top: 20px; 
+    justify-content: flex-start;
+    height: auto;
+    padding-top: 20px;
   }
-  
+
   .centered-text {
-      font-size: 2em; 
+    font-size: 2em;
   }
 
   .subtext {
-      font-size: 0.8em; 
+    font-size: 0.8em;
   }
 }
 
 @media (max-width: 576px) {
   .centered-content {
-      padding-top: 10px; 
+    padding-top: 10px;
   }
-  
+
   .centered-text {
-      font-size: 1.5em; 
+    font-size: 1.5em;
   }
 
   .subtext {
-      font-size: 0.7em;
+    font-size: 0.7em;
   }
 }
-
