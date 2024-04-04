@@ -3,64 +3,64 @@
 {% block title %}Connect Hearts at UWA{% endblock %}
 
 {% block content %}
-    <div class="centered-content">
-      <div class="centered-text">WEBSITE NAME</div>
-      <div class="subtext">Make some friends if you don't have any :p</div>
+  <div class="centered-content">
+    <div class="centered-text">WEBSITE NAME</div>
+    <div class="subtext">Make some friends if you don't have any :p</div>
 
-      <div class="search-bar mt-4">
-        <form class="form-inline justify-content-center">
-          <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button
-            class="btn btn-outline-primary bg-light my-2 my-sm-0"
-            type="submit"
-          >
-            Search
-          </button>
-        </form>
-      </div>
+    <div class="search-bar mt-4">
+      <form class="form-inline justify-content-center">
+        <input
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button
+          class="btn btn-outline-primary bg-light my-2 my-sm-0"
+          type="submit"
+        >
+          Search
+        </button>
+      </form>
     </div>
+  </div>
 
-    <!-- Navigation Cards -->
+  <!-- Navigation Cards -->
 
-    <div class="container my-5">
-      <div class="row">
-        <div class="col-md-3 mb-4">
-          <div class="card" onclick="location.href='{{ url_for('browse') }}';">
-            <div class="card-body">
-              <h5 class="card-title">Browse Letters</h5>
-              <p class="card-text">Description</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 mb-4">
-          <div class="card" onclick="location.href='{{ url_for('post') }}';">
-            <div class="card-body">
-              <h5 class="card-title">Post Letters</h5>
-              <p class="card-text">Description</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 mb-4">
-          <div class="card" onclick="location.href='#link3';">
-            <div class="card-body">
-              <h5 class="card-title">How it Works</h5>
-              <p class="card-text">Description</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 mb-4">
-          <div class="card" onclick="location.href='{{ url_for('account_settings') }}';">
-            <div class="card-body">
-              <h5 class="card-title">My Account</h5>
-              <p class="card-text">Description</p>
-            </div>
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-3 mb-4">
+        <div class="card" onclick="location.href='{{ url_for('browse') }}';">
+          <div class="card-body">
+            <h5 class="card-title">Browse Letters</h5>
+            <p class="card-text">Description</p>
           </div>
         </div>
       </div>
+      <div class="col-md-3 mb-4">
+        <div class="card" onclick="location.href='{{ url_for('post') }}';">
+          <div class="card-body">
+            <h5 class="card-title">Post Letters</h5>
+            <p class="card-text">Description</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-4">
+        <div class="card" onclick="location.href='#link3';">
+          <div class="card-body">
+            <h5 class="card-title">How it Works</h5>
+            <p class="card-text">Description</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-4">
+        <div class="card" onclick="location.href='{{ url_for('account_settings') }}';">
+          <div class="card-body">
+            <h5 class="card-title">My Account</h5>
+            <p class="card-text">Description</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 {% endblock %}
