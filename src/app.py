@@ -53,26 +53,30 @@ def init_db():
 #             )
 #     return render_template("index.html")
 
+
 @app.route("/")
 def home():
     return render_template("landing.html")
+
 
 @app.route("/browse")
 def browse():
     return render_template("browse.html")
 
+
 @app.route("/post")
 def post():
     return render_template("post.html")
+
 
 @app.route("/sign-up")
 def sign_up():
     return render_template("sign-up.html")
 
+
 @app.route("/account_settings")
 def account_settings():
     return render_template("account_settings.html")
-
 
 
 if __name__ == "__main__":

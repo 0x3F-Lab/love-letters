@@ -49,15 +49,22 @@
               Actions
             </a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="{{ url_for('post') }}">Create Post</a>
-              <a class="dropdown-item" href="{{ url_for('browse') }}">Browse Posts</a>
-              <a class="dropdown-item" href="#">Settings</a> <!--This can be page settings (Maybe a dark mode?) -->
+              <a class="dropdown-item" href="{{ url_for('post') }}"
+                >Create Post</a
+              >
+              <a class="dropdown-item" href="{{ url_for('browse') }}"
+                >Browse Posts</a
+              >
+              <a class="dropdown-item" href="#">Settings</a>
+              <!--This can be page settings (Maybe a dark mode?) -->
             </div>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('account_settings') }}">Profile</a>
+            <a class="nav-link" href="{{ url_for('account_settings') }}"
+              >Profile</a
+            >
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('sign_up') }}">Sign Up</a>
@@ -70,8 +77,7 @@
     </nav>
 
     <!-- Middle Text -->
-    {% block content %}
-    {% endblock %}
+    {% block content %} {% endblock %}
 
     <!-- Footer -->
 
