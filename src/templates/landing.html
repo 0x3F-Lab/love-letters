@@ -97,7 +97,7 @@
     <div class="container my-5">
       <div class="row">
         <div class="col-md-3 mb-4">
-          <div class="card" onclick="location.href='#link1';">
+          <div class="card" onclick="location.href='{{ url_for('browse') }}';">
             <div class="card-body">
               <h5 class="card-title">Browse Letters</h5>
               <p class="card-text">Description</p>
@@ -105,7 +105,7 @@
           </div>
         </div>
         <div class="col-md-3 mb-4">
-          <div class="card" onclick="location.href='#link2';">
+          <div class="card" onclick="location.href='{{ url_for('post') }}';">
             <div class="card-body">
               <h5 class="card-title">Post Letters</h5>
               <p class="card-text">Description</p>
@@ -121,7 +121,7 @@
           </div>
         </div>
         <div class="col-md-3 mb-4">
-          <div class="card" onclick="location.href='#link4';">
+          <div class="card" onclick="location.href='{{ url_for('account_settings') }}';">
             <div class="card-body">
               <h5 class="card-title">My Account</h5>
               <p class="card-text">Description</p>
