@@ -26,32 +26,57 @@ def init_db():
         db.create_all()
 
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        user = User.query.filter_by(username=username).first()
+# @app.route("/", methods=["GET", "POST"])
+# def index():
+#     if request.method == "POST":
+#         username = request.form["username"]
+#         password = request.form["password"]
+#         user = User.query.filter_by(username=username).first()
 
-        if user:
-            # User exists, check password
-            if check_password_hash(user.password_hash, password):
-                # Correct password, log in
-                return render_template(
-                    "status.html", message=f"Logged in account: {username}"
-                )
-            else:
-                flash("Incorrect password. Please try again.")
-        else:
-            # No user found, create a new account
-            hashed_password = generate_password_hash(password)
-            new_user = User(username=username, password_hash=hashed_password)
-            db.session.add(new_user)
-            db.session.commit()
-            return render_template(
-                "status.html", message=f"Created account: {username}"
-            )
-    return render_template("index.html")
+#         if user:
+#             # User exists, check password
+#             if check_password_hash(user.password_hash, password):
+#                 # Correct password, log in
+#                 return render_template(
+#                     "status.html", message=f"Logged in account: {username}"
+#                 )
+#             else:
+#                 flash("Incorrect password. Please try again.")
+#         else:
+#             # No user found, create a new account
+#             hashed_password = generate_password_hash(password)
+#             new_user = User(username=username, password_hash=hashed_password)
+#             db.session.add(new_user)
+#             db.session.commit()
+#             return render_template(
+#                 "status.html", message=f"Created account: {username}"
+#             )
+#     return render_template("index.html")
+
+
+@app.route("/")
+def home():
+    return render_template("landing.html")
+
+
+@app.route("/browse")
+def browse():
+    return render_template("browse.html")
+
+
+@app.route("/post")
+def post():
+    return render_template("post.html")
+
+
+@app.route("/sign-up")
+def sign_up():
+    return render_template("sign-up.html")
+
+
+@app.route("/account_settings")
+def account_settings():
+    return render_template("account_settings.html")
 
 
 if __name__ == "__main__":
