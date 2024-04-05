@@ -43,7 +43,7 @@
       </div>
     </div>
     <div class="col-md-3 mb-4">
-      <div class="card" onclick="location.href='#link3';">
+      <div class="card" data-toggle="modal" data-target="#howItWorksModal">
         <div class="card-body">
           <h5 class="card-title">How it Works</h5>
           <p class="card-text">Description</p>
@@ -63,4 +63,64 @@
     </div>
   </div>
 </div>
+
+<!-- How it works popup modal -->
+<div
+class="modal fade"
+id="howItWorksModal"
+tabindex="-1"
+role="dialog"
+aria-labelledby="howItWorksModalLabel"
+aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="howItWorksModalLabel">How It Works</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="position: relative">
+        <img
+          src="static/images/scroll.png"
+          alt="How It Works"
+          style="width: 100%; display: block"
+        />
+        <div
+          style="
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            color: #000;
+            text-align: center;
+          "
+        >
+          <p>
+            This is some text that explains how things work. Adjust the
+            'top' value as necessary to align the text within the scroll
+            area.
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

@@ -61,6 +61,26 @@ body {
   padding: 10px 0; /* 10px top and bottom padding */
 }
 
+.modal-content {
+  background: none;
+  border: none;
+}
+
+.modal-header,
+.modal-footer {
+  display: none; /* Optionally remove header and footer for full image display */
+}
+
+.modal-body {
+  padding: 0; /* Remove padding to eliminate white spaces */
+}
+
+.modal-body img {
+  width: 100%; /* Full width */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Remove any extra space beneath the image */
+}
+
 /* Adjustments for smaller screens */
 @media (max-width: 768px) {
   .centered-content {
