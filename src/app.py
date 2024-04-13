@@ -113,6 +113,7 @@ def home():
         if user and check_password_hash(user.password_hash, password):
             # User exists and password is correct, log them in
             session["user_id"] = user.user_id  # Store user's id in session
+            session['user_name'] = f"{user.first_name} {user.last_name}"  # Store user's full name
             flash("Login successful!", "success")
         else:
             # User doesn't exist or password is wrong
@@ -120,6 +121,12 @@ def home():
 
     # Render landing.html if it's a GET request or if no form submission occurred
     return render_template("landing.html")
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)  # Remove user_id from session
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('home'))
 
 
 @app.route("/browse")

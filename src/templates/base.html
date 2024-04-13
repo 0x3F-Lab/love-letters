@@ -61,29 +61,25 @@
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('account_settings') }}"
-              >Profile</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="#"
-              data-toggle="modal"
-              data-target="#signUpModal"
-              >Sign Up</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="#"
-              data-toggle="modal"
-              data-target="#loginModal"
-              >Log In</a
-            >
-          </li>
+          <!-- If the user is logged in -->
+          {% if 'user_id' in session %}
+            <li class="nav-item">
+              <!-- Replace sign-up with username that links to account settings -->
+              <a class="nav-link" href="{{ url_for('account_settings') }}">{{ session['user_name'] }}</a>
+                
+            </li>
+            <li class="nav-item">
+              <!-- Replace log-in with log-out -->
+              <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#signUpModal">Sign Up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
+            </li>
+          {% endif %}
         </ul>
       </div>
     </nav>
