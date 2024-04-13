@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///connect_hearts.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # Hard coded for testing
@@ -15,48 +15,110 @@ app.config["SECRET_KEY"] = (
 db = SQLAlchemy(app)
 
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password_hash = db.Column(db.String(120), nullable=False)
+class User(db.Model): 
+    user_id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(100), nullable=False)
+    last_name = db.Column(db.String(100), nullable=False)
+    gender = db.Column(db.String(50))
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
+    phone_number = db.Column(db.String(50))
+    socials = db.Column(db.Text)
 
+    # Relationships
+    posts = db.relationship('Post', backref='author', lazy=True)
+    replies = db.relationship('Reply', backref='replier', lazy=True)
+
+
+class Post(db.Model):
+    post_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
+    title = db.Column(db.String(200), nullable=False)
+    is_anonymous = db.Column(db.Boolean, default=False)
+    content = db.Column(db.Text, nullable=False)
+    post_type = db.Column(db.String(50), nullable=False)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+    # Relationship
+    replies = db.relationship('Reply', backref='post', lazy=True)
+
+class Reply(db.Model):
+    reply_id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
 
 def init_db():
     with app.app_context():
         db.create_all()
 
 
-# @app.route("/", methods=["GET", "POST"])
-# def index():
-#     if request.method == "POST":
-#         username = request.form["username"]
-#         password = request.form["password"]
-#         user = User.query.filter_by(username=username).first()
-
-#         if user:
-#             # User exists, check password
-#             if check_password_hash(user.password_hash, password):
-#                 # Correct password, log in
-#                 return render_template(
-#                     "status.html", message=f"Logged in account: {username}"
-#                 )
-#             else:
-#                 flash("Incorrect password. Please try again.")
-#         else:
-#             # No user found, create a new account
-#             hashed_password = generate_password_hash(password)
-#             new_user = User(username=username, password_hash=hashed_password)
-#             db.session.add(new_user)
-#             db.session.commit()
-#             return render_template(
-#                 "status.html", message=f"Created account: {username}"
-#             )
-#     return render_template("index.html")
-
-
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])  # Allow both GET and POST requests
 def home():
+    
+    # Handle Sign Up
+    if request.method == 'POST' and 'signup_form' in request.form:
+        # Extract and validate data from the sign-up form
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        email = request.form.get('email')
+        gender = request.form.get('gender')  # Optional
+        phone_number = request.form.get('phone_number')  # Optional
+        socials = request.form.get('socials')  # Optional
+        password = request.form.get('password')
+
+        # Assuming you've validated the data
+        hashed_password = generate_password_hash(password)
+
+        # Check if email already exists
+        user = User.query.filter_by(email=email).first()
+        if user:
+            flash('Email already exists.', 'danger')
+            return redirect(url_for('home'))
+
+        # Create a new User instance with all collected data
+        new_user = User(
+            first_name=first_name,
+            last_name=last_name,
+            gender=gender if gender else None,  # Assign None if empty string
+            email=email,
+            password_hash=hashed_password,
+            phone_number=phone_number if phone_number else None,  # Assign None if empty string
+            socials=socials if socials else None  # Assign None if empty string
+        )
+        # Add the new user to the database session and commit
+        db.session.add(new_user)
+        try:
+            db.session.commit()
+            flash('Sign up successful!', 'success')
+        except Exception as e:
+            db.session.rollback()  # Roll back the session on error
+            flash(str(e), 'danger')
+        
+        return redirect(url_for('home'))
+    
+    # Handle Login
+    elif request.method == 'POST' and 'login_form' in request.form:
+        # Get form data
+        email = request.form['email']
+        password = request.form['password']
+
+        # Check if user exists and the password is correct
+        user = User.query.filter_by(email=email).first()
+        if user and check_password_hash(user.password_hash, password):
+            # User exists and password is correct, log them in
+            session['user_id'] = user.user_id  # Store user's id in session
+            flash('Login successful!', 'success')
+        else:
+            # User doesn't exist or password is wrong
+            flash('Invalid email or password.', 'danger')
+    
+    # Render landing.html if it's a GET request or if no form submission occurred
     return render_template("landing.html")
+
+
+
 
 
 @app.route("/browse")
@@ -69,14 +131,15 @@ def post():
     return render_template("post.html")
 
 
-@app.route("/sign-up")
-def sign_up():
-    return render_template("sign-up.html")
+# @app.route("/sign-up")
+# def sign_up():
+#    return render_template("sign-up.html")
 
 
 @app.route("/account_settings")
 def account_settings():
     return render_template("account_settings.html")
+
 
 
 if __name__ == "__main__":
