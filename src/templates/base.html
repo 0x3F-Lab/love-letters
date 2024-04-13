@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -67,10 +67,22 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" data-toggle="modal" data-target="#signUpModal">Sign Up</a>
+            <a
+              class="nav-link"
+              href="#"
+              data-toggle="modal"
+              data-target="#signUpModal"
+              >Sign Up</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
+            <a
+              class="nav-link"
+              href="#"
+              data-toggle="modal"
+              data-target="#loginModal"
+              >Log In</a
+            >
           </li>
         </ul>
       </div>
@@ -80,22 +92,26 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
     <!-- Check if any messages are available to display -->
     {% if messages %}
-      <!-- Iterate over each message and its category (like 'success', 'danger') -->
-      {% for category, message in messages %}
-        <!-- Display each message in a Bootstrap alert component, using the category for styling (color) -->
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-          {{ message }}  <!-- Display the message text -->
-          <!-- Include a button to allow users to close the alert -->
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      {% endfor %}
-    {% endif %}
-    {% endwith %}
-
-
-    {% block content %} {% endblock %}
+    <!-- Iterate over each message and its category (like 'success', 'danger') -->
+    {% for category, message in messages %}
+    <!-- Display each message in a Bootstrap alert component, using the category for styling (color) -->
+    <div
+      class="alert alert-{{ category }} alert-dismissible fade show"
+      role="alert"
+    >
+      {{ message }}
+      <!-- Display the message text -->
+      <!-- Include a button to allow users to close the alert -->
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock %}
 
     <!-- Footer -->
 
