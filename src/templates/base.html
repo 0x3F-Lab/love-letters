@@ -61,22 +61,66 @@
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
+          <!-- If the user is logged in -->
+          {% if 'user_id' in session %}
           <li class="nav-item">
+            <!-- Replace sign-up with username that links to account settings -->
             <a class="nav-link" href="{{ url_for('account_settings') }}"
-              >Profile</a
+              >{{ session['user_name'] }}</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('sign_up') }}">Sign Up</a>
+            <!-- Replace log-in with log-out -->
+            <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="#"
+              data-toggle="modal"
+              data-target="#signUpModal"
+              >Sign Up</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Log In</a>
+            <a
+              class="nav-link"
+              href="#"
+              data-toggle="modal"
+              data-target="#loginModal"
+              >Log In</a
+            >
           </li>
+          {% endif %}
         </ul>
       </div>
     </nav>
 
-    {% block content %} {% endblock %}
+    <!-- This section displays flash messages from the backend. Flash messages are used to inform the user about the results of their actions, such as successful submissions or errors. -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    <!-- Check if any messages are available to display -->
+    {% if messages %}
+    <!-- Iterate over each message and its category (like 'success', 'danger') -->
+    {% for category, message in messages %}
+    <!-- Display each message in a Bootstrap alert component, using the category for styling (color) -->
+    <div
+      class="alert alert-{{ category }} alert-dismissible fade show"
+      role="alert"
+    >
+      {{ message }}
+      <!-- Display the message text -->
+      <!-- Include a button to allow users to close the alert -->
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock %}
 
     <!-- Footer -->
 
