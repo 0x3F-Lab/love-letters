@@ -149,7 +149,17 @@ def post():
 
 @app.route("/account_settings")
 def account_settings():
-    return render_template("account_settings.html")
+    if "user_id" not in session:
+        flash("Please log in to view this page.", "warning")
+        return redirect(url_for("home"))
+
+    user_id = session["user_id"]
+    user = User.query.get(user_id)
+    if not user:
+        flash("User not found.", "danger")
+        return redirect(url_for("home"))
+
+    return render_template("account_settings.html", user=user)
 
 
 if __name__ == "__main__":
