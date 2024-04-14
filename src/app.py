@@ -152,7 +152,7 @@ def account_settings():
     if "user_id" not in session:
         flash("Please log in to view this page.", "warning")
         return redirect(url_for("home"))
-    
+
     user_id = session["user_id"]
     user = User.query.get(user_id)
     if not user:
