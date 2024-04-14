@@ -1,28 +1,21 @@
-{% extends "base.html" %} 
-{% block title %}Browse Letters{% endblock %} 
-{% block content %} 
+{% extends "base.html" %} {% block title %}Browse Letters{% endblock %} {% block
+content %}
 
 <!doctype html>
 <html lang="en">
-
-
-  
   <body>
+    <div>testing testing</div>
 
-    <div>
-        testing testing
-    </div>
-    
     <body>
-        <h1>All Posts</h1>
-        <ul>
-            {% for post in posts %}
-                <li>From User ID {{ post.user_id }}: {{ post.title }} - {{ post.content }}</li>
-            {% endfor %}
-        </ul>
+      <h1>All Posts</h1>
+      <ul>
+        {% for post in posts %}
+        <li>
+          From User ID {{ post.user_id }}: {{ post.title }} - {{ post.content }}
+        </li>
+        {% endfor %}
+      </ul>
     </body>
-
-
   </body>
 </html>
 
