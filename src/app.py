@@ -131,6 +131,7 @@ def logout():
     flash("You have been logged out.", "success")
     return redirect(url_for("home"))
 
+
 # Update user information
 @app.route("/update_account", methods=["POST"])
 def update_account():
@@ -143,10 +144,10 @@ def update_account():
 
     if user:
         # Get form data
-        user.email = request.form['email']
-        user.gender = request.form['gender']
-        user.phone_number = request.form['phone_number']
-        user.socials = request.form['socials']
+        user.email = request.form["email"]
+        user.gender = request.form["gender"]
+        user.phone_number = request.form["phone_number"]
+        user.socials = request.form["socials"]
 
         # Update the database
         try:

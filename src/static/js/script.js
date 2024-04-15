@@ -1,5 +1,5 @@
 // ----------   USER PROFILE ----------
 
-$('#editButton').click(function() {
-    $('#editForm').toggle();
+$("#editButton").click(function () {
+  $("#editForm").toggle();
 });
