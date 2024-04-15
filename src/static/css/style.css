@@ -116,7 +116,12 @@ body {
 
 /* Form Container */
 .form-container {
-  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Semi-transparent white background */
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -126,7 +131,9 @@ body {
 }
 
 /* Form Elements */
-input[type="text"], textarea, select {
+input[type="text"],
+textarea,
+select {
   width: 100%; /* Full width of the form container */
   padding: 10px;
   margin-top: 8px;
@@ -143,7 +150,7 @@ input[type="checkbox"] {
 
 /* Submit Button */
 input[type="submit"] {
-  background-color: #4CAF50; /* Green background */
+  background-color: #4caf50; /* Green background */
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -157,12 +164,16 @@ input[type="submit"]:hover {
 }
 
 /* Hover Effects for Interactivity */
-input[type="text"]:hover, textarea:hover, select:hover {
+input[type="text"]:hover,
+textarea:hover,
+select:hover {
   border-color: #888; /* Darken the border color on hover */
 }
 
 /* Focus Effects for Accessibility */
-input[type="text"]:focus, textarea:focus, select:focus {
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
   outline: none;
   border-color: #555;
 }
