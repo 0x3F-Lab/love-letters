@@ -50,6 +50,7 @@ class Reply(db.Model):
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
+
 @app.route("/create_post", methods=["POST"])
 def create_post():
     if request.method == "POST":
@@ -88,9 +89,11 @@ def create_post():
 
         return redirect(url_for("browse"))
 
+
 def init_db():
     with app.app_context():
         db.create_all()
+
 
 @app.route("/", methods=["GET", "POST"])  # Allow both GET and POST requests
 def home():
@@ -160,15 +163,18 @@ def home():
     # Render landing.html if it's a GET request or if no form submission occurred
     return render_template("landing.html")
 
+
 @app.route("/logout")
 def logout():
     session.pop("user_id", None)  # Remove user_id from session
     flash("You have been logged out.", "success")
     return redirect(url_for("home"))
 
+
 @app.route("/browse")
 def browse():
     return render_template("browse.html")
+
 
 @app.route("/post")
 def post():
@@ -178,13 +184,16 @@ def post():
         return redirect(url_for("home"))
     return render_template("post.html")
 
+
 # @app.route("/sign-up")
 # def sign_up():
 #    return render_template("sign-up.html")
 
+
 @app.route("/account_settings")
 def account_settings():
     return render_template("account_settings.html")
+
 
 if __name__ == "__main__":
     init_db()
