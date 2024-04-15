@@ -34,6 +34,9 @@ jobs:
         with:
           node-version: '14'
 
+      - name: Install Prettier
+        run: npm install --global prettier
+
       - name: Apply Prettier Formatting
         run: |
             prettier --write "**/*.{css,js,json}"  # Excluding HTML for now
