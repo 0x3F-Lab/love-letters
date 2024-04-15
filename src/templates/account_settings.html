@@ -1,16 +1,50 @@
-{% extends "base.html" %} {% block title %}User Profile{% endblock %} {% block
-content %}
+{% extends "base.html" %}
+
+{% block title %}
+User Profile
+{% endblock %}
+
+{% block content %}
 <div class="container mt-4">
   <h1>{{ user.first_name }} {{ user.last_name }}</h1>
   <p><strong>First Name:</strong> {{ user.first_name }}</p>
   <p><strong>Last Name:</strong> {{ user.last_name }}</p>
   <p><strong>Email:</strong> {{ user.email }}</p>
   <p><strong>Gender:</strong> {{ user.gender or 'Not provided' }}</p>
-  <p>
-    <strong>Phone Number:</strong> {{ user.phone_number or 'Not provided' }}
-  </p>
+  <p><strong>Phone Number:</strong> {{ user.phone_number or 'Not provided' }}</p>
   <p><strong>Socials:</strong> {{ user.socials or 'Not provided' }}</p>
 
+  <button class="btn btn-primary" id="editButton">Edit</button>
   <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
 </div>
+
+<!-- Initially hide the form -->
+<div id="editForm" style="display:none;" class="container mt-4">
+  <form method="post" action="{{ url_for('update_account') }}">
+      <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+      </div>
+      <div class="form-group">
+          <label for="gender">Gender</label>
+          <select class="form-control" id="gender" name="gender">
+              <option value="">Select...</option>
+              <option value="male" {% if user.gender == 'male' %}selected{% endif %}>Male</option>
+              <option value="female" {% if user.gender == 'female' %}selected{% endif %}>Female</option>
+              <option value="non-binary" {% if user.gender == 'non-binary' %}selected{% endif %}>Non-binary</option>
+              <option value="prefer-not-to-say" {% if user.gender == 'prefer-not-to-say' %}selected{% endif %}>Prefer not to say</option>
+          </select>
+      </div>
+      <div class="form-group">
+          <label for="phone-number">Phone Number</label>
+          <input type="tel" class="form-control" id="phone-number" name="phone_number" value="{{ user.phone_number }}">
+      </div>
+      <div class="form-group">
+          <label for="socials">Socials</label>
+          <textarea class="form-control" id="socials" name="socials">{{ user.socials }}</textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+</div>
+
 {% endblock %}

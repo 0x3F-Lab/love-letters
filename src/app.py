@@ -131,6 +131,36 @@ def logout():
     flash("You have been logged out.", "success")
     return redirect(url_for("home"))
 
+# Update user information
+@app.route("/update_account", methods=["POST"])
+def update_account():
+    if "user_id" not in session:
+        flash("Please log in to view this page.", "warning")
+        return redirect(url_for("home"))
+
+    user_id = session["user_id"]
+    user = User.query.get(user_id)
+
+    if user:
+        # Get form data
+        user.email = request.form['email']
+        user.gender = request.form['gender']
+        user.phone_number = request.form['phone_number']
+        user.socials = request.form['socials']
+
+        # Update the database
+        try:
+            db.session.commit()
+            flash("Account updated successfully!", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(str(e), "danger")
+
+    else:
+        flash("User not found.", "danger")
+
+    return redirect(url_for("account_settings"))
+
 
 @app.route("/browse")
 def browse():
