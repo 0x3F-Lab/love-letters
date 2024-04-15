@@ -113,3 +113,56 @@ body {
     font-size: 0.7em;
   }
 }
+
+/* Form Container */
+.form-container {
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 90%; /* Responsive width */
+  max-width: 500px; /* Maximum width */
+  margin: 20px; /* Margin to separate from other content */
+}
+
+/* Form Elements */
+input[type="text"], textarea, select {
+  width: 100%; /* Full width of the form container */
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+
+input[type="checkbox"] {
+  margin-top: 8px;
+}
+
+/* Submit Button */
+input[type="submit"] {
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Hover Effects for Interactivity */
+input[type="text"]:hover, textarea:hover, select:hover {
+  border-color: #888; /* Darken the border color on hover */
+}
+
+/* Focus Effects for Accessibility */
+input[type="text"]:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #555;
+}
