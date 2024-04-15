@@ -57,7 +57,6 @@ def create_post():
         if not user_id:
             flash("You need to login to post.", "danger")
             return redirect(url_for("home"))
-        
         title = request.form.get("title")
         content = request.form.get("content")
         post_type = request.form.get("post_type")
@@ -86,11 +85,9 @@ def create_post():
         
         return redirect(url_for("browse")) 
 
-
 def init_db():
     with app.app_context():
         db.create_all()
-
 
 @app.route("/", methods=["GET", "POST"])  # Allow both GET and POST requests
 def home():
@@ -181,16 +178,13 @@ def post():
         return redirect(url_for("home"))  
     return render_template("post.html")
 
-
 # @app.route("/sign-up")
 # def sign_up():
 #    return render_template("sign-up.html")
 
-
 @app.route("/account_settings")
 def account_settings():
     return render_template("account_settings.html")
-
 
 if __name__ == "__main__":
     init_db()
