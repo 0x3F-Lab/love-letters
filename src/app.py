@@ -50,14 +50,15 @@ class Reply(db.Model):
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
+
 @app.route("/create_post", methods=["POST"])
 def create_post():
     if request.method == "POST":
-        user_id = session.get("user_id") 
+        user_id = session.get("user_id")
         if not user_id:
             flash("You need to login to post.", "danger")
             return redirect(url_for("home"))
-        
+
         title = request.form.get("title")
         content = request.form.get("content")
         post_type = request.form.get("post_type")
@@ -68,9 +69,9 @@ def create_post():
             title=title,
             content=content,
             post_type=post_type,
-            is_anonymous=is_anonymous
+            is_anonymous=is_anonymous,
         )
-        
+
         db.session.add(new_post)
         try:
             db.session.commit()
@@ -79,12 +80,14 @@ def create_post():
             db.session.rollback()
             flash(str(e), "danger")
 
-        posts = Post.query.all() 
+        posts = Post.query.all()
         for post in posts:
             # some debugging stuff
-            print(f"ID: {post.post_id}, Title: {post.title}, Content: {post.content}, Type: {post.post_type}, Poster: {post.user_id}, Anonymous: {post.is_anonymous}, Time: {post.created_at}")
-        
-        return redirect(url_for("browse")) 
+            print(
+                f"ID: {post.post_id}, Title: {post.title}, Content: {post.content}, Type: {post.post_type}, Poster: {post.user_id}, Anonymous: {post.is_anonymous}, Time: {post.created_at}"
+            )
+
+        return redirect(url_for("browse"))
 
 
 def init_db():
@@ -175,10 +178,10 @@ def browse():
 
 @app.route("/post")
 def post():
-    if 'user_id' not in session:
+    if "user_id" not in session:
         # redirect to home if not logged in
         flash("You need to be logged in to access this page.", "warning")
-        return redirect(url_for("home"))  
+        return redirect(url_for("home"))
     return render_template("post.html")
 
 
