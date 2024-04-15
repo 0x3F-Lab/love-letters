@@ -1,5 +1,8 @@
-{% extends "base.html" %} {% block title %} User Profile {% endblock %} {% block
-content %}
+{% extends "base.html" %} 
+
+{% block title %} User Profile {% endblock %} 
+
+{% block content %}
 <div class="container mt-4">
   <h1>{{ user.first_name }} {{ user.last_name }}</h1>
   <p><strong>First Name:</strong> {{ user.first_name }}</p>
@@ -33,43 +36,16 @@ content %}
       <label for="gender">Gender</label>
       <select class="form-control" id="gender" name="gender">
         <option value="">Select...</option>
-        <option value="Male" {% if user.gender="" ="male" %}selected{% endif %}>
+        <option value="Male" {% if user.gender == "male" %} selected {% endif %} >
           Male
         </option>
-        <option
-          value="Female"
-          {%
-          if
-          user.gender=""
-          ="female"
-          %}selected{%
-          endif
-          %}
-        >
+        <option value="Female" {% if user.gender == "female" %} selected {% endif %} >
           Female
         </option>
-        <option
-          value="Non-binary"
-          {%
-          if
-          user.gender=""
-          ="non-binary"
-          %}selected{%
-          endif
-          %}
-        >
+        <option value="Non-binary" {% if user.gender == "non-binary" %} selected {% endif %} >
           Non-binary
         </option>
-        <option
-          value="Prefer not to say"
-          {%
-          if
-          user.gender=""
-          ="prefer-not-to-say"
-          %}selected{%
-          endif
-          %}
-        >
+        <option value="Prefer not to say" {% if user.gender == "prefer-not-to-say" %} selected {% endif %} >
           Prefer not to say
         </option>
       </select>
@@ -86,9 +62,7 @@ content %}
     </div>
     <div class="form-group">
       <label for="socials">Socials</label>
-      <textarea class="form-control" id="socials" name="socials">
-{{ user.socials }}</textarea
-      >
+      <textarea class="form-control" id="socials" name="socials"> {{ user.socials }}</textarea>
     </div>
     <button type="submit" class="btn btn-primary">Update</button>
   </form>
