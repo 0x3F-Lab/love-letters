@@ -34,13 +34,15 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Install Prettier
-        run: npm install --global prettier
+      - name: Install Prettier and Plugin
+        run: |
+          npm install --global prettier prettier-plugin-jinja
 
       - name: Apply Prettier Formatting
         run: |
           prettier --write "**/*.{html,css,js,json}"
           echo "HTML, CSS, JavaScript, and JSON files formatted with Prettier."
+
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
