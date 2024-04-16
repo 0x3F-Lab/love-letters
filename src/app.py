@@ -135,7 +135,6 @@ def logout():
 @app.route("/browse")
 def browse():
     posts = Post.query.all()
-    print(posts)
     return render_template("browse.html", posts=posts)
 
 
