@@ -19,7 +19,7 @@ jobs:
 
       - name: Remove Database Files
         run: |
-            find ./instance/ -name '*.db' -exec rm {} +
+            find ./src/instance/ -name '*.db' -exec rm {} +
         shell: bash
 
       - name: Commit changes
