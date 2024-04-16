@@ -1,10 +1,5 @@
-{% extends "base.html" %}
-
-{% block title %}
-Browse Letters
-{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %} Browse Letters {% endblock %} {%
+block content %}
 
 <!doctype html>
 <html lang="en">
@@ -18,13 +13,12 @@ Browse Letters
         margin-top: 10px;
         padding: 10px;
         border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
       }
     </style>
   </head>
 
   <body>
-
     <div class="container mt-5">
       <h1 class="text-center">All Posts</h1>
       <div class="list-group">
@@ -45,11 +39,11 @@ Browse Letters
                   <small class="post-details">Posted {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}</small>
               </div>
           </div>
-          {% endfor %}
-
+          
+        </div>
+        {% endfor %}
       </div>
     </div>
-
   </body>
 </html>
 
