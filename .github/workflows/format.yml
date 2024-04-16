@@ -39,7 +39,7 @@ jobs:
 
       - name: Apply Prettier Formatting
         run: |
-          prettier --write "**/*.{html,css,js,json}"
+          prettier --write "**/*.{css,js,json}"
           echo "HTML, CSS, JavaScript, and JSON files formatted with Prettier."
 
       - name: Commit changes
