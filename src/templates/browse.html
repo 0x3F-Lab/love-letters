@@ -1,10 +1,5 @@
-{% extends "base.html" %}
-
-{% block title %}
-Browse Letters
-{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %} Browse Letters {% endblock %} {%
+block content %}
 
 <!doctype html>
 <html lang="en">
@@ -18,38 +13,38 @@ Browse Letters
         margin-top: 10px;
         padding: 10px;
         border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
       }
     </style>
   </head>
 
   <body>
-
     <div class="container mt-5">
       <h1 class="text-center">All Posts</h1>
       <div class="list-group">
-
-          {% for post in posts %}
-          <div class="list-group-item list-group-item-action flex-column align-items-start">
-              <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">{{ post.title }}</h5>
-                  <small class="text-muted">by User {{ post.user_id }}</small>
-                   <!-- TODO: Get the user's name or anonymous if needed instead of userID -->
-              </div>
-
-              <p class="mb-1">{{ post.content }}</p>
-
-              <div class="d-flex w-100 justify-content-between">
-                  <small class="post-details">{{ post.post_type }}</small>
-                  <!-- Don't know where to put the post type right now, thinking they each have their own colour? -->
-                  <small class="post-details">Posted {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}</small>
-              </div>
+        {% for post in posts %}
+        <div
+          class="list-group-item list-group-item-action flex-column align-items-start"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ post.title }}</h5>
+            <small class="text-muted">by User {{ post.user_id }}</small>
+            <!-- TODO: Get the user's name or anonymous if needed instead of userID -->
           </div>
-          {% endfor %}
 
+          <p class="mb-1">{{ post.content }}</p>
+
+          <div class="d-flex w-100 justify-content-between">
+            <small class="post-details">{{ post.post_type }}</small>
+            <!-- Don't know where to put the post type right now, thinking they each have their own colour? -->
+            <small class="post-details"
+              >Posted {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}</small
+            >
+          </div>
+        </div>
+        {% endfor %}
       </div>
     </div>
-
   </body>
 </html>
 
