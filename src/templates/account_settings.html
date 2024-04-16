@@ -9,16 +9,15 @@
   <p><strong>Last Name:</strong> {{ user.last_name }}</p>
   <p><strong>Email:</strong> {{ user.email }}</p>
   <p><strong>Gender:</strong> {{ user.gender or 'Not provided' }}</p>
-  <p>
-    <strong>Phone Number:</strong> {{ user.phone_number or 'Not provided' }}
-  </p>
+  <p><strong>Phone Number:</strong> {{ user.phone_number or 'Not provided' }}</p>
   <p><strong>Socials:</strong> {{ user.socials or 'Not provided' }}</p>
 
   <button class="btn btn-primary" id="editButton">Edit</button>
   <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+  <button class="btn btn-secondary" id="changePasswordButton">Change Password</button>
 </div>
 
-<!-- Initially hide the form -->
+<!-- User information form initially hidden -->
 <div id="editForm" style="display: none" class="container mt-4">
   <form method="post" action="{{ url_for('update_account') }}">
     <div class="form-group">
@@ -67,5 +66,25 @@
     <button type="submit" class="btn btn-primary">Update</button>
   </form>
 </div>
+
+<!-- Password update form initially hidden -->
+<div id="passwordForm" style="display:none;" class="container mt-4">
+  <form method="post" action="{{ url_for('update_password') }}">
+    <div class="form-group">
+      <label for="current-password">Current Password</label>
+      <input type="password" class="form-control" id="current-password" name="current_password" required>
+    </div>
+    <div class="form-group">
+      <label for="new-password">New Password</label>
+      <input type="password" class="form-control" id="new-password" name="new_password" required>
+    </div>
+    <div class="form-group">
+      <label for="confirm-password">Confirm New Password</label>
+      <input type="password" class="form-control" id="confirm-password" name="confirm_password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Password</button>
+  </form>
+</div>
+
 
 {% endblock %}

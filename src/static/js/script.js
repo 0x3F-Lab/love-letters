@@ -1,5 +1,13 @@
 // ----------   USER PROFILE ----------
 
-$("#editButton").click(function () {
-  $("#editForm").toggle();
+$(document).ready(function() {
+  $('#editButton').click(function() {
+    $('#editForm').toggle(); 
+  });
+
+  $('#changePasswordButton').click(function() {
+    $('#passwordForm').toggle(); 
+  });
 });
+
+
