@@ -19,7 +19,8 @@ jobs:
 
       - name: Remove Database Files
         run: |
-          find ./instance/ -name '*.db' -delete
+            find ./instance/ -name '*.db' -exec rm {} +
+        shell: bash
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
