@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.exc import IntegrityError
 
 
 app = Flask(__name__)
@@ -171,25 +172,6 @@ def logout():
     return redirect(url_for("home"))
 
 
-@app.route("/browse")
-def browse():
-    return render_template("browse.html")
-
-
-@app.route("/post")
-def post():
-    if "user_id" not in session:
-        # redirect to home if not logged in
-        flash("You need to be logged in to access this page.", "warning")
-        return redirect(url_for("home"))
-    return render_template("post.html")
-
-
-# @app.route("/sign-up")
-# def sign_up():
-#    return render_template("sign-up.html")
-
-
 @app.route("/account_settings")
 def account_settings():
     if "user_id" not in session:
@@ -197,12 +179,109 @@ def account_settings():
         return redirect(url_for("home"))
 
     user_id = session["user_id"]
-    user = User.query.get(user_id)
+    user = db.session.get(User, user_id)
     if not user:
         flash("User not found.", "danger")
         return redirect(url_for("home"))
 
     return render_template("account_settings.html", user=user)
+
+
+# ----- Update user information -----
+
+
+@app.route("/update_account", methods=["POST"])
+def update_account():
+    if "user_id" not in session:
+        flash("Please log in to view this page.", "warning")
+        return redirect(url_for("home"))
+
+    user_id = session["user_id"]
+    user = db.session.get(User, user_id)
+
+    if user:
+        # Get form data
+        current_email = user.email
+        new_email = request.form["email"]
+        user.email = new_email
+        user.gender = request.form["gender"]
+        user.phone_number = request.form["phone_number"]
+        user.socials = request.form["socials"]
+
+        # Handle updating database
+        try:
+            db.session.commit()
+            flash("Account updated successfully!", "success")
+        except IntegrityError as e:
+            db.session.rollback()
+            flash(
+                "This email address is already in use. Please choose another one.",
+                "danger",
+            )
+        except Exception as e:
+            db.session.rollback()
+            flash("An unexpected error occurred. Please try again.", "danger")
+    else:
+        flash("User not found.", "danger")
+
+    return redirect(url_for("account_settings"))
+
+
+# ----- Update user passwords -----
+
+
+@app.route("/update_password", methods=["POST"])
+def update_password():
+    if "user_id" not in session:
+        flash("Please log in to view this page.", "warning")
+        return redirect(url_for("home"))
+
+    user_id = session["user_id"]
+    user = db.session.get(User, user_id)
+    if not user:
+        flash("User not found.", "danger")
+        return redirect(url_for("account_settings"))
+
+    current_password = request.form["current_password"]
+    new_password = request.form["new_password"]
+    confirm_password = request.form["confirm_password"]
+
+    # Check current password
+    if not check_password_hash(user.password_hash, current_password):
+        flash("Current password is incorrect.", "danger")
+        return redirect(url_for("account_settings"))
+
+    # Double confirm new password
+    if new_password != confirm_password:
+        flash("New passwords do not match.", "danger")
+        return redirect(url_for("account_settings"))
+
+    # Create new password hash and attempt to update database
+    user.password_hash = generate_password_hash(new_password)
+    try:
+        db.session.commit()
+        flash("Password updated successfully!", "success")
+    except Exception as e:
+        # Roll back if database fails to update
+        db.session.rollback()
+        flash(str(e), "danger")
+
+    return redirect(url_for("account_settings"))
+
+
+@app.route("/browse")
+def browse():
+    return render_template("browse.html")
+
+
+@app.route("/post")
+def post():
+    return render_template("post.html")
+
+
+# @app.route("/sign-up")
+# def sign_up():
+#  return render_template("sign-up.html")
 
 
 if __name__ == "__main__":
