@@ -29,4 +29,3 @@ jobs:
             branch: ${{ github.ref }}
             file_pattern: ./*
             token: ${{ secrets.ACTIONS }}
-  
