@@ -1,0 +1,32 @@
+name: Clean Database Files
+
+on:
+  push:
+    branches:
+      - main
+      - development
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+            ref: ${{ github.head_ref }}
+            token: ${{ secrets.ACTIONS }}
+      
+
+      - name: Remove Database Files
+        run: |
+            find . -type f -name '*.db' -exec rm -f {} +
+        shell: bash
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+            commit_message: 'Clean database (automated)'
+            branch: ${{ github.ref }}
+            file_pattern: ./*
+            token: ${{ secrets.ACTIONS }}
+  

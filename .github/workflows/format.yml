@@ -47,7 +47,7 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: 'Apply auto-formatting'
+          commit_message: 'Apply auto-formatting (automated)'
           branch: ${{ github.ref }}
           file_pattern: ./*
           token: ${{ secrets.ACTIONS }}
