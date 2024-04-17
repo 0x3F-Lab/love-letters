@@ -49,7 +49,7 @@ def signup():
             password_hash=hashed_password,
             gender=gender,
             phone_number=phone_number,
-            socials=socials
+            socials=socials,
         )
         db.session.add(new_user)
         db.session.commit()
