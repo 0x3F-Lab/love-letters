@@ -5,10 +5,12 @@ import random
 import datetime
 import os
 
-base_dir = os.path.abspath(os.path.dirname(__file__))
-db_path = os.path.join(base_dir, 'src', 'instance', 'connect_hearts.db')
-os.makedirs(os.path.dirname(db_path), exist_ok=True)
+project_root = os.path.abspath(os.path.dirname(__file__))
+instance_path = os.path.join(project_root, 'src', 'instance')
+if not os.path.exists(instance_path):
+    os.makedirs(instance_path, exist_ok=True)
 
+db_path = os.path.join(instance_path, 'connect_hearts.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
