@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block title %}Post Letters{% endblock %} {% block
+content %}
+<div class="centered-content">
+  <div class="form-container">
+    <form method="POST" action="{{ url_for('post.create_post') }}">
+      <input type="text" name="title" placeholder="Enter Title" required />
+      <textarea
+        name="content"
+        placeholder="Enter your content here"
+        required
+      ></textarea>
+      <select name="post_type">
+        <option value="general">Love Letter</option>
+        <option value="question">Friend Request</option>
+        <option value="question">General Broadcast</option>
+      </select>
+      <input type="checkbox" name="is_anonymous" /> Post Anonymously<br />
+      <input type="submit" value="Submit Post" />
+    </form>
+  </div>
+</div>
+{% endblock %}

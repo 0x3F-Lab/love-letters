@@ -1,0 +1,101 @@
+<!-- Sign Up Modal -->
+<div
+class="modal fade"
+id="signUpModal"
+tabindex="-1"
+aria-labelledby="signUpModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="signUpModalLabel">Sign Up</h5>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="signUpForm" method="post" action="{{ url_for('auth.signup') }}">
+        <!-- The purpose of the hidden input is so that flask can identify which button we sent a POST request from, as we have both login and sign-up on the same page (this is just used to identify) -->
+        <input type="hidden" name="signup_form" value="true" />
+        <!-- Form fields for User attributes -->
+        <div class="form-group">
+          <label for="first-name">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="first-name"
+            name="first_name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="last-name">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="last-name"
+            name="last_name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender (optional)</label>
+          <select class="form-control" id="gender" name="gender">
+            <option value="">Select...</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="non-binary">Non-binary</option>
+            <option value="prefer-not-to-say">Prefer not to say</option>
+            <!-- Add any other gender options as necessary -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="phone-number">Phone Number (optional)</label>
+          <input
+            type="tel"
+            class="form-control"
+            id="phone-number"
+            name="phone_number"
+          />
+        </div>
+        <div class="form-group">
+          <label for="socials">Socials (optional)</label>
+          <textarea
+            class="form-control"
+            id="socials"
+            name="socials"
+            placeholder="Social media links or other contact information"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Connect Hearts at UWA{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <!-- Custom CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+
+    {% include 'components/navbar.html' %}
+
+    {% include 'components/signup.html' %}
+
+    {% include 'components/login.html' %}    
+
+    <!-- This section displays flash messages from the backend. Flash messages are used to inform the user about the results of their actions, such as successful submissions or errors. -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    <!-- Check if any messages are available to display -->
+    {% if messages %}
+    <!-- Iterate over each message and its category (like 'success', 'danger') -->
+    {% for category, message in messages %}
+    <!-- Display each message in a Bootstrap alert component, using the category for styling (color) -->
+    <div
+      class="alert alert-{{ category }} alert-dismissible fade show"
+      role="alert"
+    >
+      {{ message }}
+      <!-- Display the message text -->
+      <!-- Include a button to allow users to close the alert -->
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %} {% endif %} {% endwith %} 
+
+    <!--Block content in between navbar and footer -->
+    
+    {% block content %} {% endblock %}
+
+    {% include 'components/footer.html' %}
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/login-modal.js') }}"></script>
+  </body>
+</html>

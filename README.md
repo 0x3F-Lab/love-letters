@@ -52,3 +52,5 @@ a brief summary of the architecture of the application.
 instructions for how to launch the application.
 
 instructions for how to run the tests for the application.
+
+3 intermediates through git tags 

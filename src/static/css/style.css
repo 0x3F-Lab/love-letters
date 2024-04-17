@@ -1,4 +1,197 @@
-.big-red-letters {
-  color: red;
-  font-weight: bolder;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  /* background: linear-gradient(to right, #f2c0a2, #d9a2ce); */
+  background-image: url("../images/uwa-sunrise-crop.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Center Content */
+
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 60vh;
+  margin: 0;
+  padding: 0;
+  margin-top: -20px;
+}
+
+.centered-text {
+  font-size: 5em;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+.subtext {
+  font-size: 1em;
+  margin-top: 20px;
+}
+
+/* Navigation Cards */
+
+.card {
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  background-color: #cacaca;
+}
+
+.posts {
+  margin: 20px;
+}
+
+/* Footer */
+
+.footer {
+  margin-top: auto; /* Automatically adjusts margin to push footer at the bottom */
+  width: 100%; /* Full width */
+  background-color: #f5f5f5; /* Adjust the color as needed */
+  color: #666;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.modal-content {
+  background: none;
+  border: none;
+}
+
+.modal-header,
+.modal-footer {
+  display: none; /* Optionally remove header and footer for full image display */
+}
+
+.modal-body {
+  padding: 0; /* Remove padding to eliminate white spaces */
+}
+
+.modal-body img {
+  width: 100%; /* Full width */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Remove any extra space beneath the image */
+}
+
+.card {
+  width: 80%; /* Sets the card width to 80% of its parent container */
+  margin: 0 auto 20px; /* Centers the card horizontally and adds space below */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow for better visibility */
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 90%;
+  }
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+  .centered-content {
+    justify-content: flex-start;
+    height: auto;
+    padding-top: 20px;
+    margin-top: 20px;
+  }
+
+  .centered-text {
+    font-size: 2em;
+  }
+
+  .subtext {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 576px) {
+  .centered-content {
+    padding-top: 10px;
+    margin-top: 20px;
+  }
+
+  .centered-text {
+    font-size: 1.5em;
+  }
+
+  .subtext {
+    font-size: 0.7em;
+  }
+}
+
+/* Form Container */
+.form-container {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Semi-transparent white background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 90%; /* Responsive width */
+  max-width: 500px; /* Maximum width */
+  margin: 20px; /* Margin to separate from other content */
+}
+
+/* Form Elements */
+input[type="text"],
+textarea,
+select {
+  width: 100%; /* Full width of the form container */
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+
+input[type="checkbox"] {
+  margin-top: 8px;
+}
+
+/* Submit Button */
+input[type="submit"] {
+  background-color: #4caf50; /* Green background */
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Hover Effects for Interactivity */
+input[type="text"]:hover,
+textarea:hover,
+select:hover {
+  border-color: #888; /* Darken the border color on hover */
+}
+
+/* Focus Effects for Accessibility */
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #555;
 }
