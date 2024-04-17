@@ -10,7 +10,7 @@ app = Flask(__name__)
 # =================
 #
 # This is currently in place to ensure connection to the test generated database, may need to be changed soon?
-# 
+#
 #
 # =================
 
@@ -184,10 +184,12 @@ def logout():
     flash("You have been logged out.", "success")
     return redirect(url_for("home"))
 
+
 @app.route("/browse")
 def browse():
     posts = Post.query.all()
     return render_template("browse.html", posts=posts)
+
 
 @app.route("/account_settings")
 def account_settings():
