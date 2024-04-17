@@ -1,0 +1,47 @@
+name: Initialize and Populate Database
+
+on:
+  push:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+            ref: ${{ github.head_ref }}
+            token: ${{ secrets.ACTIONS }}
+      
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./src/requirements.txt
+      
+      - name: Create instance directory
+        run: |
+            mkdir -p src/instance
+            ls -al src
+    
+      - name: Execute data generation script
+        run: |
+            python generate_example_db.py
+    
+
+      - name: Force add the database file
+        run: |
+          git add -f ./src/instance/*.db
+    
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Generate and commit example database (automated)'
+          branch: ${{ github.ref }}
+          file_pattern: ./src/instance/*.db
+          token: ${{ secrets.ACTIONS }}

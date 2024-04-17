@@ -1,12 +1,24 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 from sqlalchemy.exc import IntegrityError
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///connect_hearts.db"
+
+# =================
+#
+# This is currently in place to ensure connection to the test generated database, may need to be changed soon?
+#
+# =================
+
+
+db_path = os.path.join(os.path.dirname(__file__), "instance", "connect_hearts.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+print("Database URI:", app.config["SQLALCHEMY_DATABASE_URI"])
 
 # Hard coded for testing
 app.config["SECRET_KEY"] = (
@@ -171,13 +183,16 @@ def logout():
     flash("You have been logged out.", "success")
     return redirect(url_for("home"))
 
+@app.route("/browse")
+def browse():
+    posts = Post.query.all()
+    return render_template("browse.html", posts=posts)
 
 @app.route("/account_settings")
 def account_settings():
     if "user_id" not in session:
         flash("Please log in to view this page.", "warning")
         return redirect(url_for("home"))
-
     user_id = session["user_id"]
     user = db.session.get(User, user_id)
     if not user:
@@ -285,5 +300,6 @@ def post():
 
 
 if __name__ == "__main__":
-    init_db()
-    app.run(debug=True)
+    with app.app_context():
+        init_db()
+        app.run(debug=True)
