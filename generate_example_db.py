@@ -6,7 +6,7 @@ import datetime
 import os
 
 app = Flask(__name__)
-os.makedirs("src/instance", exist_ok=True)
+os.makedirs("./src/instance", exist_ok=True)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///src/instance/connect_hearts.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
