@@ -47,7 +47,7 @@ def add_users():
             "password": "password123",
             "gender": "Female",
             "phone_number": "123-456-7890",
-            "socials": "instagram: alice_j"
+            "socials": "instagram: alice_j",
         },
         {
             "first_name": "Bob",
@@ -56,7 +56,7 @@ def add_users():
             "password": "password123",
             "gender": "Male",
             "phone_number": "987-654-3210",
-            "socials": None
+            "socials": None,
         },
         {
             "first_name": "Carol",
@@ -65,8 +65,8 @@ def add_users():
             "password": "password123",
             "gender": "Female",
             "phone_number": "555-444-3333",
-            "socials": "twitter: carolm"
-        }
+            "socials": "twitter: carolm",
+        },
     ]
 
     for user_info in users_info:
@@ -78,7 +78,7 @@ def add_users():
             email=user_info["email"],
             password_hash=hashed_password,
             phone_number=user_info["phone_number"],
-            socials=user_info["socials"]
+            socials=user_info["socials"],
         )
         db.session.add(new_user)
     db.session.commit()
@@ -87,14 +87,16 @@ def add_users():
 def add_posts():
     users = User.query.all()
     for user in users:
-        for i in range(3):  
+        for i in range(3):
             new_post = Post(
                 user_id=user.user_id,
                 title=f"{user.first_name}'s Post #{i+1}",
                 content=f"Hello I am {user.first_name}. I am so lonely. {'Contact me on ' + user.socials if user.socials else ''}",
                 is_anonymous=random.choice([True, False]),
-                post_type=random.choice(['Love Letter', 'Friend Request', 'General Broadcast']),
-                created_at=db.func.now()
+                post_type=random.choice(
+                    ["Love Letter", "Friend Request", "General Broadcast"]
+                ),
+                created_at=db.func.now(),
             )
             db.session.add(new_post)
     db.session.commit()
@@ -104,9 +106,11 @@ def init_db():
     db.create_all()
     print("Database initialized and tables created.")
 
+
 def populate_data():
     add_users()
     add_posts()
+
 
 if __name__ == "__main__":
     with app.app_context():
