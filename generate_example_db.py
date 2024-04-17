@@ -5,11 +5,14 @@ import random
 import datetime
 import os
 
-app = Flask(__name__)
-os.makedirs("./src/instance", exist_ok=True)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///src/instance/connect_hearts.db"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+base_dir = os.path.abspath(os.path.dirname(__file__))
+db_path = os.path.join(base_dir, 'src', 'instance', 'connect_hearts.db')
+os.makedirs(os.path.dirname(db_path), exist_ok=True)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
 
 
 class User(db.Model):
@@ -76,7 +79,9 @@ def add_posts():
 
 
 def init_db():
+    print(f"Creating the database at {db_path}...")
     db.create_all()
+    print("Database created.")
 
 
 def populate_data():

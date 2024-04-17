@@ -25,9 +25,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r ./src/requirements.txt
       
+      - name: Check current directory and list src/instance
+        run: |
+          pwd
+          ls -al
+          ls -al src/instance
+    
       - name: Execute data generation script
         run: |
-          python generate_example_db.py
+          python generate_data.py
+    
+      - name: List directory contents after script execution
+        run: |
+          ls -al src/instance
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
