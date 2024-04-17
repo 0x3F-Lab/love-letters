@@ -13,13 +13,13 @@
   <p><strong>Socials:</strong> {{ user.socials or 'Not provided' }}</p>
 
   <button class="btn btn-primary" id="editButton">Edit</button>
-  <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+  <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Logout</a>
   <button class="btn btn-secondary" id="changePasswordButton">Change Password</button>
 </div>
 
 <!-- User information form initially hidden -->
 <div id="editForm" style="display: none" class="container mt-4">
-  <form method="post" action="{{ url_for('update_account') }}">
+  <form method="post" action="{{ url_for('auth.account') }}">
     <div class="form-group">
       <label for="email">Email</label>
       <input
@@ -69,7 +69,7 @@
 
 <!-- Password update form initially hidden -->
 <div id="passwordForm" style="display:none;" class="container mt-4">
-  <form method="post" action="{{ url_for('update_password') }}">
+  <form method="post" action="{{ url_for('auth.change_password') }}">
     <div class="form-group">
       <label for="current-password">Current Password</label>
       <input type="password" class="form-control" id="current-password" name="current_password" required>
