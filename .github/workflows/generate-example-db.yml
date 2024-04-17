@@ -2,7 +2,6 @@ name: Initialize and Populate Database
 
 on:
   push:
-  pull_request:
 
 jobs:
   cleanup:
