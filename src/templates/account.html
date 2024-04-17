@@ -34,7 +34,7 @@
     <div class="form-group">
       <label for="gender">Gender</label>
       <select class="form-control" id="gender" name="gender">
-        <option value="">Select...</option>
+        <option value="{{ user.gender }}">Select...</option>
         <option value="Male" {% if user.gender == "male" %} selected {% endif %} >
           Male
         </option>
