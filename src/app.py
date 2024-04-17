@@ -6,11 +6,11 @@ import os
 
 app = Flask(__name__)
 
-#=================
+# =================
 #
 # This is currently in place to ensure connection to the test generated database, may need to be changed soon?
 #
-#=================
+# =================
 
 
 db_path = os.path.join(os.path.dirname(__file__), "instance", "connect_hearts.db")
