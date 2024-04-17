@@ -34,14 +34,15 @@ jobs:
         run: |
             python generate_example_db.py
     
-      - name: List directory contents
-        run: |
-            ls -al src/instance
 
-      - name: Commit changes
+      - name: Force add the database file
+        run: |
+          git add -f ./src/instance/*.db
+    
+      - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-            commit_message: 'Generate example database (automated)'
-            branch: ${{ github.ref }}
-            file_pattern: ./*
-            token: ${{ secrets.ACTIONS }}
+          commit_message: 'Generate and commit example database (automated)'
+          branch: ${{ github.ref }}
+          file_pattern: ./src/instance/*.db
+          token: ${{ secrets.ACTIONS }}
