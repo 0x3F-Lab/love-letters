@@ -93,12 +93,16 @@ def change_password():
     return redirect(url_for("auth.account"))
 
 
-@auth.route('/notifications')
+@auth.route("/notifications")
 def notifications():
-    if 'user_id' not in session:
-        flash('You must be logged in to view notifications.', 'danger')
-        return redirect(url_for('auth.login'))
+    if "user_id" not in session:
+        flash("You must be logged in to view notifications.", "danger")
+        return redirect(url_for("auth.login"))
 
-    user_id = session['user_id']
-    notifications = Notification.query.filter_by(user_id=user_id).order_by(Notification.created_at.desc()).all()
-    return render_template('notifications.html', notifications=notifications)
+    user_id = session["user_id"]
+    notifications = (
+        Notification.query.filter_by(user_id=user_id)
+        .order_by(Notification.created_at.desc())
+        .all()
+    )
+    return render_template("notifications.html", notifications=notifications)
