@@ -6,10 +6,11 @@ import datetime
 import os
 
 app = Flask(__name__)
-os.makedirs('src/instance', exist_ok=True)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///src/instance/connect_hearts.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+os.makedirs("src/instance", exist_ok=True)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///src/instance/connect_hearts.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+
 
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
@@ -18,17 +19,36 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
 
+
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
     title = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text, nullable=False)
 
+
 def add_users():
     users_info = [
-        {"first_name": "Alice", "last_name": "Johnson", "email": "alice@example.com", "password": "password123", "socials": "instagram: example"},
-        {"first_name": "Bob", "last_name": "Smith", "email": "bob@example.com", "password": "password123"},
-        {"first_name": "Carol", "last_name": "Martinez", "email": "carol@example.com", "password": "password123", "socials": "onlyfans: cheeky"}
+        {
+            "first_name": "Alice",
+            "last_name": "Johnson",
+            "email": "alice@example.com",
+            "password": "password123",
+            "socials": "instagram: example",
+        },
+        {
+            "first_name": "Bob",
+            "last_name": "Smith",
+            "email": "bob@example.com",
+            "password": "password123",
+        },
+        {
+            "first_name": "Carol",
+            "last_name": "Martinez",
+            "email": "carol@example.com",
+            "password": "password123",
+            "socials": "onlyfans: cheeky",
+        },
     ]
     for user_info in users_info:
         hashed_password = generate_password_hash(user_info["password"])
@@ -36,10 +56,11 @@ def add_users():
             first_name=user_info["first_name"],
             last_name=user_info["last_name"],
             email=user_info["email"],
-            password_hash=hashed_password
+            password_hash=hashed_password,
         )
         db.session.add(new_user)
     db.session.commit()
+
 
 def add_posts():
     users = User.query.all()
@@ -53,14 +74,17 @@ def add_posts():
             db.session.add(new_post)
     db.session.commit()
 
+
 def init_db():
     db.create_all()
+
 
 def populate_data():
     add_users()
     add_posts()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     with app.app_context():
         init_db()
         populate_data()
