@@ -7,13 +7,6 @@ body {
   flex-direction: column;
 }
 
-body {
-  /* background: linear-gradient(to right, #f2c0a2, #d9a2ce); */
-  background-image: url("../images/uwa-sunrise-crop.jpg");
-  background-size: cover;
-  background-position: center;
-}
-
 /* Center Content */
 
 .centered-content {

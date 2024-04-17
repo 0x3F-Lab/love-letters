@@ -1,26 +1,17 @@
-{% extends "base.html" %} {% block title %}Connect Hearts at UWA{% endblock %}
+{% extends "base.html" %}
+{% block title %}Connect Hearts at UWA{% endblock %}
 {% block content %}
-<div class="centered-content">
-  <div class="centered-text">WEBSITE NAME</div>
-  <div class="subtext">Make some friends if you don't have any :p</div>
-
-  <div class="search-bar mt-4">
-    <form class="form-inline justify-content-center">
-      <input
-        class="form-control mr-sm-2"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <button
-        class="btn btn-outline-primary bg-light my-2 my-sm-0"
-        type="submit"
-      >
-        Search
-      </button>
-    </form>
+<div class="centered-content m-4">
+  <div class="centered-text" style="background: white; border-radius: 20px;">Love Letters</div>
+  <div class="subtext" style="background: white; border-radius: 20px;">Find love or friendship! We don't care!</div>
+  <div style="width: 80%;">
+    {% if random_letter %}
+      {% set post = random_letter %}
+      {% include 'components/postcard.html' %}
+    {% else %}
+      <p>No posts available right now.</p>
+    {% endif %}
   </div>
-</div>
 
 <!-- Navigation Cards -->
 
@@ -63,59 +54,5 @@
     </div>
   </div>
 </div>
-
-<!-- How it works popup modal -->
-<div
-  class="modal fade"
-  id="howItWorksModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="howItWorksModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="howItWorksModalLabel">How It Works</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" style="position: relative">
-        <img
-          src="static/images/scroll.png"
-          alt="How It Works"
-          style="width: 100%; display: block"
-        />
-        <div
-          style="
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            color: #000;
-            text-align: center;
-          "
-        >
-          <p>
-            This is some text that explains how things work. Adjust the 'top'
-            value as necessary to align the text within the scroll area.
-          </p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
 </div>
-
 {% endblock %}

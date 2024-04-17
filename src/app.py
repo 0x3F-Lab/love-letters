@@ -2,6 +2,10 @@ from flask import Flask, render_template
 from models import db
 from config import DevelopmentConfig
 
+from models import Post, db
+
+import random
+
 # Import Blueprints
 from blueprints.auth import auth
 from blueprints.post import post
@@ -19,7 +23,9 @@ def create_app(config_class=DevelopmentConfig):
 
     @app.route("/")
     def home():
-        return render_template("landing.html")
+        love_letters = Post.query.all()
+        random_letter = random.choice(love_letters)
+        return render_template("landing.html", random_letter=random_letter)
 
     return app
 
