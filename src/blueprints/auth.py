@@ -35,6 +35,9 @@ def signup():
         last_name = request.form.get("last_name")
         email = request.form.get("email")
         password = request.form.get("password")
+        gender = request.form.get("gender")
+        phone_number = request.form.get("phone_number")
+        socials = request.form.get("socials")
         if User.query.filter_by(email=email).first():
             flash("Email already exists.", "danger")
             return redirect(url_for("auth.signup"))
@@ -44,6 +47,9 @@ def signup():
             last_name=last_name,
             email=email,
             password_hash=hashed_password,
+            gender=gender,
+            phone_number=phone_number,
+            socials=socials
         )
         db.session.add(new_user)
         db.session.commit()
