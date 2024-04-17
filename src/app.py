@@ -1,11 +1,23 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///connect_hearts.db"
+
+#=================
+#
+# This is currently in place to ensure connection to the test generated database, may need to be changed soon?
+#
+#=================
+
+
+db_path = os.path.join(os.path.dirname(__file__), "instance", "connect_hearts.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+print("Database URI:", app.config["SQLALCHEMY_DATABASE_URI"])
 
 # Hard coded for testing
 app.config["SECRET_KEY"] = (
@@ -207,5 +219,6 @@ def account_settings():
 
 
 if __name__ == "__main__":
-    init_db()
-    app.run(debug=True)
+    with app.app_context():
+        init_db()
+        app.run(debug=True)
