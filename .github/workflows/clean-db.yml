@@ -27,7 +27,7 @@ jobs:
       
       - name: Execute data generation script
         run: |
-          python generate_example_data.py
+          python generate_example_db.py
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
