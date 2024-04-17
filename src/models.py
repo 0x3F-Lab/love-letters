@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
@@ -16,6 +17,7 @@ class User(db.Model):
     posts = db.relationship("Post", backref="author", lazy=True)
     replies = db.relationship("Reply", backref="replier", lazy=True)
 
+
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
@@ -27,6 +29,7 @@ class Post(db.Model):
 
     # Relationship
     replies = db.relationship("Reply", backref="post", lazy=True)
+
 
 class Reply(db.Model):
     reply_id = db.Column(db.Integer, primary_key=True)

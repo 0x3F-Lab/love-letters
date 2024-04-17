@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from models import Post, db
 
-post = Blueprint('post', __name__)
+post = Blueprint("post", __name__)
 
-@post.route('/create', methods=['POST'])
+
+@post.route("/create", methods=["POST"])
 def create():
     if request.method == "POST":
         user_id = session.get("user_id")
@@ -41,7 +42,8 @@ def create():
 
         return redirect(url_for("browse"))
 
-@post.route('/browse')
+
+@post.route("/browse")
 def browse():
     posts = Post.query.all()
-    return render_template('browse.html', posts=posts)
+    return render_template("browse.html", posts=posts)
