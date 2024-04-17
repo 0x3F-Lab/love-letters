@@ -103,6 +103,7 @@ def add_posts():
 
 
 def init_db():
+    db.drop_all()
     db.create_all()
     print("Database initialized and tables created.")
 
