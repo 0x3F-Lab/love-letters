@@ -8,14 +8,15 @@ import os
 app = Flask(__name__)
 
 project_root = os.path.abspath(os.path.dirname(__file__))
-instance_path = os.path.join(project_root, 'src', 'instance')
+instance_path = os.path.join(project_root, "src", "instance")
 if not os.path.exists(instance_path):
     os.makedirs(instance_path, exist_ok=True)
 
-db_path = os.path.join(instance_path, 'connect_hearts.db')
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db_path = os.path.join(instance_path, "connect_hearts.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+
 
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
