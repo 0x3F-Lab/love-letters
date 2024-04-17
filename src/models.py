@@ -30,10 +30,18 @@ class Post(db.Model):
     # Relationship
     replies = db.relationship("Reply", backref="post", lazy=True)
 
-
 class Reply(db.Model):
     reply_id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey("post.post_id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+class Notification(db.Model):
+    notification_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    is_read = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+    user = db.relationship('User', backref=db.backref('notifications', lazy=True))

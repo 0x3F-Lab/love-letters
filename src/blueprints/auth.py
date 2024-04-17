@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import check_password_hash, generate_password_hash
-from models import User, db
+from models import User, Notification, db
 
 auth = Blueprint("auth", __name__)
 
@@ -91,3 +91,14 @@ def change_password():
     else:
         flash("Current password is incorrect.", "danger")
     return redirect(url_for("auth.account"))
+
+
+@auth.route('/notifications')
+def notifications():
+    if 'user_id' not in session:
+        flash('You must be logged in to view notifications.', 'danger')
+        return redirect(url_for('auth.login'))
+
+    user_id = session['user_id']
+    notifications = Notification.query.filter_by(user_id=user_id).order_by(Notification.created_at.desc()).all()
+    return render_template('notifications.html', notifications=notifications)

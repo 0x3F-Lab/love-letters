@@ -15,6 +15,9 @@
                 <small class="text-muted">
                     Posted {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
                 </small>
+                <form action="{{ url_for('post.connect', post_id=post.post_id) }}" method="POST">
+                    <button type="submit" class="btn btn-primary">Connect</button>
+                </form>
             </div>
         </div>
     </div>

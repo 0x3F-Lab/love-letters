@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Your Notifications{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Your Notifications</h1>
+    {% for notification in notifications %}
+    <div class="alert alert-info" role="alert">
+        {{ notification.message }}
+        <small class="float-right">{{ notification.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+    </div>
+    {% else %}
+    <p>No notifications to show.</p>
+    {% endfor %}
+</div>
+{% endblock %}

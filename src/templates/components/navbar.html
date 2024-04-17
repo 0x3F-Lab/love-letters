@@ -33,9 +33,7 @@
             <a class="dropdown-item" href="{{ url_for('post.browse') }}"
               >Browse Posts</a
             >
-            <a class="dropdown-item" href="#">Settings</a>
-            <!--This can be page settings (Maybe a dark mode?) -->
-          </div>
+            <a class="dropdown-item" href="{{ url_for('auth.notifications') }}">Notifications</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
