@@ -1,18 +1,17 @@
-name: Initialize and Populate Database
+name: Initialize Database and Format Code
 
 on:
   push:
 
 jobs:
-  cleanup:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
         with:
-            ref: ${{ github.head_ref }}
-            token: ${{ secrets.ACTIONS }}
-      
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.ACTIONS }}
 
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
@@ -32,16 +31,36 @@ jobs:
       - name: Execute data generation script
         run: |
             python generate_example_db.py
-    
-
+      
       - name: Force add the database file
         run: |
           git add -f ./src/instance/*.db
-    
-      - name: Commit and push changes
+
+      - name: Install Black
+        run: pip install black
+
+      - name: Apply Black Formatting
+        run: |
+          black .
+          echo "Python files formatted with Black."
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Prettier
+        run: npm install --global prettier
+
+      - name: Apply Prettier Formatting
+        run: |
+            prettier --write "**/*.{css,js,json}" 
+            echo "CSS, JavaScript, and JSON files formatted with Prettier."
+
+      - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: 'Generate and commit example database (automated)'
+          commit_message: 'Database updated and code formatted [skip ci]'
           branch: ${{ github.ref }}
-          file_pattern: ./src/instance/*.db
+          file_pattern: ./*
           token: ${{ secrets.ACTIONS }}
