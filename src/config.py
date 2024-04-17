@@ -9,7 +9,7 @@ class Config:
 
 class DevelopmentConfig(Config):
     db_path = os.path.join(
-        os.path.dirname(__file__), "..", "instance", "connect_hearts.db"
+        os.path.dirname(__file__), "instance", "connect_hearts.db"
     )
     SQLALCHEMY_DATABASE_URI = f"sqlite:///{db_path}"
 
