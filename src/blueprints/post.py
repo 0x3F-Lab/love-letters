@@ -58,21 +58,21 @@ def browse():
     return render_template("browse.html", posts=posts)
 
 
-@post.route('/connect/<int:post_id>', methods=['POST'])
+@post.route("/connect/<int:post_id>", methods=["POST"])
 def connect(post_id):
-    if 'user_id' not in session:
-        flash('You need to log in to connect.', 'danger')
-        return redirect(url_for('auth.login'))
+    if "user_id" not in session:
+        flash("You need to log in to connect.", "danger")
+        return redirect(url_for("auth.login"))
 
     post = Post.query.get_or_404(post_id)
-    if post.user_id == session['user_id']:
-        flash('You cannot connect with your own post.', 'warning')
-        return redirect(url_for('post.browse'))
+    if post.user_id == session["user_id"]:
+        flash("You cannot connect with your own post.", "warning")
+        return redirect(url_for("post.browse"))
 
-    user = User.query.get(session['user_id'])
+    user = User.query.get(session["user_id"])
     message = f"{user.first_name} {user.last_name} wants to connect! Contact info: {user.socials}"
     new_notification = Notification(user_id=post.user_id, message=message)
     db.session.add(new_notification)
     db.session.commit()
-    flash('Connect request sent.', 'success')
-    return redirect(url_for('post.browse'))
+    flash("Connect request sent.", "success")
+    return redirect(url_for("post.browse"))
