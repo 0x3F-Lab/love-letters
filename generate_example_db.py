@@ -5,6 +5,8 @@ import random
 import datetime
 import os
 
+app = Flask(__name__)
+
 project_root = os.path.abspath(os.path.dirname(__file__))
 instance_path = os.path.join(project_root, 'src', 'instance')
 if not os.path.exists(instance_path):
