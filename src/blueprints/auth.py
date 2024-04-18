@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import check_password_hash, generate_password_hash
 from models import User, db
+from sqlalchemy.exc import IntegrityError
 
 auth = Blueprint("auth", __name__)
 
@@ -38,9 +39,12 @@ def signup():
         gender = request.form.get("gender")
         phone_number = request.form.get("phone_number")
         socials = request.form.get("socials")
+
+        # Ensure unique email
         if User.query.filter_by(email=email).first():
             flash("Email already exists.", "danger")
             return redirect(url_for("auth.signup"))
+
         hashed_password = generate_password_hash(password)
         new_user = User(
             first_name=first_name,
@@ -51,9 +55,16 @@ def signup():
             phone_number=phone_number,
             socials=socials,
         )
+
         db.session.add(new_user)
-        db.session.commit()
-        flash("Account successfully created!", "success")
+        try:
+            db.session.commit()
+            flash("Account successfully created!", "success")
+        except Exception as e:
+            # Roll back if database fails to update
+            db.session.rollback()
+            flash(str(e), "danger")        
+        
         return redirect(url_for("auth.login"))
     return render_template("landing.html")
 
@@ -63,7 +74,13 @@ def account():
     if "user_id" not in session:
         flash("You must be logged in to access this page.", "danger")
         return redirect(url_for("auth.login"))
+
     user = User.query.get(session["user_id"])
+    
+    if not user:
+        flash("User not found.", "danger")
+        return redirect(url_for("auth.login"))
+    
     if request.method == "POST":
         user.email = request.form.get("email", user.email)
         user.first_name = request.form.get("first_name", user.first_name)
@@ -71,23 +88,56 @@ def account():
         user.gender = request.form.get("gender", user.gender)
         user.phone_number = request.form.get("phone_number", user.phone_number)
         user.socials = request.form.get("socials", user.socials)
-        db.session.commit()
-        flash("Your account has been updated.", "success")
+
+        try:
+            db.session.commit()
+            flash("Account updated successfully!", "success")
+        except IntegrityError as e:
+            # Prevent an already existing email to be used
+            db.session.rollback()
+            flash("This email address is already in use. Please choose another one.", "danger")
+        except Exception as e:
+            db.session.rollback()
+            flash("An unexpected error occurred. Please try again.", "danger")
+        
+        
     return render_template("account.html", user=user)
 
 
 @auth.route("/change_password", methods=["POST"])
 def change_password():
     if "user_id" not in session:
-        flash("You must be logged in to change your password.", "danger")
-        return redirect(url_for("auth.login"))
-    user = User.query.get(session["user_id"])
-    current_password = request.form.get("current_password")
-    new_password = request.form.get("new_password")
-    if check_password_hash(user.password_hash, current_password):
-        user.password_hash = generate_password_hash(new_password)
-        db.session.commit()
-        flash("Password successfully changed.", "success")
-    else:
+        flash("Please log in to view this page.", "warning")
+        return redirect(url_for("home"))
+
+    user_id = session["user_id"]
+    user = User.query.get(user_id)
+    if not user:
+        flash("User not found.", "danger")
+        return redirect(url_for("auth.account"))
+
+    current_password = request.form["current_password"]
+    new_password = request.form["new_password"]
+    confirm_password = request.form["confirm_password"]
+
+    # Check current password
+    if not check_password_hash(user.password_hash, current_password):
         flash("Current password is incorrect.", "danger")
+        return redirect(url_for("auth.account"))
+
+    # Double confirm new password
+    if new_password != confirm_password:
+        flash("New passwords do not match.", "danger")
+        return redirect(url_for("auth.account"))
+
+    # Create new password hash and attempt to update database
+    user.password_hash = generate_password_hash(new_password)
+    try:
+        db.session.commit()
+        flash("Password updated successfully!", "success")
+    except Exception as e:
+        # Roll back if database fails to update
+        db.session.rollback()
+        flash(str(e), "danger")
+    
     return redirect(url_for("auth.account"))
