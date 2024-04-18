@@ -63,8 +63,8 @@ def signup():
         except Exception as e:
             # Roll back if database fails to update
             db.session.rollback()
-            flash(str(e), "danger")        
-        
+            flash(str(e), "danger")
+
         return redirect(url_for("auth.login"))
     return render_template("landing.html")
 
@@ -76,11 +76,11 @@ def account():
         return redirect(url_for("auth.login"))
 
     user = User.query.get(session["user_id"])
-    
+
     if not user:
         flash("User not found.", "danger")
         return redirect(url_for("auth.login"))
-    
+
     if request.method == "POST":
         user.email = request.form.get("email", user.email)
         user.first_name = request.form.get("first_name", user.first_name)
@@ -95,12 +95,14 @@ def account():
         except IntegrityError as e:
             # Prevent an already existing email to be used
             db.session.rollback()
-            flash("This email address is already in use. Please choose another one.", "danger")
+            flash(
+                "This email address is already in use. Please choose another one.",
+                "danger",
+            )
         except Exception as e:
             db.session.rollback()
             flash("An unexpected error occurred. Please try again.", "danger")
-        
-        
+
     return render_template("account.html", user=user)
 
 
@@ -139,5 +141,5 @@ def change_password():
         # Roll back if database fails to update
         db.session.rollback()
         flash(str(e), "danger")
-    
+
     return redirect(url_for("auth.account"))
