@@ -9,3 +9,9 @@ $(document).ready(function () {
     $("#passwordForm").toggle();
   });
 });
+
+
+function setPostId(postId) {
+    document.getElementById('post-id').value = postId;
+}
+

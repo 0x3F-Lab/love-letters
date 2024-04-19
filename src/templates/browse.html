@@ -2,6 +2,14 @@
 {% block title %} Browse Letters {% endblock %} 
 
 {% block content %}
+
+<script>
+    function setPostId(postId) {
+        document.getElementById('post-id').value = postId;
+    }
+    </script>
+
+
 <div class="container mt-5">
     <h1 class="text-center">All Posts</h1>
     {% for post in posts %}
@@ -15,9 +23,35 @@
                 <small class="text-muted">
                     Posted {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
                 </small>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" onclick="setPostId({{ post.post_id }})">Reply</button>
+
             </div>
         </div>
     </div>
     {% endfor %}
 </div>
+
+<!-- Reply Modal -->
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="replyModalLabel">Reply to Post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ url_for('post.submit_reply') }}">
+                <div class="modal-body">
+                    <input type="hidden" name="post_id" id="post-id">
+                    <textarea class="form-control" name="content" required placeholder="Write your reply here..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit Reply</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
