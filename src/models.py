@@ -21,7 +21,7 @@ class User(db.Model):
 
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"))
     title = db.Column(db.String(200), nullable=False)
     is_anonymous = db.Column(db.Boolean, default=False)
     content = db.Column(db.Text, nullable=False)
@@ -48,10 +48,18 @@ class Notification(db.Model):
     is_read = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
-    user = db.relationship("User", backref=db.backref("sent_notifications", lazy="dynamic"), foreign_keys=[user_id])
-    recipient = db.relationship("User", backref=db.backref("received_notifications", lazy="dynamic"), foreign_keys=[recipient_id])
+    user = db.relationship(
+        "User",
+        backref=db.backref("sent_notifications", lazy="dynamic"),
+        foreign_keys=[user_id],
+    )
+    recipient = db.relationship(
+        "User",
+        backref=db.backref("received_notifications", lazy="dynamic"),
+        foreign_keys=[recipient_id],
+    )
     post = db.relationship("Post")
 
-    __table_args__ = (db.UniqueConstraint('user_id', 'recipient_id', name='_user_recipient_uc'),)
-
-
+    __table_args__ = (
+        db.UniqueConstraint("user_id", "recipient_id", name="_user_recipient_uc"),
+    )
