@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from models import Post, User, Notification, db
+from sqlalchemy.exc import IntegrityError
 
 post = Blueprint("post", __name__)
 
@@ -58,21 +59,35 @@ def browse():
     return render_template("browse.html", posts=posts)
 
 
-@post.route("/connect/<int:post_id>", methods=["POST"])
+@post.route('/connect/<int:post_id>', methods=['POST'])
 def connect(post_id):
-    if "user_id" not in session:
-        flash("You need to log in to connect.", "danger")
-        return redirect(url_for("auth.login"))
+    if 'user_id' not in session:
+        flash('You need to log in to connect.', 'danger')
+        return redirect(url_for('auth.login'))
 
+    user_id = session['user_id']
     post = Post.query.get_or_404(post_id)
-    if post.user_id == session["user_id"]:
-        flash("You cannot connect with your own post.", "warning")
-        return redirect(url_for("post.browse"))
+    recipient_id = post.user_id
 
-    user = User.query.get(session["user_id"])
-    message = f"{user.first_name} {user.last_name} wants to connect! Contact info: {user.socials}"
-    new_notification = Notification(user_id=post.user_id, message=message)
+    if user_id == recipient_id:
+        flash('You cannot connect with yourself.', 'info')
+        return redirect(url_for('post.browse'))
+
+    existing_notification = Notification.query.filter_by(user_id=user_id, recipient_id=recipient_id).first()
+
+    if existing_notification:
+        flash('You have already sent a connection request to this user.', 'info')
+        return redirect(url_for('post.browse'))
+    
+    new_notification = Notification(user_id=user_id, recipient_id=recipient_id, post_id=post_id)
     db.session.add(new_notification)
-    db.session.commit()
-    flash("Connect request sent.", "success")
-    return redirect(url_for("post.browse"))
+    try:
+        db.session.commit()
+        flash('Connect request sent.', 'success')
+    except IntegrityError:
+        db.session.rollback()
+        flash('Connection request failed. You may have already connected to this user.', 'info')
+
+    return redirect(url_for('post.browse'))
+
+

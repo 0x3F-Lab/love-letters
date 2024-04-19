@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import check_password_hash, generate_password_hash
 from models import User, Notification, db
+import json
 
 auth = Blueprint("auth", __name__)
 
@@ -15,7 +16,7 @@ def login():
             session["user_id"] = user.user_id
             session["user_name"] = f"{user.first_name} {user.last_name}"
             flash("Login successful!", "success")
-            return redirect(url_for("post.browse"))
+            return redirect(url_for("home"))
         else:
             flash("Invalid email or password.", "danger")
     return render_template("landing.html")
@@ -28,34 +29,42 @@ def logout():
     return redirect(url_for("auth.login"))
 
 
-@auth.route("/signup", methods=["GET", "POST"])
+@auth.route('/signup', methods=['POST'])
 def signup():
-    if request.method == "POST":
-        first_name = request.form.get("first_name")
-        last_name = request.form.get("last_name")
-        email = request.form.get("email")
-        password = request.form.get("password")
-        gender = request.form.get("gender")
-        phone_number = request.form.get("phone_number")
-        socials = request.form.get("socials")
-        if User.query.filter_by(email=email).first():
-            flash("Email already exists.", "danger")
-            return redirect(url_for("auth.signup"))
-        hashed_password = generate_password_hash(password)
-        new_user = User(
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            password_hash=hashed_password,
-            gender=gender,
-            phone_number=phone_number,
-            socials=socials,
-        )
+    # Extract data from form submission
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    email = request.form['email']
+    password = request.form['password']
+    socials = {
+        'instagram': request.form.get('instagram', ''),
+        'facebook': request.form.get('facebook', ''),
+        'snapchat': request.form.get('snapchat', ''),
+        'phone_number': request.form.get('phone_number', '')
+    }
+
+
+    if not any(socials.values()):
+        flash("At least one social media handle or phone number must be provided.", "danger")
+        return redirect(url_for("auth.login"))
+
+    new_user = User(
+        first_name=first_name,
+        last_name=last_name,
+        email=email,
+        password_hash=generate_password_hash(password),
+        socials=json.dumps(socials)  
+    )
+    try:
         db.session.add(new_user)
         db.session.commit()
-        flash("Account successfully created!", "success")
+    except:
+        flash("Error creating user", "danger")
         return redirect(url_for("auth.login"))
-    return render_template("landing.html")
+    
+    flash("Account created! You can now login.", "success")
+
+    return redirect(url_for("auth.login"))
 
 
 @auth.route("/account", methods=["GET", "POST"])
@@ -95,14 +104,22 @@ def change_password():
 
 @auth.route("/notifications")
 def notifications():
-    if "user_id" not in session:
-        flash("You must be logged in to view notifications.", "danger")
-        return redirect(url_for("auth.login"))
+    if 'user_id' not in session:
+        flash("You must be logged in to view notifications.", "warning")
+        return redirect(url_for('auth.login'))
 
-    user_id = session["user_id"]
-    notifications = (
-        Notification.query.filter_by(user_id=user_id)
-        .order_by(Notification.created_at.desc())
-        .all()
-    )
-    return render_template("notifications.html", notifications=notifications)
+    user_id = session['user_id']
+    user_notifications = Notification.query.filter_by(recipient_id=user_id).all()
+    return render_template("notifications.html", notifications=user_notifications)
+
+@auth.route('/dismiss_notification/<int:notification_id>', methods=['POST'])
+def dismiss_notification(notification_id):
+    notification = Notification.query.get_or_404(notification_id)
+    if notification.recipient_id != session.get('user_id'):
+        flash('You do not have permission to delete this notification.', 'danger')
+        return redirect(url_for('auth.notifications'))
+
+    db.session.delete(notification)
+    db.session.commit()
+    flash('Notification dismissed.', 'success')
+    return redirect(url_for('auth.notifications'))

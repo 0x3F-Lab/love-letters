@@ -8,15 +8,12 @@
     {% if random_letter %}
       {% set post = random_letter %}
       {% include 'components/postcard.html' %}
-    {% else %}
-      <p>No posts available right now.</p>
     {% endif %}
   </div>
 
 <!-- Navigation Cards -->
-
 <div class="container my-5">
-  <div class="row">
+  <div class="row row justify-content-center">
     <div class="col-md-3 mb-4">
       <div class="card" onclick="location.href='{{ url_for('post.browse') }}';">
         <div class="card-body">
@@ -33,25 +30,35 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3 mb-4">
-      <div class="card" data-toggle="modal" data-target="#howItWorksModal" onclick="location.href='{{ url_for('auth.notifications') }}';">
-        <div class="card-body">
-          <h5 class="card-title">Responses</h5>
-          <p class="card-text">Description</p>
+    {% if 'user_id' in session %}
+      <div class="col-md-3 mb-4">
+        <div class="card" onclick="location.href='{{ url_for('auth.notifications') }}';">
+          <div class="card-body">
+            <h5 class="card-title">Responses<span class="badge badge-info">{{ notification_count|default(0) }}</span></h5>
+            <p class="card-text">Check your notifications</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-3 mb-4">
-      <div
-        class="card"
-        onclick="location.href='{{ url_for('auth.account') }}';"
-      >
-        <div class="card-body">
-          <h5 class="card-title">My Account</h5>
-          <p class="card-text">Description</p>
+      <div class="col-md-3 mb-4">
+        <div class="card" onclick="location.href='{{ url_for('auth.account') }}';">
+          <div class="card-body">
+            <h5 class="card-title">My Account</h5>
+            <p class="card-text">Description</p>
+          </div>
         </div>
       </div>
-    </div>
+    {% else %}
+      <div class="col-md-3 mb-4">
+        <div class="card"
+        data-toggle="modal"
+        data-target="#loginModal">
+          <div class="card-body">
+            <h5 class="card-title">Login</h5>
+            <p class="card-text">Access your account</p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
   </div>
 </div>
 </div>
