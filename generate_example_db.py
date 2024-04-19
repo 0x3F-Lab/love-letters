@@ -19,7 +19,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
 
-
 def add_users():
     users_info = [
         {
@@ -29,7 +28,7 @@ def add_users():
             "password": "password123",
             "gender": "Female",
             "phone_number": "123-456-7890",
-            "socials": json.dumps({"instagram": "alice_j"}),  
+            "socials": json.dumps({"instagram": "alice_j"}),
         },
         {
             "first_name": "Bob",
@@ -38,7 +37,7 @@ def add_users():
             "password": "password123",
             "gender": "Male",
             "phone_number": "987-654-3210",
-            "socials": json.dumps({"twitter": "bobsmith", "instagram": "freakyman69"}), 
+            "socials": json.dumps({"twitter": "bobsmith", "instagram": "freakyman69"}),
         },
         {
             "first_name": "Carol",
@@ -47,7 +46,7 @@ def add_users():
             "password": "password123",
             "gender": "Female",
             "phone_number": "555-444-3333",
-            "socials": json.dumps({"twitter": "carolm"}),  
+            "socials": json.dumps({"twitter": "carolm"}),
         },
     ]
 
@@ -83,6 +82,7 @@ def add_posts():
             db.session.add(new_post)
     db.session.commit()
 
+
 def add_notifications():
     users = User.query.all()
     posts = Post.query.all()
@@ -91,12 +91,15 @@ def add_notifications():
         print("No users or posts available to create notifications.")
         return
 
-    notifications_sent = set()  
+    notifications_sent = set()
 
     for user in users:
         sampled_posts = random.sample(posts, min(3, len(posts)))
         for post in sampled_posts:
-            if (user.user_id, post.user_id) not in notifications_sent and user.user_id != post.user_id:
+            if (
+                user.user_id,
+                post.user_id,
+            ) not in notifications_sent and user.user_id != post.user_id:
                 notifications_sent.add((user.user_id, post.user_id))
                 new_notification = Notification(
                     user_id=user.user_id,
@@ -109,7 +112,6 @@ def add_notifications():
     db.session.commit()
 
 
-
 def init_db():
     try:
         db.drop_all()
@@ -117,7 +119,6 @@ def init_db():
         print("Database initialized and tables created.")
     except Exception as e:
         print(f"Error during database initialization: {e}")
-
 
 
 def populate_data():

@@ -59,35 +59,40 @@ def browse():
     return render_template("browse.html", posts=posts)
 
 
-@post.route('/connect/<int:post_id>', methods=['POST'])
+@post.route("/connect/<int:post_id>", methods=["POST"])
 def connect(post_id):
-    if 'user_id' not in session:
-        flash('You need to log in to connect.', 'danger')
-        return redirect(url_for('auth.login'))
+    if "user_id" not in session:
+        flash("You need to log in to connect.", "danger")
+        return redirect(url_for("auth.login"))
 
-    user_id = session['user_id']
+    user_id = session["user_id"]
     post = Post.query.get_or_404(post_id)
     recipient_id = post.user_id
 
     if user_id == recipient_id:
-        flash('You cannot connect with yourself.', 'info')
-        return redirect(url_for('post.browse'))
+        flash("You cannot connect with yourself.", "info")
+        return redirect(url_for("post.browse"))
 
-    existing_notification = Notification.query.filter_by(user_id=user_id, recipient_id=recipient_id).first()
+    existing_notification = Notification.query.filter_by(
+        user_id=user_id, recipient_id=recipient_id
+    ).first()
 
     if existing_notification:
-        flash('You have already sent a connection request to this user.', 'info')
-        return redirect(url_for('post.browse'))
-    
-    new_notification = Notification(user_id=user_id, recipient_id=recipient_id, post_id=post_id)
+        flash("You have already sent a connection request to this user.", "info")
+        return redirect(url_for("post.browse"))
+
+    new_notification = Notification(
+        user_id=user_id, recipient_id=recipient_id, post_id=post_id
+    )
     db.session.add(new_notification)
     try:
         db.session.commit()
-        flash('Connect request sent.', 'success')
+        flash("Connect request sent.", "success")
     except IntegrityError:
         db.session.rollback()
-        flash('Connection request failed. You may have already connected to this user.', 'info')
+        flash(
+            "Connection request failed. You may have already connected to this user.",
+            "info",
+        )
 
-    return redirect(url_for('post.browse'))
-
-
+    return redirect(url_for("post.browse"))

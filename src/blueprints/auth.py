@@ -29,23 +29,25 @@ def logout():
     return redirect(url_for("auth.login"))
 
 
-@auth.route('/signup', methods=['POST'])
+@auth.route("/signup", methods=["POST"])
 def signup():
     # Extract data from form submission
-    first_name = request.form['first_name']
-    last_name = request.form['last_name']
-    email = request.form['email']
-    password = request.form['password']
+    first_name = request.form["first_name"]
+    last_name = request.form["last_name"]
+    email = request.form["email"]
+    password = request.form["password"]
     socials = {
-        'instagram': request.form.get('instagram', ''),
-        'facebook': request.form.get('facebook', ''),
-        'snapchat': request.form.get('snapchat', ''),
-        'phone_number': request.form.get('phone_number', '')
+        "instagram": request.form.get("instagram", ""),
+        "facebook": request.form.get("facebook", ""),
+        "snapchat": request.form.get("snapchat", ""),
+        "phone_number": request.form.get("phone_number", ""),
     }
 
-
     if not any(socials.values()):
-        flash("At least one social media handle or phone number must be provided.", "danger")
+        flash(
+            "At least one social media handle or phone number must be provided.",
+            "danger",
+        )
         return redirect(url_for("auth.login"))
 
     new_user = User(
@@ -53,7 +55,7 @@ def signup():
         last_name=last_name,
         email=email,
         password_hash=generate_password_hash(password),
-        socials=json.dumps(socials)  
+        socials=json.dumps(socials),
     )
     try:
         db.session.add(new_user)
@@ -61,7 +63,7 @@ def signup():
     except:
         flash("Error creating user", "danger")
         return redirect(url_for("auth.login"))
-    
+
     flash("Account created! You can now login.", "success")
 
     return redirect(url_for("auth.login"))
@@ -104,22 +106,23 @@ def change_password():
 
 @auth.route("/notifications")
 def notifications():
-    if 'user_id' not in session:
+    if "user_id" not in session:
         flash("You must be logged in to view notifications.", "warning")
-        return redirect(url_for('auth.login'))
+        return redirect(url_for("auth.login"))
 
-    user_id = session['user_id']
+    user_id = session["user_id"]
     user_notifications = Notification.query.filter_by(recipient_id=user_id).all()
     return render_template("notifications.html", notifications=user_notifications)
 
-@auth.route('/dismiss_notification/<int:notification_id>', methods=['POST'])
+
+@auth.route("/dismiss_notification/<int:notification_id>", methods=["POST"])
 def dismiss_notification(notification_id):
     notification = Notification.query.get_or_404(notification_id)
-    if notification.recipient_id != session.get('user_id'):
-        flash('You do not have permission to delete this notification.', 'danger')
-        return redirect(url_for('auth.notifications'))
+    if notification.recipient_id != session.get("user_id"):
+        flash("You do not have permission to delete this notification.", "danger")
+        return redirect(url_for("auth.notifications"))
 
     db.session.delete(notification)
     db.session.commit()
-    flash('Notification dismissed.', 'success')
-    return redirect(url_for('auth.notifications'))
+    flash("Notification dismissed.", "success")
+    return redirect(url_for("auth.notifications"))
