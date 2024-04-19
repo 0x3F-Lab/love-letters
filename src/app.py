@@ -36,8 +36,6 @@ def create_app(config_class=DevelopmentConfig):
 
     @app.route("/")
     def home():
-        love_letters = Post.query.all()
-        random_letter = random.choice(love_letters) if love_letters else None
 
         notification_count = 0
         
@@ -45,7 +43,7 @@ def create_app(config_class=DevelopmentConfig):
             user_id = session['user_id']
             notification_count = Notification.query.filter_by(recipient_id=user_id).count()
 
-        return render_template("landing.html", random_letter=random_letter, notification_count=notification_count)
+        return render_template("landing.html", notification_count=notification_count)
     
     return app
 
