@@ -49,9 +49,14 @@ def validate_password(password):
     
     return None
 
-def validate_no_spaces(value, field_name):
+def validate_text_and_no_spaces(value, field_name):
+    # Check for spaces
     if " " in value:
         return f"{field_name} should not contain spaces."
+
+    # Check for non-text characters (allow only alphabetic characters)
+    if not re.match(r"^[A-Za-z]+$", value):
+        return f"{field_name} should contain only alphabetic characters."
     return None
 
 def validate_email_address(email):
@@ -60,6 +65,16 @@ def validate_email_address(email):
         return "Invalid email format."
     return None
 
+def validate_phone_number(phone_number):
+    # Check if the phone number contains only digits
+    if not phone_number.isdigit():
+        return "Phone number should contain only digits."
+
+    # Check for length of the phone number
+    if (len(phone_number) < 7 or len(phone_number) > 15):
+        return "Phone number should be between 7 and 15 digits."
+
+    return None
 
 
 @auth.route("/signup", methods=["GET", "POST"])
@@ -76,6 +91,14 @@ def signup():
         if User.query.filter_by(email=email).first():
             return jsonify({'status': 'error', 'message': 'Email already exists.'}), 200
 
+        firstName_validation = validate_text_and_no_spaces(first_name, "First Name")
+        if firstName_validation:
+            return jsonify({'status': 'error', 'message': firstName_validation}), 200
+
+        lastName_validation = validate_text_and_no_spaces(last_name, "Last Name")
+        if lastName_validation:
+            return jsonify({'status': 'error', 'message': lastName_validation}), 200
+
         email_validation = validate_email_address(email)
         if email_validation:
             return jsonify({'status': 'error', 'message': email_validation}), 200
@@ -83,6 +106,10 @@ def signup():
         password_validation = validate_password(password)
         if password_validation:
             return jsonify({'status': 'error', 'message': password_validation}), 200
+
+        phoneNumber_validation = validate_phone_number(phone_number)
+        if phoneNumber_validation:
+            return jsonify({'status': 'error', 'message': phoneNumber_validation}), 200
 
         hashed_password = generate_password_hash(password)
         new_user = User(
