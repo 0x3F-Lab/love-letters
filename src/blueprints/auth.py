@@ -80,48 +80,41 @@ def validate_phone_number(phone_number):
 @auth.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
+        errors = {}
+
+        # Data fetching
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
         email = request.form.get("email")
         password = request.form.get("password")
-        gender = request.form.get("gender")
         phone_number = request.form.get("phone_number")
         socials = request.form.get("socials")
 
+        # Validation
         if User.query.filter_by(email=email).first():
-            return jsonify({'status': 'error', 'message': 'Email already exists.'}), 200
+            errors['email'] = 'Email already exists.'
 
-        firstName_validation = validate_text_and_no_spaces(first_name, "First Name")
-        if firstName_validation:
-            return jsonify({'status': 'error', 'message': firstName_validation}), 200
+        errors['email'] = validate_email_address(email) or errors.get('email')
+        errors['password'] = validate_password(password)
+        errors['first_name'] = validate_text_and_no_spaces(first_name, "First Name")
+        errors['last_name'] = validate_text_and_no_spaces(last_name, "Last Name")
+        errors['phone_number'] = validate_phone_number(phone_number)
 
-        lastName_validation = validate_text_and_no_spaces(last_name, "Last Name")
-        if lastName_validation:
-            return jsonify({'status': 'error', 'message': lastName_validation}), 200
+        # Filter out any None values
+        errors = {key: val for key, val in errors.items() if val is not None}
 
-        email_validation = validate_email_address(email)
-        if email_validation:
-            return jsonify({'status': 'error', 'message': email_validation}), 200
+        if errors:
+            return jsonify({'status': 'error', 'message': errors}), 200
 
-        password_validation = validate_password(password)
-        if password_validation:
-            return jsonify({'status': 'error', 'message': password_validation}), 200
-
-        phoneNumber_validation = validate_phone_number(phone_number)
-        if phoneNumber_validation:
-            return jsonify({'status': 'error', 'message': phoneNumber_validation}), 200
-
-        hashed_password = generate_password_hash(password)
+        # Successful validation and user creation
         new_user = User(
             first_name=first_name,
             last_name=last_name,
             email=email,
-            password_hash=hashed_password,
-            gender=gender,
+            password_hash=generate_password_hash(password),
             phone_number=phone_number,
             socials=socials,
         )
-
         db.session.add(new_user)
         try:
             db.session.commit()
@@ -132,7 +125,6 @@ def signup():
             return jsonify({'status': 'error', 'message': str(e)}), 500
 
     return render_template("landing.html")
-
 
 
 @auth.route("/account", methods=["GET", "POST"])

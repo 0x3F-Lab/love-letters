@@ -38,30 +38,63 @@ $(document).ready(function () {
 
 
 
+// $(document).ready(function() {
+//   $('#signUpForm').submit(function(e) {
+//       e.preventDefault(); // Prevent the default form submission
+
+//       // Serialize the form data.
+//       var formData = $(this).serialize();
+
+//       $.ajax({
+//           type: "POST",
+//           url: $(this).attr('action'),
+//           data: formData,
+//           dataType: 'json',
+//           success: function(response) {
+//               $('#errorMessages').empty(); // Clear previous errors
+
+//               if (response.status === 'success') {
+//                   var redirectUrl = $('#signUpForm').data('redirect-url');
+//                   window.location.href = redirectUrl; // redirect to home page
+//               } else if (response.status === 'error') {
+//                   // Display error messages
+//                   $('#errorMessages').text(response.message); // Display error message
+//               }
+//           }
+//       });
+//   });
+// });
+
+
 $(document).ready(function() {
   $('#signUpForm').submit(function(e) {
       e.preventDefault(); // Prevent the default form submission
-
-      // Serialize the form data.
-      var formData = $(this).serialize();
+      var formData = $(this).serialize(); // Serialize the form data
 
       $.ajax({
           type: "POST",
-          url: $(this).attr('action'),
+          url: $(this).attr('action'), 
           data: formData,
           dataType: 'json',
           success: function(response) {
-              $('#errorMessages').empty(); // Clear previous errors
+              if (response.status === 'error') {
+                  // Clear previous error messages
+                  $('.error-message').remove();
 
-              if (response.status === 'success') {
-                  var redirectUrl = $('#signUpForm').data('redirect-url');
-                  window.location.href = redirectUrl; // redirect to home page
-              } else if (response.status === 'error') {
-                  // Display error messages
-                  $('#errorMessages').text(response.message); // Display error message
+                  // Display error messages next to the respective form fields
+                  for (var fieldName in response.message) {
+                      var message = response.message[fieldName];
+                      var $inputField = $('#' + fieldName); 
+                      $inputField.after('<div class="error-message" style="color:red;">' + message + '</div>');
+                  }
+              } else if (response.status === 'success') {
+                var redirectUrl = $('#signUpForm').data('redirect-url');
+                window.location.href = redirectUrl; // redirect to home page
               }
+          },
+          error: function(xhr, status, error) {
+              console.log("Error: " + xhr.status + " - " + error);
           }
       });
   });
 });
-
