@@ -60,10 +60,6 @@ $(document).ready(function() {
                   // Display error messages
                   $('#errorMessages').text(response.message); // Display error message
               }
-          },
-          error: function(xhr, status, error) {
-              // Handle general AJAX errors
-              $('#errorMessages').text('Error: ' + xhr.responseText);
           }
       });
   });

@@ -3,6 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from models import User, db
 from sqlalchemy.exc import IntegrityError
 from flask import jsonify
+import re
 
 auth = Blueprint("auth", __name__)
 
@@ -30,6 +31,35 @@ def logout():
     return redirect(url_for("auth.login"))
 
 
+# Validation Functions
+
+def validate_password(password):
+    if " " in password:
+        return "Password should not contain spaces."
+    if len(password) < 8:
+        return "Password must be at least 8 characters long."
+    if not re.search("[a-z]", password):
+        return "Password must contain at least one lowercase letter."
+    if not re.search("[A-Z]", password):
+        return "Password must contain at least one uppercase letter."
+    if not re.search("[0-9]", password):
+        return "Password must contain at least one number."
+    if not re.search("[!@#$%^&*]", password):
+        return "Password must contain at least one special character."
+    
+    return None
+
+def validate_no_spaces(value, field_name):
+    if " " in value:
+        return f"{field_name} should not contain spaces."
+    return None
+
+def validate_email_address(email):
+    # Enhanced Basic Format Check with no spaces allowed
+    if not re.match(r"^[^\s@]+@[^\s@]+\.[^\s@]+$", email):
+        return "Invalid email format."
+    return None
+
 
 
 @auth.route("/signup", methods=["GET", "POST"])
@@ -44,7 +74,15 @@ def signup():
         socials = request.form.get("socials")
 
         if User.query.filter_by(email=email).first():
-            return jsonify({'status': 'error', 'message': 'Email already exists.'}), 409
+            return jsonify({'status': 'error', 'message': 'Email already exists.'}), 200
+
+        email_validation = validate_email_address(email)
+        if email_validation:
+            return jsonify({'status': 'error', 'message': email_validation}), 200
+
+        password_validation = validate_password(password)
+        if password_validation:
+            return jsonify({'status': 'error', 'message': password_validation}), 200
 
         hashed_password = generate_password_hash(password)
         new_user = User(
@@ -105,7 +143,6 @@ def account():
             flash("An unexpected error occurred. Please try again.", "danger")
 
     return render_template("account.html", user=user)
-
 
 @auth.route("/change_password", methods=["POST"])
 def change_password():
