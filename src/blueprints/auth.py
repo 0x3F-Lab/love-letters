@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from werkzeug.security import check_password_hash, generate_password_hash
 from models import User, db
 from sqlalchemy.exc import IntegrityError
+from flask import jsonify
 
 auth = Blueprint("auth", __name__)
 
@@ -29,6 +30,8 @@ def logout():
     return redirect(url_for("auth.login"))
 
 
+
+
 @auth.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
@@ -40,10 +43,8 @@ def signup():
         phone_number = request.form.get("phone_number")
         socials = request.form.get("socials")
 
-        # Ensure unique email
         if User.query.filter_by(email=email).first():
-            flash("Email already exists.", "danger")
-            return redirect(url_for("auth.signup"))
+            return jsonify({'status': 'error', 'message': 'Email already exists.'}), 409
 
         hashed_password = generate_password_hash(password)
         new_user = User(
@@ -59,14 +60,14 @@ def signup():
         db.session.add(new_user)
         try:
             db.session.commit()
-            flash("Account successfully created!", "success")
+            flash("Account successfully created", "success")
+            return jsonify({'status': 'success', 'message': 'Account successfully created!'})
         except Exception as e:
-            # Roll back if database fails to update
             db.session.rollback()
-            flash(str(e), "danger")        
-        
-        return redirect(url_for("auth.login"))
+            return jsonify({'status': 'error', 'message': str(e)}), 500
+
     return render_template("landing.html")
+
 
 
 @auth.route("/account", methods=["GET", "POST"])

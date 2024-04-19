@@ -20,7 +20,8 @@ aria-hidden="true"
       </button>
     </div>
     <div class="modal-body">
-      <form id="signUpForm" method="post" action="{{ url_for('auth.signup') }}">
+      <div id="errorMessages" style="color: red;"></div>
+      <form id="signUpForm" method="post" action="{{ url_for('auth.signup') }}" data-redirect-url="{{ url_for('home') }}">
         <!-- The purpose of the hidden input is so that flask can identify which button we sent a POST request from, as we have both login and sign-up on the same page (this is just used to identify) -->
         <input type="hidden" name="signup_form" value="true" />
         <!-- Form fields for User attributes -->
