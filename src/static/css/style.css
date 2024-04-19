@@ -70,7 +70,6 @@ body {
   border-bottom: none !important; /* Removes the bottom border if not needed */
 }
 
-
 .modal-body {
   padding: 0; /* Remove padding to eliminate white spaces */
 }
@@ -195,7 +194,7 @@ select:focus {
   background-color: #ffffff; /* White background for clarity */
   padding: 20px; /* Padding around the content */
   border-radius: 8px; /* Soften the edges */
-  box-shadow: 0 2px 15px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .modal-header {
@@ -214,7 +213,7 @@ select:focus {
 
 /* User Info Styling */
 .user-info {
-  font-family: 'Arial', sans-serif; /* Ensuring a clean, readable font */
+  font-family: "Arial", sans-serif; /* Ensuring a clean, readable font */
   color: #333333; /* Dark grey for readability */
   margin-top: 15px; /* Space above the user info */
 }
@@ -236,11 +235,9 @@ select:focus {
   color: #212529; /* Slightly darker text for emphasis */
 }
 
-
-
 /* Responsive Adjustments */
 @media (max-width: 576px) {
   .user-detail strong {
-      width: auto; /* Allow label width to adjust on smaller screens */
+    width: auto; /* Allow label width to adjust on smaller screens */
   }
 }
