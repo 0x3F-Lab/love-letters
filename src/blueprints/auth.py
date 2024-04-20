@@ -7,33 +7,6 @@ import re
 
 auth = Blueprint("auth", __name__)
 
-@auth.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        email = request.form["email"]
-        password = request.form["password"]
-        user = User.query.filter_by(email=email).first()
-        
-        if user and check_password_hash(user.password_hash, password):
-            session["user_id"] = user.user_id
-            session["user_name"] = f"{user.first_name} {user.last_name}"
-            flash("Successfully logged in", "success")
-            return jsonify({'status': 'success', 'message': 'Login successful!'}), 200
-        else:
-            return jsonify({'status': 'error', 'message': 'Invalid email or password.'}), 401
-
-    return render_template("landing.html")
-
-
-
-
-@auth.route("/logout")
-def logout():
-    session.pop("user_id", None)
-    flash("You have been logged out.", "success")
-    return redirect(url_for("auth.login"))
-
-
 # Validation Functions
 
 def validate_password(password):
@@ -83,6 +56,9 @@ def validate_phone_number(phone_number):
 
     return None
 
+# ----- Form Processing -----
+
+# Sign-up
 
 @auth.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -133,6 +109,7 @@ def signup():
 
     return render_template("landing.html")
 
+# Update user information
 
 @auth.route("/account", methods=["GET", "POST"])
 def account():
@@ -147,7 +124,7 @@ def account():
         return redirect(url_for("auth.login"))
 
     if request.method == "POST":
-        print(request.form)  # This will show all the data received from the form
+        # print(request.form) debugging  
         errors = {}
 
         # Fetching form data
@@ -168,7 +145,7 @@ def account():
         # Filter out None values
         errors = {k: v for k, v in errors.items() if v is not None}
         
-        print(errors)
+        # print(errors) debugging
 
         if errors:
             return jsonify({'status': 'error', 'message': errors}), 400
@@ -188,6 +165,7 @@ def account():
     # Initial page load or GET request
     return render_template("account.html", user=user)
 
+# Update account password
 
 @auth.route("/change_password", methods=["POST"])
 def change_password():
@@ -227,3 +205,30 @@ def change_password():
     except Exception as e:
         db.session.rollback()
         return jsonify({'status': 'error', 'message': str(e)}), 500
+
+# Log-in
+
+@auth.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+        user = User.query.filter_by(email=email).first()
+        
+        if user and check_password_hash(user.password_hash, password):
+            session["user_id"] = user.user_id
+            session["user_name"] = f"{user.first_name} {user.last_name}"
+            flash("Successfully logged in", "success")
+            return jsonify({'status': 'success', 'message': 'Login successful!'}), 200
+        else:
+            return jsonify({'status': 'error', 'message': 'Invalid email or password.'}), 401
+
+    return render_template("landing.html")
+
+# Logout
+
+@auth.route("/logout")
+def logout():
+    session.pop("user_id", None)
+    flash("You have been logged out.", "success")
+    return redirect(url_for("auth.login"))
