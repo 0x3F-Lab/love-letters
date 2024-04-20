@@ -46,6 +46,9 @@ def validate_email_address(email):
     return None
 
 def validate_phone_number(phone_number):
+    # Return None if phone_number not provided
+    if not phone_number:
+        return None
     # Check if the phone number contains only digits
     if not phone_number.isdigit():
         return "Phone number should contain only digits."
