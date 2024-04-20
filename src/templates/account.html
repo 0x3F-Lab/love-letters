@@ -18,17 +18,18 @@
 </div>
 
 <!-- User information form initially hidden -->
-<div id="editForm" style="display: none" class="container mt-4">
-  <form method="post" action="{{ url_for('auth.account') }}">
+<div id="editDiv" style="display: none" class="container mt-4">
+  <form id="editForm" method="post" action="{{ url_for('auth.account') }}">
     <div class="form-group">
       <label for="email">Email</label>
       <input
         type="email"
         class="form-control"
-        id="email"
+        id="edit_email"
         name="email"
         value="{{ user.email }}"
         required
+        maxlength="50"
       />
     </div>
     <div class="form-group">
@@ -54,9 +55,11 @@
       <input
         type="tel"
         class="form-control"
-        id="phone_number"
+        id="edit_phone_number"
         name="phone_number"
         value="{{ user.phone_number }}"
+        required
+        maxlength="15"
       />
     </div>
     <div class="form-group">

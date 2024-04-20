@@ -147,28 +147,47 @@ def account():
         return redirect(url_for("auth.login"))
 
     if request.method == "POST":
-        user.email = request.form.get("email", user.email)
-        user.first_name = request.form.get("first_name", user.first_name)
-        user.last_name = request.form.get("last_name", user.last_name)
-        user.gender = request.form.get("gender", user.gender)
-        user.phone_number = request.form.get("phone_number", user.phone_number)
-        user.socials = request.form.get("socials", user.socials)
+        print(request.form)  # This will show all the data received from the form
+        errors = {}
+
+        # Fetching form data
+        new_email = request.form.get("email")
+        phone_number = request.form.get("phone_number")
+        
+        # Validate email only if it has been changed
+        if new_email != user.email:
+            if User.query.filter(User.email == new_email).first():
+                errors['email'] = 'This email is already in use.'
+            else:
+                email_error = validate_email_address(new_email)
+                if email_error:
+                    errors['email'] = email_error
+
+        errors['phone_number'] = validate_phone_number(phone_number)
+        
+        # Filter out None values
+        errors = {k: v for k, v in errors.items() if v is not None}
+        
+        print(errors)
+
+        if errors:
+            return jsonify({'status': 'error', 'message': errors}), 400
+
+        # If validation passes, update user info
+        user.email = new_email
+        user.phone_number = phone_number
 
         try:
             db.session.commit()
-            flash("Account updated successfully!", "success")
-        except IntegrityError as e:
-            # Prevent an already existing email to be used
-            db.session.rollback()
-            flash(
-                "This email address is already in use. Please choose another one.",
-                "danger",
-            )
+            flash("Account details successfully updated", "success")
+            return jsonify({'status': 'success', 'message': 'Account updated successfully!'}), 200
         except Exception as e:
             db.session.rollback()
-            flash("An unexpected error occurred. Please try again.", "danger")
+            return jsonify({'status': 'error', 'message': str(e)}), 500
 
+    # Initial page load or GET request
     return render_template("account.html", user=user)
+
 
 @auth.route("/change_password", methods=["POST"])
 def change_password():

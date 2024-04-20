@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
   $("#editButton").click(function () {
-    $("#editForm").toggle();
+    $("#editDiv").toggle();
   });
 
   $("#changePasswordButton").click(function () {
@@ -49,6 +49,8 @@ $(document).ready(function() {
   });
 });
 
+// Log in validation
+
 $(document).ready(function() {
   $('#loginForm').submit(function(e) {
       e.preventDefault(); // Prevent the default form submission
@@ -76,6 +78,48 @@ $(document).ready(function() {
       });
   });
 });;
+
+// Update user information validation
+
+$(document).ready(function() {
+  $('#editForm').submit(function(e) {
+      e.preventDefault(); // Prevent the default form submission
+      var formData = $(this).serialize(); // Serialize the form data
+
+      $.ajax({
+          type: "POST",
+          url: $(this).attr('action'),
+          data: formData,
+          dataType: 'json',
+          success: function(response) {
+              if (response.status === 'success') {
+                  location.reload(); // Reload the page to reflect changes
+              }
+          },
+          error: function(xhr, status, error) {
+            $('.error-message').remove();
+            if (xhr.status === 500) { // Database update failure
+              console.error("Server Error: " + xhr.responseText);
+              alert("We're experiencing technical difficulties. Please try again later.");
+            } else if (xhr.status === 400) {
+              var response = JSON.parse(xhr.responseText);
+              console.log(response)
+              if (response.status === 'error') {
+                  for (var fieldName in response.message) {
+                      console.log("Appending error to:", $inputField);
+                      var message = response.message[fieldName];
+                      var $inputField = $('#' + 'edit_' + fieldName);
+                      $inputField.after('<div class="error-message" style="color:red;">' + message + '</div>');
+                  }
+              }
+            } else {
+                console.log("Error: " + xhr.status + " - " + error);
+            }
+          }
+      });
+  });
+});
+
 
 
 
