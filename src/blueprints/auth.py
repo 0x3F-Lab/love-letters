@@ -108,7 +108,7 @@ def signup():
         errors = {key: val for key, val in errors.items() if val is not None}
 
         if errors:
-            return jsonify({'status': 'error', 'message': errors}), 200
+            return jsonify({'status': 'error', 'message': errors}), 400
 
         # Successful validation and user creation
         new_user = User(
