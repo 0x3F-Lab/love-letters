@@ -47,6 +47,10 @@ def validate_password(password):
     if not re.search("[!@#$%^&*]", password):
         return "Password must contain at least one special character."
     
+    # Check for invalid characters (any characters other than letters, numbers, and specified special characters)
+    if re.search("[^a-zA-Z0-9!@#$%^&*]", password):
+        return "Invalid character detected. Only letters, numbers, and !@#$%^&* are allowed."
+    
     return None
 
 def validate_text_and_no_spaces(value, field_name):
