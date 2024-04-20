@@ -7,21 +7,24 @@ import re
 
 auth = Blueprint("auth", __name__)
 
-
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
         user = User.query.filter_by(email=email).first()
+        
         if user and check_password_hash(user.password_hash, password):
             session["user_id"] = user.user_id
             session["user_name"] = f"{user.first_name} {user.last_name}"
-            flash("Login successful!", "success")
-            return redirect(url_for("post.browse"))
+            flash("Successfully logged in", "success")
+            return jsonify({'status': 'success', 'message': 'Login successful!'}), 200
         else:
-            flash("Invalid email or password.", "danger")
+            return jsonify({'status': 'error', 'message': 'Invalid email or password.'}), 401
+
     return render_template("landing.html")
+
+
 
 
 @auth.route("/logout")
