@@ -106,7 +106,6 @@ $(document).ready(function() {
               console.log(response)
               if (response.status === 'error') {
                   for (let fieldName in response.message) {
-                      console.log("Appending error to:", $inputField);
                       let message = response.message[fieldName];
                       let $inputField = $('#' + 'edit_' + fieldName);
                       $inputField.after('<div class="error-message" style="color:red;">' + message + '</div>');
@@ -119,6 +118,8 @@ $(document).ready(function() {
       });
   });
 });
+
+
 
 // Changing password validation
 
@@ -152,7 +153,3 @@ $(document).ready(function() {
       });
   });
 });
-
-
-
-
