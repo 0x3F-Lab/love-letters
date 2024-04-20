@@ -2,11 +2,11 @@
 
 $(document).ready(function () {
   $("#editButton").click(function () {
-    $("#editDiv").toggle();
+    $("#editFormDiv").toggle();
   });
 
   $("#changePasswordButton").click(function () {
-    $("#passwordForm").toggle();
+    $("#passwordFormDiv").toggle();
   });
 });
 
@@ -15,7 +15,7 @@ $(document).ready(function () {
 $(document).ready(function() {
   $('#signUpForm').submit(function(e) {
       e.preventDefault(); // Prevent the default form submission
-      var formData = $(this).serialize(); // Serialize the form data
+      const formData = $(this).serialize(); // Serialize the form data
 
       $.ajax({
           type: "POST",
@@ -23,7 +23,7 @@ $(document).ready(function() {
           data: formData,
           dataType: 'json',
           success: function(response) {
-              var redirectUrl = $('#signUpForm').data('redirect-url');
+              const redirectUrl = $('#signUpForm').data('redirect-url');
               window.location.href = redirectUrl; // Redirect to home page
           },
           error: function(xhr, status, error) {
@@ -33,11 +33,11 @@ $(document).ready(function() {
                   console.error("Server Error: " + xhr.responseText);
                   alert("We're experiencing technical difficulties. Please try again later.");
               } else if (xhr.status === 400) {
-                  var response = JSON.parse(xhr.responseText);
+                  const response = JSON.parse(xhr.responseText);
                   if (response.status === 'error') {
-                      for (var fieldName in response.message) {
-                          var message = response.message[fieldName];
-                          var $inputField = $('#' + fieldName);
+                      for (let fieldName in response.message) {
+                          let message = response.message[fieldName];
+                          let $inputField = $('#' + fieldName);
                           $inputField.after('<div class="error-message" style="color:red;">' + message + '</div>');
                       }
                   }
@@ -54,7 +54,7 @@ $(document).ready(function() {
 $(document).ready(function() {
   $('#loginForm').submit(function(e) {
       e.preventDefault(); // Prevent the default form submission
-      var formData = $(this).serialize(); // Serialize the form data
+      const formData = $(this).serialize(); // Serialize the form data
 
       $.ajax({
           type: "POST",
@@ -63,7 +63,7 @@ $(document).ready(function() {
           dataType: 'json',
           success: function(response) {
               if (response.status === 'success') {
-                  var redirectUrl = $('#signUpForm').data('redirect-url');
+                  const redirectUrl = $('#signUpForm').data('redirect-url');
                   window.location.href = redirectUrl; // Redirect to home page
               }
           },
@@ -84,7 +84,7 @@ $(document).ready(function() {
 $(document).ready(function() {
   $('#editForm').submit(function(e) {
       e.preventDefault(); // Prevent the default form submission
-      var formData = $(this).serialize(); // Serialize the form data
+      const formData = $(this).serialize(); // Serialize the form data
 
       $.ajax({
           type: "POST",
@@ -102,19 +102,52 @@ $(document).ready(function() {
               console.error("Server Error: " + xhr.responseText);
               alert("We're experiencing technical difficulties. Please try again later.");
             } else if (xhr.status === 400) {
-              var response = JSON.parse(xhr.responseText);
+              const response = JSON.parse(xhr.responseText);
               console.log(response)
               if (response.status === 'error') {
-                  for (var fieldName in response.message) {
+                  for (let fieldName in response.message) {
                       console.log("Appending error to:", $inputField);
-                      var message = response.message[fieldName];
-                      var $inputField = $('#' + 'edit_' + fieldName);
+                      let message = response.message[fieldName];
+                      let $inputField = $('#' + 'edit_' + fieldName);
                       $inputField.after('<div class="error-message" style="color:red;">' + message + '</div>');
                   }
               }
             } else {
                 console.log("Error: " + xhr.status + " - " + error);
             }
+          }
+      });
+  });
+});
+
+// Changing password validation
+
+$(document).ready(function() {
+  $('#passwordForm').submit(function(e) {
+      e.preventDefault(); // Prevent the default form submission
+      const formData = $(this).serialize(); // Serialize the form data
+
+      $.ajax({
+          type: "POST",
+          url: $(this).attr('action'),
+          data: formData,
+          dataType: 'json',
+          success: function(response) {
+              if (response.status === 'success') {
+                  location.reload();
+              }
+          },
+          error: function(xhr) {
+              $('.error-message').remove();
+              if (xhr.status === 500) {
+                  console.error("Server Error: " + xhr.responseText);
+                  $('#passwordError').text("We're experiencing technical difficulties. Please try again later.").show();
+              } else if (xhr.status === 400) {
+                  const response = JSON.parse(xhr.responseText);
+                  $('#passwordError').text(xhr.responseJSON.message).show();
+              } else {
+                  console.error("Error: " + xhr.status + " - " + xhr.statusText);
+              }
           }
       });
   });

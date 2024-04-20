@@ -192,37 +192,38 @@ def account():
 @auth.route("/change_password", methods=["POST"])
 def change_password():
     if "user_id" not in session:
-        flash("Please log in to view this page.", "warning")
-        return redirect(url_for("home"))
+        flash("You must be logged in to access this page.", "danger")
+        return redirect(url_for("auth.login"))
 
-    user_id = session["user_id"]
-    user = User.query.get(user_id)
+    user = User.query.get(session["user_id"])
+
     if not user:
         flash("User not found.", "danger")
-        return redirect(url_for("auth.account"))
+        return redirect(url_for("auth.login"))
 
-    current_password = request.form["current_password"]
-    new_password = request.form["new_password"]
-    confirm_password = request.form["confirm_password"]
+    current_password = request.form.get("current_password")
+    new_password = request.form.get("new_password")
+    confirm_password = request.form.get("confirm_password")
 
     # Check current password
     if not check_password_hash(user.password_hash, current_password):
-        flash("Current password is incorrect.", "danger")
-        return redirect(url_for("auth.account"))
+        return jsonify({'status': 'error', 'message': 'Current password is incorrect.'}), 400
 
     # Double confirm new password
     if new_password != confirm_password:
-        flash("New passwords do not match.", "danger")
-        return redirect(url_for("auth.account"))
+        return jsonify({'status': 'error', 'message': 'New passwords do not match.'}), 400
 
-    # Create new password hash and attempt to update database
+    # Validate new password
+    password_validation_error = validate_password(new_password)
+    if password_validation_error:
+        return jsonify({'status': 'error', 'message': password_validation_error}), 400
+
+    # Update password hash
     user.password_hash = generate_password_hash(new_password)
     try:
         db.session.commit()
-        flash("Password updated successfully!", "success")
+        flash("Password successfully updated", "success")
+        return jsonify({'status': 'success', 'message': 'Password updated successfully!'}), 200
     except Exception as e:
-        # Roll back if database fails to update
         db.session.rollback()
-        flash(str(e), "danger")
-
-    return redirect(url_for("auth.account"))
+        return jsonify({'status': 'error', 'message': str(e)}), 500
