@@ -11,7 +11,4 @@ $(document).ready(function () {
 });
 
 
-function setPostId(postId) {
-    document.getElementById('post-id').value = postId;
-}
 

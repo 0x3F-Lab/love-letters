@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
 from models import Post, Reply, db
 
 
@@ -60,21 +60,18 @@ def browse():
 
 @post.route('/submit_reply', methods=['POST'])
 def submit_reply():
-    user_id = session.get("user_id")  # Get the user_id from session
+    user_id = session.get("user_id")
     if not user_id:
-        flash("You need to login to reply.", "danger")
-        return redirect(url_for("auth.login"))  # Assuming 'auth.login' is your login route
-    
+        return jsonify({"error": "You need to log in to reply"}), 403
+
     post_id = request.form['post_id']
     content = request.form['content']
     new_reply = Reply(post_id=post_id, user_id=user_id, content=content)
     db.session.add(new_reply)
-    
+
     try:
         db.session.commit()
-        flash("Reply posted successfully!", "success")
+        return jsonify({"message": "Reply posted successfully!", "post_id": post_id, "content": content})
     except Exception as e:
         db.session.rollback()
-        flash(f"An error occurred: {e}", "danger")
-    
-    return redirect(url_for('post.browse'))
+        return jsonify({"error": str(e)}), 500

@@ -10,6 +10,37 @@
     </script>
 
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var form = document.getElementById('replyForm');
+        form.onsubmit = function (event) {
+            event.preventDefault(); // Prevent the form from submitting via the browser
+    
+            var formData = new FormData(form);
+            fetch('{{ url_for("post.submit_reply") }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error); // Display error message from server
+                } else {
+                    // Update the page to show the new reply
+                    console.log(data.message); // Or update the DOM as needed
+                    var modal = bootstrap.Modal.getInstance(document.getElementById('replyModal'));
+                    modal.hide(); // Close the modal
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        };
+    });
+    </script>
+    
+
+
 <div class="container mt-5">
     <h1 class="text-center">All Posts</h1>
     {% for post in posts %}
@@ -39,7 +70,7 @@
                 <h5 class="modal-title" id="replyModalLabel">Reply to Post</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="{{ url_for('post.submit_reply') }}">
+            <form id="replyForm" method="POST">
                 <div class="modal-body">
                     <input type="hidden" name="post_id" id="post-id">
                     <textarea class="form-control" name="content" required placeholder="Write your reply here..."></textarea>
