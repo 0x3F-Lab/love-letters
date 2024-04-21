@@ -64,26 +64,24 @@ def validate_phone_number(phone_number):
 
     return None
 
+
 def validate_socials(value, social_handle):
     if value == "":
         return None
 
     if social_handle == "facebook":
-        if not re.match(r'https?://www\.facebook\.com/.+', value):
+        if not re.match(r"https?://www\.facebook\.com/.+", value):
             return "Please enter a valid Facebook URL"
-    
+
     if social_handle == "instagram":
-        if not re.match(r'^[a-zA-Z0-9._]{1,30}$', value):
+        if not re.match(r"^[a-zA-Z0-9._]{1,30}$", value):
             return "Please enter a valid Instagram username"
 
     if social_handle == "snapchat":
-        if not re.match(r'^[a-zA-Z0-9]{3,15}$', value):
+        if not re.match(r"^[a-zA-Z0-9]{3,15}$", value):
             return "Please eneter a valid snapchat username"
-    
+
     return None
-
-    
-
 
 
 # ----- Form Processing -----
@@ -105,13 +103,12 @@ def signup():
         gender = request.form.get("gender")
         email = request.form.get("email")
         password = request.form.get("password")
-        phone_number = request.form.get("phone_number","")
+        phone_number = request.form.get("phone_number", "")
         socials = {
             "instagram": request.form.get("instagram", ""),
             "facebook": request.form.get("facebook", ""),
             "snapchat": request.form.get("snapchat", ""),
         }
-
 
         if not any(socials.values()):
             errors["socials"] = "At least one social media handle must be provided"
@@ -137,7 +134,7 @@ def signup():
             return jsonify({"status": "error", "message": errors}), 400
 
         # Successful validation and user creation
-        
+
         new_user = User(
             first_name=first_name,
             last_name=last_name,
@@ -184,7 +181,7 @@ def account():
         new_email = request.form.get("email")
         phone_number = request.form.get("phone_number")
         gender = request.form.get("gender")
-        phone_number = request.form.get("phone_number","")
+        phone_number = request.form.get("phone_number", "")
         socials = {
             "instagram": request.form.get("instagram", ""),
             "facebook": request.form.get("facebook", ""),
@@ -201,7 +198,9 @@ def account():
                     errors["email"] = email_error
 
         if not any(socials.values()):
-            errors["missingSocialError"] = "At least one social media handle must be provided"
+            errors["missingSocialError"] = (
+                "At least one social media handle must be provided"
+            )
 
         errors["phone_number"] = validate_phone_number(phone_number)
 
@@ -221,7 +220,7 @@ def account():
         user.phone_number = phone_number
         user.gender = gender
         user.socials = json.dumps(socials)
-        
+
         try:
             db.session.commit()
             flash("Account details successfully updated", "success")
@@ -237,9 +236,9 @@ def account():
 
     if user.socials:
         socials = json.loads(user.socials)
-        user.instagram = socials.get('instagram', "")
-        user.facebook = socials.get('facebook', "")
-        user.snapchat = socials.get('snapchat', "")
+        user.instagram = socials.get("instagram", "")
+        user.facebook = socials.get("facebook", "")
+        user.snapchat = socials.get("snapchat", "")
 
     # Initial page load or GET request
     return render_template("account.html", user=user)
@@ -330,7 +329,9 @@ def logout():
     flash("You have been logged out.", "success")
     return redirect(url_for("auth.login"))
 
+
 # Notifications
+
 
 @auth.route("/notifications")
 def notifications():
@@ -353,4 +354,4 @@ def dismiss_notification(notification_id):
     db.session.delete(notification)
     db.session.commit()
     flash("Notification dismissed.", "success")
-    return redirect(url_for("auth.notifications")) 
+    return redirect(url_for("auth.notifications"))

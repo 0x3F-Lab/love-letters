@@ -116,7 +116,7 @@ $(document).ready(function () {
           const response = JSON.parse(xhr.responseText);
           // console.log(response) Debug
           if (response.status === "error") {
-            $("#missingSocialError").hide()
+            $("#missingSocialError").hide();
             for (let fieldName in response.message) {
               if (fieldName == "missingSocialError") {
                 $("#missingSocialError")
