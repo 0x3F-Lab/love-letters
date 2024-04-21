@@ -55,8 +55,10 @@ def create():
 
 @post.route("/browse")
 def browse():
-    posts = Post.query.all()
+    posts = Post.query.options(db.joinedload(Post.replies)).all()
     return render_template("browse.html", posts=posts)
+
+
 
 @post.route('/submit_reply', methods=['POST'])
 def submit_reply():

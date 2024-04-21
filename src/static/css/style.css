@@ -195,3 +195,27 @@ select:focus {
   outline: none;
   border-color: #555;
 }
+
+.reply-div {
+  border: 1px solid #eaeaea;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  position: relative; /* Allows absolute positioning inside */
+}
+
+.replier-name {
+  font-weight: bold;
+  position: absolute; /* Position the name to the right */
+  right: 10px;
+  top: 10px;
+}
+
+.reply-date {
+  font-size: 0.8rem;
+  color: #777;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}

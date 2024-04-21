@@ -14,7 +14,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         var form = document.getElementById('replyForm');
         form.onsubmit = function (event) {
-            event.preventDefault(); // Prevent the form from submitting via the browser
+            event.preventDefault(); 
     
             var formData = new FormData(form);
             fetch('{{ url_for("post.submit_reply") }}', {
@@ -24,12 +24,12 @@
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    alert(data.error); // Display error message from server
+                    alert(data.error); 
                 } else {
-                    // Update the page to show the new reply
-                    console.log(data.message); // Or update the DOM as needed
+                    
+                    console.log(data.message); 
                     var modal = bootstrap.Modal.getInstance(document.getElementById('replyModal'));
-                    modal.hide(); // Close the modal
+                    modal.hide(); 
                 }
             })
             .catch(error => {
@@ -39,12 +39,22 @@
     });
     </script>
     
-
+    <script>
+        function toggleReplies(postId) {
+            var repliesContainer = document.getElementById('replies-' + postId);
+            if (repliesContainer.style.display === 'none') {
+                repliesContainer.style.display = 'block';
+            } else {
+                repliesContainer.style.display = 'none';
+            }
+        }
+    </script>
+    
 
 <div class="container mt-5">
     <h1 class="text-center">All Posts</h1>
     {% for post in posts %}
-    <div class="card mb-4" style="width: 80%; margin-left: auto; margin-right: auto;"> <!-- Centers the card and sets width -->
+    <div class="card mb-4" style="width: 80%; margin-left: auto; margin-right: auto;">
         <div class="card-body">
             <h5 class="card-title">{{ post.title }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">by User {{ post.user_id }}</h6>
@@ -55,11 +65,22 @@
                     Posted {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
                 </small>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" onclick="setPostId({{ post.post_id }})">Reply</button>
-
+                <button type="button" class="btn btn-info" onclick="toggleReplies({{ post.post_id }})">View Replies</button>
+            </div>
+            <div id="replies-{{ post.post_id }}" class="replies-container" style="display: none;">
+                {% for reply in post.replies %}
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Reply by {{ reply.replier.first_name }}</h6>
+                        <p class="card-text">{{ reply.content }}</p>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
     {% endfor %}
+
 </div>
 
 <!-- Reply Modal -->
