@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import check_password_hash, generate_password_hash
-from models import User, db
+from models import User, Notification, db
 from sqlalchemy.exc import IntegrityError
 from flask import jsonify
 import re
+import json
 
 auth = Blueprint("auth", __name__)
 
@@ -51,7 +52,7 @@ def validate_email_address(email):
 
 def validate_phone_number(phone_number):
     # Return None if phone_number not provided
-    if not phone_number:
+    if phone_number == "":
         return None
     # Check if the phone number contains only digits
     if not phone_number.isdigit():
@@ -63,26 +64,58 @@ def validate_phone_number(phone_number):
 
     return None
 
+def validate_socials(value, social_handle):
+    if value == "":
+        return None
+
+    if social_handle == "facebook":
+        if not re.match(r'https?://www\.facebook\.com/.+', value):
+            return "Please enter a valid Facebook URL"
+    
+    if social_handle == "instagram":
+        if not re.match(r'^[a-zA-Z0-9._]{1,30}$', value):
+            return "Please enter a valid Instagram username"
+
+    if social_handle == "snapchat":
+        if not re.match(r'^[a-zA-Z0-9]{3,15}$', value):
+            return "Please eneter a valid snapchat username"
+    
+    return None
+
+    
+
+
 
 # ----- Form Processing -----
 
 # Sign-up
 
 
-@auth.route("/signup", methods=["GET", "POST"])
+@auth.route("/signup", methods=["POST"])
 def signup():
     if request.method == "POST":
+
+        print("Method called")
+
         errors = {}
 
         # Data fetching
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
+        gender = request.form.get("gender")
         email = request.form.get("email")
         password = request.form.get("password")
-        phone_number = request.form.get("phone_number")
-        socials = request.form.get("socials")
+        phone_number = request.form.get("phone_number","")
+        socials = {
+            "instagram": request.form.get("instagram", ""),
+            "facebook": request.form.get("facebook", ""),
+            "snapchat": request.form.get("snapchat", ""),
+        }
 
-        # Validation
+
+        if not any(socials.values()):
+            errors["socials"] = "At least one social media handle must be provided"
+
         if User.query.filter_by(email=email).first():
             errors["email"] = "Email already exists."
 
@@ -92,20 +125,27 @@ def signup():
         errors["last_name"] = validate_text_and_no_spaces(last_name, "Last Name")
         errors["phone_number"] = validate_phone_number(phone_number)
 
+        for platform, username in socials.items():
+            errors[platform] = validate_socials(username, platform)
+
         # Filter out any None values
         errors = {key: val for key, val in errors.items() if val is not None}
+
+        print(errors)
 
         if errors:
             return jsonify({"status": "error", "message": errors}), 400
 
         # Successful validation and user creation
+        
         new_user = User(
             first_name=first_name,
             last_name=last_name,
             email=email,
+            gender=gender,
             password_hash=generate_password_hash(password),
             phone_number=phone_number,
-            socials=socials,
+            socials=json.dumps(socials),
         )
         db.session.add(new_user)
         try:
@@ -143,6 +183,13 @@ def account():
         # Fetching form data
         new_email = request.form.get("email")
         phone_number = request.form.get("phone_number")
+        gender = request.form.get("gender")
+        phone_number = request.form.get("phone_number","")
+        socials = {
+            "instagram": request.form.get("instagram", ""),
+            "facebook": request.form.get("facebook", ""),
+            "snapchat": request.form.get("snapchat", ""),
+        }
 
         # Validate email only if it has been changed
         if new_email != user.email:
@@ -153,7 +200,13 @@ def account():
                 if email_error:
                     errors["email"] = email_error
 
+        if not any(socials.values()):
+            errors["missingSocialError"] = "At least one social media handle must be provided"
+
         errors["phone_number"] = validate_phone_number(phone_number)
+
+        for platform, username in socials.items():
+            errors[platform] = validate_socials(username, platform)
 
         # Filter out None values
         errors = {k: v for k, v in errors.items() if v is not None}
@@ -166,7 +219,9 @@ def account():
         # If validation passes, update user info
         user.email = new_email
         user.phone_number = phone_number
-
+        user.gender = gender
+        user.socials = json.dumps(socials)
+        
         try:
             db.session.commit()
             flash("Account details successfully updated", "success")
@@ -179,6 +234,12 @@ def account():
         except Exception as e:
             db.session.rollback()
             return jsonify({"status": "error", "message": str(e)}), 500
+
+    if user.socials:
+        socials = json.loads(user.socials)
+        user.instagram = socials.get('instagram', "")
+        user.facebook = socials.get('facebook', "")
+        user.snapchat = socials.get('snapchat', "")
 
     # Initial page load or GET request
     return render_template("account.html", user=user)
@@ -268,3 +329,28 @@ def logout():
     session.pop("user_id", None)
     flash("You have been logged out.", "success")
     return redirect(url_for("auth.login"))
+
+# Notifications
+
+@auth.route("/notifications")
+def notifications():
+    if "user_id" not in session:
+        flash("You must be logged in to view notifications.", "warning")
+        return redirect(url_for("auth.login"))
+
+    user_id = session["user_id"]
+    user_notifications = Notification.query.filter_by(recipient_id=user_id).all()
+    return render_template("notifications.html", notifications=user_notifications)
+
+
+@auth.route("/dismiss_notification/<int:notification_id>", methods=["POST"])
+def dismiss_notification(notification_id):
+    notification = Notification.query.get_or_404(notification_id)
+    if notification.recipient_id != session.get("user_id"):
+        flash("You do not have permission to delete this notification.", "danger")
+        return redirect(url_for("auth.notifications"))
+
+    db.session.delete(notification)
+    db.session.commit()
+    flash("Notification dismissed.", "success")
+    return redirect(url_for("auth.notifications")) 

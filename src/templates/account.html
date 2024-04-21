@@ -10,7 +10,9 @@
   <p><strong>Email:</strong> {{ user.email }}</p>
   <p><strong>Gender:</strong> {{ user.gender or 'Not provided' }}</p>
   <p><strong>Phone Number:</strong> {{ user.phone_number or 'Not provided' }}</p>
-  <p><strong>Socials:</strong> {{ user.socials or 'Not provided' }}</p>
+  <p><strong>Instagram:</strong> {{ user.instagram or 'Not provided' }}</p>
+  <p><strong>Facebook:</strong> {{ user.facebook or 'Not provided' }}</p>
+  <p><strong>Snapchat:</strong> {{ user.snapchat or 'Not provided' }}</p>
 
   <button class="btn btn-primary" id="editButton">Edit</button>
   <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Logout</a>
@@ -51,21 +53,29 @@
       </select>
     </div>
     <div class="form-group">
-      <label for="phone_number">Phone Number</label>
+      <label for="phone_number">Phone Number (optional)</label>
       <input
         type="tel"
         class="form-control"
         id="edit_phone_number"
         name="phone_number"
         value="{{ user.phone_number }}"
-        required
         maxlength="15"
       />
     </div>
     <div class="form-group">
-      <label for="socials">Socials</label>
-      <textarea class="form-control" id="socials" name="socials">{{ user.socials }}</textarea>
+      <label for="instagram">Instagram (optional)</label>
+      <input type="text" class="form-control" id="edit_instagram" name="instagram" value="{{ user.instagram }}" placeholder="Instagram username" maxlength="30" />
     </div>
+    <div class="form-group">
+      <label for="facebook">Facebook (optional)</label>
+      <input type="text" class="form-control" id="edit_facebook" name="facebook" value="{{ user.facebook }}" placeholder="Facebook profile link" maxlength="60" />
+    </div>
+    <div class="form-group">
+      <label for="snapchat">Snapchat (optional)</label>
+      <input type="text" class="form-control" id="edit_snapchat" name="snapchat" value="{{ user.snapchat }}" placeholder="Snapchat username" maxlength="30" />
+    </div>
+    <div id="missingSocialError" class="alert alert-danger" style="display:none;"></div>
     <button type="submit" class="btn btn-primary">Update</button>
   </form>
 </div>
