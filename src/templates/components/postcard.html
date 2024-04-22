@@ -1,0 +1,21 @@
+<!-- postcard.html -->
+<div class="card" style="width: 80%; margin-left: auto; margin-right: auto;">
+    <div class="card-body">
+        <h5 class="card-title">{{ post.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+            by {% if post.is_anonymous %}Anonymous{% else %}<a href="#" data-toggle="modal" data-target="#profileModal" onclick="loadUserProfile({{ post.user_id }})"> 
+                {{ post.author.first_name }} {{ post.author.last_name }}
+            </a>{% endif %}
+        </h6>
+        <p class="card-text">{{ post.content }}</p>
+        <div class="d-flex justify-content-between">
+            <small class="text-muted">Post type: {{ post.post_type }}</small>
+            <small class="text-muted">
+                Posted {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
+            </small>
+            <form action="{{ url_for('post.connect', post_id=post.post_id) }}" method="POST">
+                <button type="submit" class="btn btn-primary">Connect</button>
+            </form>
+        </div>
+    </div>
+</div>
