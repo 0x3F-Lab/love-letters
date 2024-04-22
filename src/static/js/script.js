@@ -37,4 +37,3 @@ function loadUserProfile(userId) {
       modalBody.innerHTML = `<p>Error loading profile. Please try again.</p>`; // Handle loading errors
     });
 }
-

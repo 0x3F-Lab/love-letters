@@ -29,8 +29,9 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     # Relationship
-    replies = db.relationship("Reply", backref="post", lazy=True, order_by="desc(Reply.created_at)")
-
+    replies = db.relationship(
+        "Reply", backref="post", lazy=True, order_by="desc(Reply.created_at)"
+    )
 
 
 class Reply(db.Model):
