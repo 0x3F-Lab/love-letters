@@ -7,13 +7,6 @@ body {
   flex-direction: column;
 }
 
-body {
-  /* background: linear-gradient(to right, #f2c0a2, #d9a2ce); */
-  background-image: url("../images/uwa-sunrise-crop.jpg");
-  background-size: cover;
-  background-position: center;
-}
-
 /* Center Content */
 
 .centered-content {
@@ -72,9 +65,9 @@ body {
   border: none;
 }
 
-.modal-header,
-.modal-footer {
-  display: none; /* Optionally remove header and footer for full image display */
+.modal-header {
+  background-color: transparent !important; /* Makes the background transparent */
+  border-bottom: none !important; /* Removes the bottom border if not needed */
 }
 
 .modal-body {
@@ -194,4 +187,57 @@ textarea:focus,
 select:focus {
   outline: none;
   border-color: #555;
+}
+
+/* Modal Content Styling */
+.modal-content {
+  background-color: #ffffff; /* White background for clarity */
+  padding: 20px; /* Padding around the content */
+  border-radius: 8px; /* Soften the edges */
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.modal-header {
+  background-color: #f8f9fa; /* Light grey background for the header */
+  border-bottom: 1px solid #e9ecef; /* Subtle line to separate header from body */
+  color: #495057; /* Dark color for text for better readability */
+}
+
+.close {
+  color: #6c757d; /* Muted color for the close button */
+}
+
+.close:hover {
+  color: #343a40; /* Darker shade on hover for better interaction feedback */
+}
+
+/* User Info Styling */
+.user-info {
+  font-family: "Arial", sans-serif; /* Ensuring a clean, readable font */
+  color: #333333; /* Dark grey for readability */
+  margin-top: 15px; /* Space above the user info */
+}
+
+.user-detail {
+  margin: 10px 0; /* Vertical spacing between each detail */
+  display: flex; /* Flex layout to align label and value nicely */
+  align-items: center; /* Align items in the middle vertically */
+}
+
+.user-detail strong {
+  width: 100px; /* Fixed width for labels to align values vertically */
+  color: #007bff; /* Bootstrap primary color for emphasis */
+  font-weight: normal; /* Normal weight looks more modern */
+}
+
+.user-detail span {
+  font-weight: bold; /* Bold text for user details */
+  color: #212529; /* Slightly darker text for emphasis */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+  .user-detail strong {
+    width: auto; /* Allow label width to adjust on smaller screens */
+  }
 }

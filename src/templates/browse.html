@@ -51,39 +51,48 @@
     </script>
     
 
-<div class="container mt-5">
-    <h1 class="text-center">All Posts</h1>
-    {% for post in posts %}
-    <div class="card mb-4" style="width: 80%; margin-left: auto; margin-right: auto;">
-        <div class="card-body">
-            <h5 class="card-title">{{ post.title }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">by User {{ post.user_id }}</h6>
-            <p class="card-text">{{ post.content }}</p>
-            <div class="d-flex justify-content-between">
-                <small class="text-muted">Post type: {{ post.post_type }}</small>
-                <small class="text-muted">
-                    Posted {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
-                </small>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" onclick="setPostId({{ post.post_id }})">Reply</button>
-                <button type="button" class="btn btn-info" onclick="toggleReplies({{ post.post_id }})">View Replies</button>
-            </div>
-            <div id="replies-{{ post.post_id }}" class="replies-container" style="display: none;">
-                {% for reply in post.replies %}
-                <div class="card mt-2">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted">Reply by {{ reply.replier.first_name }}</h6>
-                        <p class="card-text">{{ reply.content }}</p>
-                    </div>
+    <div class="container mt-5">
+        <h1 class="text-center">All Posts</h1>
+        {% for post in posts %}
+        <div class="card mb-4" style="width: 80%; margin-left: auto; margin-right: auto;">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    by 
+                    {% if post.is_anonymous %}
+                        Anonymous
+                    {% else %}
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="loadUserProfile({{ post.user_id }})"> 
+                            {{ post.author.first_name }} {{ post.author.last_name }}
+                        </a>
+                    {% endif %}
+                </h6>
+                <p class="card-text">{{ post.content }}</p>
+                <div class="d-flex justify-content-between">
+                    <small class="text-muted">Post type: {{ post.post_type }}</small>
+                    <small class="text-muted">
+                        Posted {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
+                    </small>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" onclick="setPostId({{ post.post_id }})">Reply</button>
+                    <button type="button" class="btn btn-info" onclick="toggleReplies({{ post.post_id }})">View Replies</button>
+                    <form action="{{ url_for('post.connect', post_id=post.post_id) }}" method="POST">
+                        <button type="submit" class="btn btn-primary">Connect</button>
+                    </form>
                 </div>
-                {% endfor %}
+                <div id="replies-{{ post.post_id }}" class="replies-container" style="display: none;">
+                    {% for reply in post.replies %}
+                    <div class="card mt-2">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Reply by {{ reply.replier.first_name }}</h6>
+                            <p class="card-text">{{ reply.content }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
-
-        <div class="mb-4">
-        {% include 'components/postcard.html' %}
         </div>
-    {% endfor %}
-
-</div>
+        {% endfor %}
+    </div>
 
 <!-- Reply Modal -->
 <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
