@@ -28,8 +28,6 @@ function loadUserProfile(userId) {
         data.socials.facebook || "N/A";
       document.getElementById("user-snapchat").textContent =
         data.socials.snapchat || "N/A";
-      document.getElementById("user-twitter").textContent =
-        data.socials.twitter || "N/A";
     })
     .catch((error) => {
       console.error("Error loading the user profile:", error);
