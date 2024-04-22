@@ -38,13 +38,12 @@ function loadUserProfile(userId) {
     });
 }
 
-
 function setPostId(postId) {
-  $('#post-id').val(postId); // Set the value of the input
+  $("#post-id").val(postId); // Set the value of the input
 }
 
 function toggleReplies(postId) {
-  $('#replies-' + postId).toggle(); // Toggle the display state of the replies
+  $("#replies-" + postId).toggle(); // Toggle the display state of the replies
 }
 
 // OLD CODE THAT WILL REFRESH THE PAGE
@@ -80,40 +79,41 @@ function toggleReplies(postId) {
 
 // Dynamically show the reply without refresching the page
 
-$(document).ready(function() {
-  $('#replyForm').submit(function(event) {
-      event.preventDefault(); // Prevent the default form submission
+$(document).ready(function () {
+  $("#replyForm").submit(function (event) {
+    event.preventDefault(); // Prevent the default form submission
 
-      var formData = new FormData(this);
-      var postUrl = $('#submitReplyUrl').val(); // Get the URL from the hidden input
+    var formData = new FormData(this);
+    var postUrl = $("#submitReplyUrl").val(); // Get the URL from the hidden input
 
-      $.ajax({
-          type: 'POST',
-          url: postUrl,
-          data: formData,
-          processData: false, // Prevent jQuery from converting the data into a query string
-          contentType: false, // Must be false to tell jQuery not to add a Content-Type header
-          success: function(data) {
-              if (data.error) {
-                  alert(data.error);
-              } else {
-                  console.log(data.message);
-                  $('#replyModal').modal('hide'); // Hide the modal using jQuery
+    $.ajax({
+      type: "POST",
+      url: postUrl,
+      data: formData,
+      processData: false, // Prevent jQuery from converting the data into a query string
+      contentType: false, // Must be false to tell jQuery not to add a Content-Type header
+      success: function (data) {
+        if (data.error) {
+          alert(data.error);
+        } else {
+          console.log(data.message);
+          $("#replyModal").modal("hide"); // Hide the modal using jQuery
 
-                  // Dynamically add reply and immediatley show the current replies
-                  let replyHtml = '<div class="card mt-2"><div class="card-body">' +
-                                  '<h6 class="card-subtitle mb-2 text-muted">Reply by You</h6>' +
-                                  '<p class="card-text">' + data.content + '</p></div></div>';
-                  $('#replies-' + data.post_id).prepend(replyHtml).show();
-              }
-          },
-          error: function(xhr, status, error) {
-              console.error('Error:', error);
-          }
-      });
+          // Dynamically add reply and immediatley show the current replies
+          let replyHtml =
+            '<div class="card mt-2"><div class="card-body">' +
+            '<h6 class="card-subtitle mb-2 text-muted">Reply by You</h6>' +
+            '<p class="card-text">' +
+            data.content +
+            "</p></div></div>";
+          $("#replies-" + data.post_id)
+            .prepend(replyHtml)
+            .show();
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("Error:", error);
+      },
+    });
   });
 });
-
-
-    
-
