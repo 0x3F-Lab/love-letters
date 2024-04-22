@@ -98,7 +98,7 @@ $(document).ready(function () {
         } else {
           console.log(data.message);
           $("#replyModal").modal("hide"); // Hide the modal using jQuery
-          $('#replyForm textarea[name="content"]').val(''); // Clear the reply box
+          $('#replyForm textarea[name="content"]').val(""); // Clear the reply box
 
           // Dynamically add reply and immediatley show the current replies
           let replyHtml =
