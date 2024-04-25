@@ -54,14 +54,7 @@
     </div>
     <div class="form-group">
       <label for="phone_number">Phone Number (optional)</label>
-      <input
-        type="tel"
-        class="form-control"
-        id="edit_phone_number"
-        name="phone_number"
-        value="{{ user.phone_number }}"
-        maxlength="15"
-      />
+      <input type="tel" class="form-control" id="edit_phone_number" name="phone_number" value="{{ user.phone_number }}" maxlength="20"/>
     </div>
     <div class="form-group">
       <label for="instagram">Instagram (optional)</label>
@@ -89,7 +82,7 @@
     </div>
     <div class="form-group">
       <label for="new-password">New Password</label>
-      <input type="password" class="form-control" id="new_password" name="new_password" required maxlength="30">
+      <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Uppercase, lowercase, number, special (!@#$%^&*)" required maxlength="30">
     </div>
     <div class="form-group">
       <label for="confirm-password">Confirm New Password</label>

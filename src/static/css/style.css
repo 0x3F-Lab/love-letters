@@ -241,3 +241,8 @@ select:focus {
     width: auto; /* Allow label width to adjust on smaller screens */
   }
 }
+
+#passwordRules {
+  font-size: small;
+  margin-top: -5px;
+}

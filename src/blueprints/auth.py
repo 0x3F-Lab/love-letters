@@ -37,8 +37,8 @@ def validate_text_and_no_spaces(value, field_name):
     if " " in value:
         return f"{field_name} should not contain spaces."
 
-    # Check for non-text characters (allow only alphabetic characters)
-    if not re.match(r"^[A-Za-z]+$", value):
+    # Check for non-text characters (allow only alphabetic characters as well as names with an apostrophe)
+    if not re.match(r"^[A-Za-z']+$", value):
         return f"{field_name} should contain only alphabetic characters."
     return None
 
@@ -54,15 +54,20 @@ def validate_phone_number(phone_number):
     # Return None if phone_number not provided
     if phone_number == "":
         return None
-    # Check if the phone number contains only digits
-    if not phone_number.isdigit():
-        return "Phone number should contain only digits."
+    
+    # Strip out '+' and '-' for validation
+    cleaned_number = phone_number.replace('-', '').replace('+', '')
+    
+    # Check if the stripped phone number contains only digits
+    if not cleaned_number.isdigit():
+        return "Phone number should contain only digits, '+' or '-'."
 
-    # Check for length of the phone number
-    if len(phone_number) < 7 or len(phone_number) > 15:
+    # Check for correct length
+    if len(cleaned_number) < 7 or len(cleaned_number) > 15:
         return "Phone number should be between 7 and 15 digits."
 
     return None
+
 
 
 def validate_socials(value, social_handle):
