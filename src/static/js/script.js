@@ -36,7 +36,7 @@ function loadUserProfile(userId) {
     });
 }
 
-// ----- Replies ----- 
+// ----- Replies -----
 
 function setPostId(postId) {
   $("#post-id").val(postId); // Set the value of the input
