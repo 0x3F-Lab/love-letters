@@ -40,6 +40,7 @@ class Reply(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
+    is_anonymous = db.Column(db.Boolean, default=False)
 
 
 class Notification(db.Model):
