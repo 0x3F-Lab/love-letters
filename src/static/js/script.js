@@ -36,6 +36,8 @@ function loadUserProfile(userId) {
     });
 }
 
+// ----- Replies ----- 
+
 function setPostId(postId) {
   $("#post-id").val(postId); // Set the value of the input
 }
@@ -43,37 +45,6 @@ function setPostId(postId) {
 function toggleReplies(postId) {
   $("#replies-" + postId).toggle(); // Toggle the display state of the replies
 }
-
-// OLD CODE THAT WILL REFRESH THE PAGE
-
-// $(document).ready(function() {
-//     $('#replyForm').submit(function(event) {
-//         event.preventDefault(); // Prevent the default form submission behavior
-
-//         var formData = new FormData(this); // 'this' refers to the form itself
-//         var postUrl = $('#submitReplyUrl').val(); // Get the URL from the hidden input
-
-//         $.ajax({
-//             type: 'POST',
-//             url: postUrl,
-//             data: formData,
-//             processData: false, // Prevent jQuery from converting the data into a query string
-//             contentType: false, // Must be false to tell jQuery not to add a Content-Type header
-//             success: function(data) {
-//                 if (data.error) {
-//                     alert(data.error);
-//                 } else {
-//                     console.log(data.message);
-//                     $('#replyModal').modal('hide'); // Hide the modal using jQuery
-//                     location.reload(); // Refresh the page to show the new reply
-//                 }
-//             },
-//             error: function(xhr, status, error) {
-//                 console.error('Error:', error);
-//             }
-//         });
-//     });
-// });
 
 // Dynamically show the reply without refresching the page
 
@@ -116,3 +87,36 @@ $(document).ready(function () {
     });
   });
 });
+
+// $(document).on('submit', '#replyForm', function(event) {
+//   event.preventDefault();
+
+//   var formData = new FormData(this);
+//   var postUrl = $("#submitReplyUrl").val();
+
+//   $.ajax({
+//     type: "POST",
+//     url: postUrl,
+//     data: formData,
+//     processData: false,
+//     contentType: false,
+//     success: function (data) {
+//       if (data.error) {
+//         alert(data.error);
+//       } else {
+//         console.log(data.message);
+//         $("#replyModal").modal("hide");
+//         $('#replyForm textarea[name="content"]').val("");
+
+//         let replyHtml =
+//           '<div class="card mt-2"><div class="card-body">' +
+//           '<h6 class="card-subtitle mb-2 text-muted">Reply by You</h6>' +
+//           '<p class="card-text">' + data.content + "</p></div></div>";
+//         $("#replies-" + data.post_id).prepend(replyHtml).show();
+//       }
+//     },
+//     error: function (xhr) {
+//       console.error("Error:", xhr.responseText);
+//     }
+//   });
+// });
