@@ -54,10 +54,10 @@ def validate_phone_number(phone_number):
     # Return None if phone_number not provided
     if phone_number == "":
         return None
-    
+
     # Strip out '+' and '-' for validation
-    cleaned_number = phone_number.replace('-', '').replace('+', '')
-    
+    cleaned_number = phone_number.replace("-", "").replace("+", "")
+
     # Check if the stripped phone number contains only digits
     if not cleaned_number.isdigit():
         return "Phone number should contain only digits, '+' or '-'."
@@ -67,7 +67,6 @@ def validate_phone_number(phone_number):
         return "Phone number should be between 7 and 15 digits."
 
     return None
-
 
 
 def validate_socials(value, social_handle):
