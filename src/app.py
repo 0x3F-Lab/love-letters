@@ -2,6 +2,7 @@ from flask import Flask, render_template, session, jsonify
 from models import db
 from config import DevelopmentConfig
 import json
+
 # from flask_migrate import Migrate
 
 from models import Post, Notification, User, db, Reply
