@@ -80,10 +80,10 @@ def submit_reply():
     is_anonymous = "is_anonymous" in request.form  # Check if the checkbox was checked
 
     new_reply = Reply(
-        post_id=post_id, 
-        user_id=user_id, 
+        post_id=post_id,
+        user_id=user_id,
         content=content,
-        is_anonymous=is_anonymous  # Set the is_anonymous field based on the checkbox
+        is_anonymous=is_anonymous,  # Set the is_anonymous field based on the checkbox
     )
     db.session.add(new_reply)
 
@@ -94,13 +94,12 @@ def submit_reply():
                 "message": "Reply posted successfully!",
                 "post_id": post_id,
                 "content": content,
-                "anonymous": is_anonymous  # Include anonymity status in the response
+                "anonymous": is_anonymous,  # Include anonymity status in the response
             }
         )
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
-
 
 
 @post.route("/connect/<int:post_id>", methods=["POST"])
