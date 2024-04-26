@@ -29,7 +29,9 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     # Relationship
-    replies = db.relationship("Reply", backref="post", lazy=True)
+    replies = db.relationship(
+        "Reply", backref="post", lazy=True, order_by="desc(Reply.created_at)"
+    )
 
 
 class Reply(db.Model):
@@ -38,6 +40,7 @@ class Reply(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
+    is_anonymous = db.Column(db.Boolean, default=False)
 
 
 class Notification(db.Model):
