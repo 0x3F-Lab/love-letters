@@ -105,7 +105,7 @@ def signup():
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
         gender = request.form.get("gender")
-        email = request.form.get("email")
+        email = request.form.get("email").lower()
         password = request.form.get("password")
         phone_number = request.form.get("phone_number", "")
         socials = {
@@ -182,7 +182,7 @@ def account():
         errors = {}
 
         # Fetching form data
-        new_email = request.form.get("email")
+        new_email = request.form.get("email").lower()
         phone_number = request.form.get("phone_number")
         gender = request.form.get("gender")
         phone_number = request.form.get("phone_number", "")
@@ -306,7 +306,7 @@ def change_password():
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email = request.form["email"]
+        email = request.form["email"].lower()
         password = request.form["password"]
         user = User.query.filter_by(email=email).first()
 
