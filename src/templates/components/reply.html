@@ -13,6 +13,13 @@
                 <div class="modal-body">
                     <input type="hidden" name="post_id" id="post-id">
                     <textarea class="form-control" name="content" required placeholder="Write your reply here..."></textarea>
+                    <!-- Checkbox for anonymous reply -->
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" name="is_anonymous" id="isAnonymous">
+                        <label class="form-check-label" for="isAnonymous">
+                            Reply anonymously
+                        </label>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
