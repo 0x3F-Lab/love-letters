@@ -3,7 +3,9 @@ from models import db
 from config import DevelopmentConfig
 import json
 
-from models import Post, Notification, User, db
+# from flask_migrate import Migrate
+
+from models import Post, Notification, User, db, Reply
 
 import random
 
@@ -17,6 +19,8 @@ def create_app(config_class=DevelopmentConfig):
     app.config.from_object(config_class)
 
     db.init_app(app)
+    # migrate = Migrate(app, db)
+    # migrate = Migrate(app, db)  # Initialize Flask-Migrate
 
     # Register Blueprints with their URL prefixes
     app.register_blueprint(auth, url_prefix="/auth")
@@ -56,4 +60,4 @@ if __name__ == "__main__":
     app = create_app()
     with app.app_context():
         db.create_all()
-        app.run()
+        app.run(debug=True)
