@@ -82,6 +82,11 @@ $(document).ready(function () {
         }
       },
       error: function (xhr, status, error) {
+        if (xhr.status == 403) {
+          $("#replyError").text("You need to be logged in to reply.").show(); // Update and show error div
+        } else {
+          $("#replyError").text("An error occurred. Please try again.").show(); // Handle other errors
+        }
         console.error("Error:", error);
       },
     });
