@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash
 import os
 import random
+from src.models import User, Post, Notification, db, Reply
+import json
 
 app = Flask(__name__)
 
@@ -102,6 +104,69 @@ def add_posts():
     db.session.commit()
 
 
+def add_notifications():
+    users = User.query.all()
+    posts = Post.query.all()
+
+    if not users or not posts:
+        print("No users or posts available to create notifications.")
+        return
+
+    notifications_sent = set()
+
+    for user in users:
+        sampled_posts = random.sample(posts, min(3, len(posts)))
+        for post in sampled_posts:
+            if (
+                user.user_id,
+                post.user_id,
+            ) not in notifications_sent and user.user_id != post.user_id:
+                notifications_sent.add((user.user_id, post.user_id))
+                new_notification = Notification(
+                    user_id=user.user_id,
+                    recipient_id=post.user_id,
+                    post_id=post.post_id,
+                    is_read=False,
+                    created_at=db.func.now(),
+                )
+                db.session.add(new_notification)
+    db.session.commit()
+
+
+def add_replies():
+    users = User.query.all()
+    posts = Post.query.all()
+
+    if not users or not posts:
+        print("No users or posts available to create replies.")
+        return
+
+    sample_replies = ["Hello Bro :3", "I am also sad :(", "Freak!", "I am oiled up ;)"]
+
+    for post in posts:
+        # Randomly select a user to be the replier; ensure they are not the post creator
+        possible_repliers = [user for user in users if user.user_id != post.user_id]
+        if not possible_repliers:
+            continue
+        replier = random.choice(possible_repliers)
+
+        # Create a new reply with random anonymity
+        new_reply = Reply(
+            post_id=post.post_id,
+            user_id=replier.user_id,
+            content=random.choice(sample_replies),
+            is_anonymous=random.choice([True, False]),
+        )
+        db.session.add(new_reply)
+
+    try:
+        db.session.commit()
+        print("Replies added successfully.")
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error adding replies: {e}")
+
+
 def init_db():
     db.drop_all()
     db.create_all()
@@ -111,6 +176,8 @@ def init_db():
 def populate_data():
     add_users()
     add_posts()
+    add_replies()
+    add_notifications()
 
 
 if __name__ == "__main__":
