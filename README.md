@@ -17,6 +17,10 @@ source env/bin/activate
 
 pip install -r requirements.txt (from src/)
 
+# Can run to upgrade or downgrade database schema
+
+flask db [upgrade/downgrade]
+
 python3 app.py
 ```
 
