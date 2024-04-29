@@ -22,19 +22,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r ./src/requirements.txt
-      
-      - name: Create instance directory
-        run: |
-            mkdir -p src/instance
-            ls -al src
-    
-      - name: Execute data generation script
-        run: |
-            python generate_example_db.py
-      
-      - name: Force add the database file
-        run: |
-          git add -f ./src/instance/*.db
 
       - name: Install Black
         run: pip install black
