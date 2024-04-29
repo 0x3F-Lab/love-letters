@@ -111,6 +111,7 @@ def add_notifications():
                 db.session.add(new_notification)
     db.session.commit()
 
+
 def add_replies():
     users = User.query.all()
     posts = Post.query.all()
@@ -118,14 +119,9 @@ def add_replies():
     if not users or not posts:
         print("No users or posts available to create replies.")
         return
-    
-    sample_replies = [
-        "Hello Bro :3",
-        "I am also sad :(",
-        "Freak!",
-        "I am oiled up ;)"
-    ]
-    
+
+    sample_replies = ["Hello Bro :3", "I am also sad :(", "Freak!", "I am oiled up ;)"]
+
     for post in posts:
         possible_repliers = [user for user in users if user.user_id != post.user_id]
         if not possible_repliers:
@@ -136,10 +132,10 @@ def add_replies():
             post_id=post.post_id,
             user_id=replier.user_id,
             content=random.choice(sample_replies),
-            is_anonymous=random.choice([True, False])
+            is_anonymous=random.choice([True, False]),
         )
         db.session.add(new_reply)
-    
+
     try:
         db.session.commit()
         print("Replies added successfully.")
