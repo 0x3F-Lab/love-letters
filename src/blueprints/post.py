@@ -1,5 +1,16 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from models import Post, db
+from flask import (
+    Blueprint,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    flash,
+    session,
+    jsonify,
+)
+from models import Post, Reply, User, Notification, db
+from sqlalchemy.exc import IntegrityError
+
 
 post = Blueprint("post", __name__)
 
@@ -54,5 +65,77 @@ def create():
 
 @post.route("/browse")
 def browse():
-    posts = Post.query.all()
+    posts = Post.query.options(db.joinedload(Post.replies)).all()
     return render_template("browse.html", posts=posts)
+
+
+@post.route("/submit_reply", methods=["POST"])
+def submit_reply():
+    user_id = session.get("user_id")
+    if not user_id:
+        return jsonify({"error": "You need to log in to reply"}), 403
+
+    post_id = request.form["post_id"]
+    content = request.form["content"]
+    is_anonymous = "is_anonymous" in request.form  # Check if the checkbox was checked
+
+    new_reply = Reply(
+        post_id=post_id,
+        user_id=user_id,
+        content=content,
+        is_anonymous=is_anonymous,  # Set the is_anonymous field based on the checkbox
+    )
+    db.session.add(new_reply)
+
+    try:
+        db.session.commit()
+        return jsonify(
+            {
+                "message": "Reply posted successfully!",
+                "post_id": post_id,
+                "content": content,
+                "anonymous": is_anonymous,  # Include anonymity status in the response
+            }
+        )
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@post.route("/connect/<int:post_id>", methods=["POST"])
+def connect(post_id):
+    if "user_id" not in session:
+        flash("You need to log in to connect.", "danger")
+        return redirect(url_for("auth.login"))
+
+    user_id = session["user_id"]
+    post = Post.query.get_or_404(post_id)
+    recipient_id = post.user_id
+
+    if user_id == recipient_id:
+        flash("You cannot connect with yourself.", "info")
+        return redirect(url_for("post.browse"))
+
+    existing_notification = Notification.query.filter_by(
+        user_id=user_id, recipient_id=recipient_id
+    ).first()
+
+    if existing_notification:
+        flash("You have already sent a connection request to this user.", "info")
+        return redirect(url_for("post.browse"))
+
+    new_notification = Notification(
+        user_id=user_id, recipient_id=recipient_id, post_id=post_id
+    )
+    db.session.add(new_notification)
+    try:
+        db.session.commit()
+        flash("Connect request sent.", "success")
+    except IntegrityError:
+        db.session.rollback()
+        flash(
+            "Connection request failed. You may have already connected to this user.",
+            "info",
+        )
+
+    return redirect(url_for("post.browse"))

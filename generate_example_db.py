@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash
 import os
 import random
+from src.models import User, Post, Notification, db, Reply
+import json
 
 app = Flask(__name__)
 
@@ -14,28 +16,7 @@ if not os.path.exists(instance_path):
 db_path = os.path.join(instance_path, "connect_hearts.db")
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db = SQLAlchemy(app)
-
-
-class User(db.Model):
-    user_id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(100), nullable=False)
-    last_name = db.Column(db.String(100), nullable=False)
-    gender = db.Column(db.String(50))
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128), nullable=False)
-    phone_number = db.Column(db.String(50))
-    socials = db.Column(db.Text)
-
-
-class Post(db.Model):
-    post_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
-    title = db.Column(db.String(200), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    is_anonymous = db.Column(db.Boolean, default=False)
-    post_type = db.Column(db.String(50), nullable=False)
-    created_at = db.Column(db.DateTime, server_default=db.func.now())
+db.init_app(app)
 
 
 def add_users():
@@ -47,7 +28,7 @@ def add_users():
             "password": "password123",
             "gender": "Female",
             "phone_number": "123-456-7890",
-            "socials": "instagram: alice_j",
+            "socials": json.dumps({"instagram": "alice_j"}),
         },
         {
             "first_name": "Bob",
@@ -56,7 +37,7 @@ def add_users():
             "password": "password123",
             "gender": "Male",
             "phone_number": "987-654-3210",
-            "socials": None,
+            "socials": json.dumps({"twitter": "bobsmith", "instagram": "freakyman69"}),
         },
         {
             "first_name": "Carol",
@@ -65,7 +46,7 @@ def add_users():
             "password": "password123",
             "gender": "Female",
             "phone_number": "555-444-3333",
-            "socials": "twitter: carolm",
+            "socials": json.dumps({"twitter": "carolm"}),
         },
     ]
 
@@ -91,7 +72,7 @@ def add_posts():
             new_post = Post(
                 user_id=user.user_id,
                 title=f"{user.first_name}'s Post #{i+1}",
-                content=f"Hello I am {user.first_name}. I am so lonely. {'Contact me on ' + user.socials if user.socials else ''}",
+                content=f"Hello I am {user.first_name}. I am so lonely.",
                 is_anonymous=random.choice([True, False]),
                 post_type=random.choice(
                     ["Love Letter", "Friend Request", "General Broadcast"]
@@ -102,15 +83,81 @@ def add_posts():
     db.session.commit()
 
 
+def add_notifications():
+    users = User.query.all()
+    posts = Post.query.all()
+
+    if not users or not posts:
+        print("No users or posts available to create notifications.")
+        return
+
+    notifications_sent = set()
+
+    for user in users:
+        sampled_posts = random.sample(posts, min(3, len(posts)))
+        for post in sampled_posts:
+            if (
+                user.user_id,
+                post.user_id,
+            ) not in notifications_sent and user.user_id != post.user_id:
+                notifications_sent.add((user.user_id, post.user_id))
+                new_notification = Notification(
+                    user_id=user.user_id,
+                    recipient_id=post.user_id,
+                    post_id=post.post_id,
+                    is_read=False,
+                    created_at=db.func.now(),
+                )
+                db.session.add(new_notification)
+    db.session.commit()
+
+
+def add_replies():
+    users = User.query.all()
+    posts = Post.query.all()
+
+    if not users or not posts:
+        print("No users or posts available to create replies.")
+        return
+
+    sample_replies = ["Hello Bro :3", "I am also sad :(", "Freak!", "I am oiled up ;)"]
+
+    for post in posts:
+        possible_repliers = [user for user in users if user.user_id != post.user_id]
+        if not possible_repliers:
+            continue
+        replier = random.choice(possible_repliers)
+
+        new_reply = Reply(
+            post_id=post.post_id,
+            user_id=replier.user_id,
+            content=random.choice(sample_replies),
+            is_anonymous=random.choice([True, False]),
+        )
+        db.session.add(new_reply)
+
+    try:
+        db.session.commit()
+        print("Replies added successfully.")
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error adding replies: {e}")
+
+
 def init_db():
-    db.drop_all()
-    db.create_all()
-    print("Database initialized and tables created.")
+    try:
+        db.drop_all()
+        db.create_all()
+        print("Database initialized and tables created.")
+    except Exception as e:
+        print(f"Error during database initialization: {e}")
 
 
 def populate_data():
     add_users()
     add_posts()
+    add_replies()
+    add_notifications()
 
 
 if __name__ == "__main__":
