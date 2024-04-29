@@ -65,7 +65,11 @@ def create():
 
 @post.route("/browse")
 def browse():
-    posts = Post.query.options(db.joinedload(Post.replies)).all()
+    # Retrieve all posts sorted by creation time in descending order
+    # and use joinedload to preload replies and replier details
+    posts = Post.query.options(
+        db.joinedload(Post.replies).joinedload(Reply.replier)
+    ).order_by(Post.created_at.desc()).all()
     return render_template("browse.html", posts=posts)
 
 
