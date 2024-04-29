@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Your Notifications{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Your Notifications</h1>
+    {% for notification in notifications %}
+    <div class="alert alert-info" role="alert">
+        <a href="#" data-toggle="modal" data-target="#profileModal" onclick="loadUserProfile({{ notification.user_id }})">
+            {{ notification.user.first_name }} {{ notification.user.last_name }}
+        </a> wants to connect.
+        <small class="float-right">{{ notification.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+        <!-- Dismiss button -->
+        <form action="{{ url_for('auth.dismiss_notification', notification_id=notification.notification_id) }}" method="post" style="display:inline;">
+            <button type="submit" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+    </div>
+    {% else %}
+    <p>No notifications to show.</p>
+    {% endfor %}
+</div>
+
+{% include 'components/user.html' %}
+{% endblock %}
