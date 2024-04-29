@@ -14,6 +14,7 @@ from sqlalchemy.exc import IntegrityError
 
 post = Blueprint("post", __name__)
 
+
 @post.route("/create_post", methods=["POST"])
 def create_post():
     if request.method == "POST":
