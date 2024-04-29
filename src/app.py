@@ -8,15 +8,14 @@ from blueprints.auth import auth
 from blueprints.post import post
 
 
-
 def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
     app.config.from_object(config_class)
-    migrate = Migrate(app,db)
+    migrate = Migrate(app, db)
 
     db.init_app(app)
-    migrate.init_app(app,db)
-    
+    migrate.init_app(app, db)
+
     # Register Blueprints with their URL prefixes
     app.register_blueprint(auth, url_prefix="/auth")
     app.register_blueprint(post, url_prefix="/post")
