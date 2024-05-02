@@ -7,6 +7,7 @@ from playwright.sync_api import Page, expect
 import runpy
 import sys
 from pathlib import Path
+
 current_dir = Path(__file__).resolve()
 parent_dir = current_dir.parents[2]
 sys.path.append(str(parent_dir))
@@ -14,10 +15,12 @@ import generate_example_db
 
 
 def reset_database():
-    runpy.run_module('generate_example_db', run_name='__main__')
+    runpy.run_module("generate_example_db", run_name="__main__")
+
 
 # Make sure the sample database has been generated before testing
 reset_database()
+
 
 # Logs into Alice's account, and checks that it was successful
 def test_login(page: Page):
@@ -31,6 +34,7 @@ def test_login(page: Page):
     expect(page.get_by_role("alert")).to_contain_text("Login successful! ×")
 
     reset_database()
+
 
 # Logs in to Alice's account, changes the password, and then signs out,
 # then checks that the old password doesn't work, then checks that the new one does
@@ -51,7 +55,9 @@ def test_passwordChange(page: Page):
     page.get_by_label("New Password", exact=True).press("Tab")
     page.get_by_label("Confirm New Password").fill("password1234")
     page.get_by_role("button", name="Update Password").click()
-    expect(page.get_by_role("alert")).to_contain_text("Password successfully changed. ×")
+    expect(page.get_by_role("alert")).to_contain_text(
+        "Password successfully changed. ×"
+    )
     page.get_by_role("link", name="Log Out").click()
     expect(page.get_by_role("alert")).to_contain_text("You have been logged out. ×")
     page.get_by_role("link", name="Log In").click()
@@ -68,8 +74,9 @@ def test_passwordChange(page: Page):
     page.get_by_role("textbox", name="Password").fill("password1234")
     page.get_by_role("button", name="Log In").click()
     expect(page.get_by_role("alert")).to_contain_text("Login successful! ×")
-    
+
     reset_database()
+
 
 # Logs into Alice's account, checks there are 2 responses, then removes them and checks that there are 0
 def test_notifications(page: Page):
@@ -88,10 +95,11 @@ def test_notifications(page: Page):
     page.locator("form").filter(has_text="×").get_by_label("Close").click()
     page.get_by_role("link", name="Love Letters").click()
     expect(page.locator("body")).to_contain_text("Responses0")
-    
+
     reset_database()
 
-# Logs into Alice's account, and creates a General Broadcast post, 
+
+# Logs into Alice's account, and creates a General Broadcast post,
 # then checks that it is created successfully and visible
 def test_createPost(page: Page):
     page.goto("http://127.0.0.1:5000/")
@@ -105,14 +113,17 @@ def test_createPost(page: Page):
     page.get_by_placeholder("Enter Title").click()
     page.get_by_placeholder("Enter Title").fill("Playwright Test Post")
     page.get_by_placeholder("Enter Title").press("Tab")
-    page.get_by_placeholder("Enter your content here").fill("This post was created from a Playwright test")
+    page.get_by_placeholder("Enter your content here").fill(
+        "This post was created from a Playwright test"
+    )
     page.get_by_role("combobox").select_option("question")
     page.get_by_role("button", name="Submit Post").click()
     expect(page.get_by_role("alert")).to_contain_text("Post created successfully! ×")
     expect(page.get_by_role("heading", name="Playwright Test Post")).to_be_visible()
     expect(page.get_by_text("This post was created from a")).to_be_visible()
-        
+
     reset_database()
+
 
 # Goes straight to Browse Letters, and checks if the first two posts of Alice, Bob and Carol are visible.
 def test_checkBrowse(page: Page):
