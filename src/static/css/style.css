@@ -9,23 +9,12 @@ body {
 
 /* Center Content */
 
-.centered-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  height: 60vh;
-  margin: 0;
-  padding: 0;
-  margin-top: -20px;
+.sidebar {
+  height: 100%;
 }
 
 .centered-text {
-  font-size: 5em;
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
+  text-align: center;
 }
 
 .subtext {
@@ -47,6 +36,25 @@ body {
 
 .posts {
   margin: 20px;
+}
+
+/* Sidebar styles */
+.list-group-item {
+  margin-bottom: 5px;
+  padding: 2vh !important;
+}
+
+.list-group-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Post cards styling */
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  text-align: center;
 }
 
 /* Footer */
@@ -245,4 +253,75 @@ select:focus {
 #passwordRules {
   font-size: small;
   margin-top: -5px;
+}
+
+
+/* Postcard Component */
+.postcard {
+  background-color: #fff; /* White background */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin-bottom: 20px; /* Spacing between cards */
+}
+
+.postcard:hover {
+  background-color: white !important;
+}
+
+.postcard-title {
+  font-size: 1.5em; /* Larger title font size */
+  margin-bottom: 10px; /* Spacing below title */
+}
+
+.post-username {
+  color: red;
+}
+
+.post-username:hover {
+  color: black;
+  transition-duration: 1s;
+}
+
+
+.postcard-author {
+  color: #666; /* Lighter text color */
+  font-style: italic; /* Italicize author name */
+  margin-bottom: 10px; /* Spacing below author */
+}
+
+.postcard-content {
+  margin-bottom: 20px; /* Spacing below content */
+}
+
+.postcard-buttons {
+  display: flex;
+}
+
+
+.postcard-button {
+  padding: 8px 16px; /* Padding inside buttons */
+  border-radius: 5px; /* Rounded button corners */
+  cursor: pointer; /* Show pointer on hover */
+}
+
+.postcard-button.reply {
+  background-color: black; /* Blue reply button */
+  color: #fff; /* White text color */
+}
+
+.postcard-button.view-replies {
+  background-color: black; /* Green view replies button */
+  color: #fff; /* White text color */
+}
+
+.postcard-button.connect {
+  background-color: red; /* Yellow connect button */
+  color: #fff; 
+}
+
+/* Hide button text on mobile devices */
+@media (max-width: 576px) {
+  .card-btn-text {
+    display: none; /* Set font size to 0 to hide text */
+  }
 }

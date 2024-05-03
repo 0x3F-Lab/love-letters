@@ -1,42 +1,40 @@
-<!-- postcard.html -->
-<div class="card" style="width: 80%; margin-left: auto; margin-right: auto;">
+<div class="card postcard">
     <div class="card-body">
-        <h5 class="card-title">{{ post.title }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">
-            by {% if post.is_anonymous %}Anonymous{% else %}<a href="#" data-toggle="modal" data-target="#profileModal" onclick="loadUserProfile({{ post.user_id }})"> 
+        <h5 class="card-title postcard-title">{{ post.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted postcard-author">
+            by {% if post.is_anonymous %}Anonymous{% else %}<a class="post-username" href="#" data-toggle="modal" data-target="#profileModal" onclick="loadUserProfile({{ post.user_id }})"> 
                 {{ post.author.first_name }} {{ post.author.last_name }}
             </a>{% endif %}
         </h6>
-        <p class="card-text">{{ post.content }}</p>
-        <div class="d-flex justify-content-between">
-            <small class="text-muted">Post type: {{ post.post_type }}</small>
-            <small class="text-muted">
-                Posted {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
-            </small>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" onclick="setPostId({{ post.post_id }})">Reply</button>
-            <button type="button" class="btn btn-info" onclick="toggleReplies({{ post.post_id }})">View Replies</button>
-            <form action="{{ url_for('post.connect', post_id=post.post_id) }}" method="POST">
-                <button type="submit" class="btn btn-primary">Connect</button>
+        <p class="card-text postcard-content pt-3 pb-3">{{ post.content }}</p>
+        <div class="postcard-buttons d-flex">
+            <button type="button" class="btn btn-dark postcard-button view-replies" onclick="toggleReplies({{ post.post_id }})">
+                <i class="fas fa-eye"></i> <span class="card-btn-text">View Replies</span>
+            </button>
+            <button type="button" class="btn btn-dark postcard-button reply ml-2" data-bs-toggle="modal" data-bs-target="#replyModal" onclick="setPostId({{ post.post_id }})">
+                <i class="fas fa-reply"></i> <span class="card-btn-text">Reply</span>
+            </button>
+            <form action="{{ url_for('post.connect', post_id=post.post_id) }}" class="ms-auto" method="POST">
+                <button type="submit" class="btn postcard-button connect">
+                    <i class="fas fa-heart"></i> <span class="card-btn-text">Connect</span>
+                </button>
             </form>
         </div>
-        <div id="replies-{{ post.post_id }}" class="replies-container" style="display: none;">
+        <div id="replies-{{ post.post_id }}" class="replies-container mt-2" style="display: none;">
             {% for reply in post.replies %}
-            <div class="card mt-2">
-                <div class="card-body">
+                <div class="card-body border">
                     <h6 class="card-subtitle mb-2 text-muted">Reply by 
                         {% if reply.is_anonymous %}
                             Anonymous
                         {% else %}
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="loadUserProfile({{ reply.user_id }})"> 
+                            <a href="#" data-toggle="modal" class="post-username" data-target="#profileModal" onclick="loadUserProfile({{ reply.user_id }})"> 
                                 {{ reply.replier.first_name }} {{ reply.replier.last_name }}
                             </a>
                         {% endif %}
                     </h6>
                     <p class="card-text">{{ reply.content }}</p>
                 </div>
-            </div>
             {% endfor %}
         </div>
     </div>
 </div>
-
