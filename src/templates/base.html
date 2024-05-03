@@ -22,7 +22,7 @@
 
   </head>
 
-  <body>
+  <body style="background: black;">
 
     {% include 'components/navbar.html' %}
 
@@ -80,7 +80,7 @@
     <script>
       const heartPath = "{{ url_for('static', filename='images/heart.png') }}";
     </script>
-    <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+    <!--<script src="{{ url_for('static', filename='js/particles.js') }}"></script>-->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
   </body>

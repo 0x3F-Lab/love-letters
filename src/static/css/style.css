@@ -9,8 +9,29 @@ body {
 
 /* Center Content */
 
+/* Sidebar Styles */
 .sidebar {
-  height: 100%;
+  background-color: black; /* Black background for the sidebar */
+  color: white; /* White text for the sidebar */
+  padding: 15px; /* Adjust padding as needed */
+}
+
+.sidebar h3 {
+  color: white; /* White text for the sidebar header */
+}
+
+.sidebar .list-group-item {
+  background-color: black; /* Black background for list items */
+  color: white; /* White text for list items */
+  border: 1px solid white; /* Thin white border around list items */
+  margin-bottom: 10px; /* Space between list items */
+  transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
+}
+
+.sidebar .list-group-item:hover {
+  background-color: red; /* Red background on hover */
+  color: white; /* Ensure text color remains white */
+  border-color: red; /* Red border on hover */
 }
 
 .centered-text {
@@ -62,10 +83,11 @@ body {
 .footer {
   margin-top: auto; /* Automatically adjusts margin to push footer at the bottom */
   width: 100%; /* Full width */
-  background-color: #f5f5f5; /* Adjust the color as needed */
-  color: #666;
+  background-color: black; /* Adjust the color as needed */
+  color: white;
   text-align: center;
   padding: 10px 0;
+  border-top: 1px solid white;
 }
 
 .modal-content {
@@ -258,70 +280,138 @@ select:focus {
 
 /* Postcard Component */
 .postcard {
-  background-color: #fff; /* White background */
-  border-radius: 15px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  background-color: black !important; /* Black background for posts */
+  color: white !important; /* White text */
+  border: 1px solid white !important; /* Thin white border around posts */
   margin-bottom: 20px; /* Spacing between cards */
-}
-
-.postcard:hover {
-  background-color: white !important;
+  padding: 2.5%;
 }
 
 .postcard-title {
   font-size: 1.5em; /* Larger title font size */
   margin-bottom: 10px; /* Spacing below title */
+  color: white !important; /* White text for title */
 }
 
 .post-username {
-  color: red;
+  color: white !important; /* White color for username */
 }
 
 .post-username:hover {
-  color: black;
+  color: black !important; /* Change username to black on hover */
   transition-duration: 1s;
 }
 
-
 .postcard-author {
-  color: #666; /* Lighter text color */
+  color: #ccc !important; /* Light grey color for author */
   font-style: italic; /* Italicize author name */
   margin-bottom: 10px; /* Spacing below author */
 }
 
 .postcard-content {
   margin-bottom: 20px; /* Spacing below content */
+  color: white !important; /* White text for content */
 }
 
 .postcard-buttons {
   display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 10px; /* Space between buttons */
 }
-
 
 .postcard-button {
   padding: 8px 16px; /* Padding inside buttons */
   border-radius: 5px; /* Rounded button corners */
   cursor: pointer; /* Show pointer on hover */
+  border: 1px solid white !important; /* White border for buttons */
 }
 
-.postcard-button.reply {
-  background-color: black; /* Blue reply button */
-  color: #fff; /* White text color */
-}
-
+.postcard-button.reply,
 .postcard-button.view-replies {
-  background-color: black; /* Green view replies button */
-  color: #fff; /* White text color */
+  background-color: black; /* Black background for reply and view buttons */
+  color: white; /* White text color */
+}
+
+.postcard-button.reply:hover,
+.postcard-button.view-replies:hover {
+  background-color: red; /* Red background on hover */
 }
 
 .postcard-button.connect {
-  background-color: red; /* Yellow connect button */
-  color: #fff; 
+  background-color: red; /* Red connect button */
+  color: white; /* White text color */
 }
 
 /* Hide button text on mobile devices */
 @media (max-width: 576px) {
   .card-btn-text {
     display: none; /* Set font size to 0 to hide text */
+  }
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: black !important; /* Black background for the navbar */
+  padding: 5px;
+  border-bottom: 1px solid white;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+  color: white; /* White text for links */
+  border: 1px solid white; /* Thin white border around each link */
+  padding: 5px 10px; /* Adjust padding as needed */
+}
+
+.navbar .navbar-brand:hover,
+.navbar .nav-link:hover {
+  background-color: red; /* Red background on hover */
+  color: white; /* Ensure text color remains white */
+  border: 1px solid white;
+  transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
+}
+
+.navbar-brand {
+  border: none !important;
+}
+
+.heart {
+  position: absolute; /* Allows hearts to move freely within the viewport */
+  top: -20px; /* Starts above the viewport */
+  width: 20px; /* Adjust heart size */
+  height: 20px; /* Adjust heart size */
+  background-color: red; /* Red hearts */
+  transform: rotate(45deg);
+  animation: fall linear infinite; /* Infinite falling animation */
+  z-index: -1; /* Sends hearts behind other content */
+  opacity: 0.7; /* Slightly transparent */
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 20px; /* Adjust according to heart size */
+  height: 20px; /* Adjust according to heart size */
+  background-color: red;
+  border-radius: 50%;
+}
+
+.heart::before {
+  top: -10px; /* Adjust according to heart size */
+  left: 0;
+}
+
+.heart::after {
+  top: 0;
+  left: -10px; /* Adjust according to heart size */
+}
+
+@keyframes fall {
+  0% {
+    top: -20px; /* Starts above the viewport */
+  }
+  100% {
+    top: var(--fallHeight); /* Falls to the calculated page height */
   }
 }
