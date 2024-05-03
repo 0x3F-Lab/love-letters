@@ -25,7 +25,9 @@ body {
   color: white; /* White text for list items */
   border: 1px solid white; /* Thin white border around list items */
   margin-bottom: 10px; /* Space between list items */
-  transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
+  transition:
+    background-color 0.3s,
+    border-color 0.3s; /* Smooth transition */
 }
 
 .sidebar .list-group-item:hover {
@@ -367,7 +369,9 @@ select:focus {
   background-color: red; /* Red background on hover */
   color: white; /* Ensure text color remains white */
   border: 1px solid white;
-  transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
+  transition:
+    background-color 0.3s,
+    border-color 0.3s; /* Smooth transition */
 }
 
 .navbar-brand {
