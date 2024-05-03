@@ -64,13 +64,24 @@ def create():
 
 
 @post.route("/browse")
-def browse():
-    # Retrieve all posts sorted by creation time in descending order
-    # and use joinedload to preload replies and replier details
+@post.route("/browse/<int:page>")
+def browse(page=1):
+    per_page = 10
     posts = Post.query.options(
         db.joinedload(Post.replies).joinedload(Reply.replier)
-    ).order_by(Post.created_at.desc()).all()
-    return render_template("browse.html", posts=posts)
+    ).order_by(Post.created_at.desc()).paginate(page=page, per_page=per_page, error_out=False)
+    
+    # Check if it's an AJAX request
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        posts_html = render_template('posts_list.html', posts=posts.items)  # Updated template name
+        has_next = posts.has_next
+        return jsonify({'posts': posts_html, 'has_next': has_next})
+    
+    return render_template("browse.html", posts=posts.items)
+
+
+
+
 
 
 @post.route("/submit_reply", methods=["POST"])
