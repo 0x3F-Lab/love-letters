@@ -255,7 +255,6 @@ select:focus {
   margin-top: -5px;
 }
 
-
 /* Postcard Component */
 .postcard {
   background-color: #fff; /* White background */
@@ -282,7 +281,6 @@ select:focus {
   transition-duration: 1s;
 }
 
-
 .postcard-author {
   color: #666; /* Lighter text color */
   font-style: italic; /* Italicize author name */
@@ -296,7 +294,6 @@ select:focus {
 .postcard-buttons {
   display: flex;
 }
-
 
 .postcard-button {
   padding: 8px 16px; /* Padding inside buttons */
@@ -316,7 +313,7 @@ select:focus {
 
 .postcard-button.connect {
   background-color: red; /* Yellow connect button */
-  color: #fff; 
+  color: #fff;
 }
 
 /* Hide button text on mobile devices */

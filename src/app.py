@@ -51,9 +51,11 @@ def create_app(config_class=DevelopmentConfig):
 
         random_posts = Post.query.order_by(db.func.random()).limit(2).all()
 
-        return render_template("landing.html", notification_count=notification_count, random_posts=random_posts)
-
-
+        return render_template(
+            "landing.html",
+            notification_count=notification_count,
+            random_posts=random_posts,
+        )
 
     return app
 
