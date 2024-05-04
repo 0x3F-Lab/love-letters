@@ -4,7 +4,16 @@
 {% block content %}
 <div class="container mt-5">
     <h1 class="text-center">All Posts</h1>
-    
+    <div class="sort-posts">
+        <form action="" method="get">
+            <label for="sort">Sort by:</label>
+            <select name="sort" id="sort" onchange="this.form.submit()">
+                <option value="" disabled selected>Choose</option>
+                <option value="newest" {% if request.args.get('sort', 'newest') == 'newest' %}selected{% endif %}>Newest</option>
+                <option value="oldest" {% if request.args.get('sort') == 'oldest' %}selected{% endif %}>Oldest</option>
+            </select>
+        </form>
+    </div>
 
     {% for post in posts %}
         {% include 'components/postcard.html' %}
@@ -21,6 +30,18 @@
 {% include 'components/reply.html' %}
 
 <style>
+
+.sort-posts select {
+    font-size: 14px;  
+    padding: 5px 10px; 
+    margin-bottom: 20px;  
+}
+
+.sort-posts form {
+    display: inline-block;  
+}
+
+
 .post-skeleton {
     margin: 10px 0;
     padding: 20px;
@@ -73,33 +94,35 @@
         let footerVisible = true; // Track the visibility of the footer
     
         function loadMorePosts() {
-            if (loading || allPostsLoaded) return;
-            loading = true;
-            displaySkeletons(5);
-    
-            setTimeout(() => {
-                fetch(`/post/browse/${page + 1}`, {
-                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.posts.length > 0) {
-                        const container = document.querySelector('.container');
-                        container.insertAdjacentHTML('beforeend', data.posts);
-                        page += 1;
-                    } else {
-                        allPostsLoaded = true;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error loading posts:', error);
-                })
-                .finally(() => {
-                    removeSkeletons();
-                    loading = false;
-                });
-            }, 600);
-        }
+    if (loading || allPostsLoaded) return;
+    loading = true;
+    displaySkeletons(5);
+
+    const sort = document.querySelector('select[name="sort"]').value; // Get current sort order
+
+    setTimeout(() => {
+        fetch(`/post/browse/${page + 1}?sort=${sort}`, { // Include sort parameter
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.posts.length > 0) {
+                const container = document.querySelector('.container');
+                container.insertAdjacentHTML('beforeend', data.posts);
+                page += 1;
+            } else {
+                allPostsLoaded = true;
+            }
+        })
+        .catch(error => {
+            console.error('Error loading posts:', error);
+        })
+        .finally(() => {
+            removeSkeletons();
+            loading = false;
+        });
+    }, 600);
+}
     
         function displaySkeletons(count) {
             const container = document.querySelector('.container');

@@ -66,18 +66,24 @@ def create():
 @post.route("/browse")
 @post.route("/browse/<int:page>")
 def browse(page=1):
+    sort_order = request.args.get('sort', 'newest')
     per_page = 10
+    
+    if sort_order == 'oldest':
+        sort_criteria = Post.created_at.asc()
+    else:  # Default to newest
+        sort_criteria = Post.created_at.desc()
+
     posts = Post.query.options(
         db.joinedload(Post.replies).joinedload(Reply.replier)
-    ).order_by(Post.created_at.desc()).paginate(page=page, per_page=per_page, error_out=False)
-    
-    # Check if it's an AJAX request
+    ).order_by(sort_criteria).paginate(page=page, per_page=per_page, error_out=False)
+
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        posts_html = render_template('posts_list.html', posts=posts.items)  # Updated template name
-        has_next = posts.has_next
-        return jsonify({'posts': posts_html, 'has_next': has_next})
-    
+        posts_html = render_template('posts_list.html', posts=posts.items)
+        return jsonify({'posts': posts_html, 'has_next': posts.has_next})
+
     return render_template("browse.html", posts=posts.items)
+
 
 
 
