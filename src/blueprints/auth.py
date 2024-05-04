@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from flask import jsonify
 import re
 import json
+from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 
 auth = Blueprint("auth", __name__)
 
@@ -166,12 +167,10 @@ def signup():
 
 
 @auth.route("/account", methods=["GET", "POST"])
+@login_required
 def account():
-    if "user_id" not in session:
-        flash("You must be logged in to access this page.", "danger")
-        return redirect(url_for("auth.login"))
 
-    user = User.query.get(session["user_id"])
+    user = current_user
 
     if not user:
         flash("User not found.", "danger")
@@ -303,16 +302,38 @@ def change_password():
 # Log-in
 
 
+# @auth.route("/login", methods=["GET", "POST"])
+# def login():
+#     if request.method == "POST":
+#         email = request.form["email"].lower()
+#         password = request.form["password"]
+#         user = User.query.filter_by(email=email).first()
+
+#         if user and check_password_hash(user.password_hash, password):
+#             session["user_id"] = user.user_id
+#             session["user_name"] = f"{user.first_name} {user.last_name}"
+#             flash("Successfully logged in", "success")
+#             return jsonify({"status": "success", "message": "Login successful!"}), 200
+#         else:
+#             return (
+#                 jsonify({"status": "error", "message": "Invalid email or password."}),
+#                 401,
+#             )
+
+#     return render_template("landing.html")
+
 @auth.route("/login", methods=["GET", "POST"])
 def login():
+    # if current_user.is_authenticated:
+    #     return redirect(url_for('auth.'))  # Redirect if already logged in
+
     if request.method == "POST":
         email = request.form["email"].lower()
         password = request.form["password"]
         user = User.query.filter_by(email=email).first()
 
         if user and check_password_hash(user.password_hash, password):
-            session["user_id"] = user.user_id
-            session["user_name"] = f"{user.first_name} {user.last_name}"
+            login_user(user)
             flash("Successfully logged in", "success")
             return jsonify({"status": "success", "message": "Login successful!"}), 200
         else:
@@ -323,15 +344,14 @@ def login():
 
     return render_template("landing.html")
 
-
 # Logout
-
 
 @auth.route("/logout")
 def logout():
-    session.pop("user_id", None)
+    logout_user() 
     flash("You have been logged out.", "success")
-    return redirect(url_for("auth.login"))
+    return redirect(url_for("auth.login")) 
+
 
 
 # Notifications

@@ -2,6 +2,7 @@ from flask import Flask, render_template, session, jsonify
 from models import db
 from config import DevelopmentConfig
 import json
+from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 
 from flask_migrate import Migrate
 
@@ -21,6 +22,14 @@ def create_app(config_class=DevelopmentConfig):
     db.init_app(app)
     migrate = Migrate(app, db)  # Initialize Flask-Migrate
 
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
+    
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+    
     # Register Blueprints with their URL prefixes
     app.register_blueprint(auth, url_prefix="/auth")
     app.register_blueprint(post, url_prefix="/post")
