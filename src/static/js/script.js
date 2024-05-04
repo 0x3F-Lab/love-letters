@@ -251,6 +251,10 @@ $(document).ready(function () {
       error: function (xhr, status, error) {
         if (xhr.status == 403) {
           $("#replyError").text("You need to be logged in to reply.").show(); // Update and show error div
+          $('#replyModal').modal('hide').on('hidden.bs.modal', function () {
+            $('#loginModal').modal('show'); // Show login modal only after reply modal has hidden
+            $(this).off('hidden.bs.modal'); // Remove the event handler to avoid stacking handlers
+          });
         } else {
           $("#replyError").text("An error occurred. Please try again.").show(); // Handle other errors
         }

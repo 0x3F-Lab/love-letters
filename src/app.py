@@ -24,6 +24,8 @@ def create_app(config_class=DevelopmentConfig):
 
     login_manager = LoginManager()
     login_manager.init_app(app)
+    login_manager.login_message = "You must log in to access this page."
+    login_manager.login_message_category = "warning"
     login_manager.login_view = 'auth.login'
     
     @login_manager.user_loader

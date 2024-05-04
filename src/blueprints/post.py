@@ -10,6 +10,7 @@ from flask import (
 )
 from models import Post, Reply, User, Notification, db
 from sqlalchemy.exc import IntegrityError
+from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 
 
 post = Blueprint("post", __name__)
@@ -18,8 +19,8 @@ post = Blueprint("post", __name__)
 @post.route("/create_post", methods=["POST"])
 def create_post():
     if request.method == "POST":
-        user_id = session.get("user_id")
-        if not user_id:
+
+        if not current_user.is_authenticated:
             flash("You need to login to post.", "danger")
             return redirect(url_for("auth.login"))
 
@@ -55,11 +56,8 @@ def create_post():
 
 
 @post.route("/create")
+@login_required
 def create():
-    user_id = session.get("user_id")
-    if not user_id:
-        flash("You need to login to post.", "danger")
-        return redirect(url_for("auth.login"))
     return render_template("post.html")
 
 
@@ -71,19 +69,19 @@ def browse():
 
 @post.route("/submit_reply", methods=["POST"])
 def submit_reply():
-    user_id = session.get("user_id")
-    if not user_id:
+    # Check if the user is authenticated
+    if not current_user.is_authenticated:
         return jsonify({"error": "You need to log in to reply"}), 403
 
     post_id = request.form["post_id"]
     content = request.form["content"]
-    is_anonymous = "is_anonymous" in request.form  # Check if the checkbox was checked
+    is_anonymous = "is_anonymous" in request.form  # Check if the checkbox for anonymous was checked
 
     new_reply = Reply(
         post_id=post_id,
-        user_id=user_id,
+        user_id=current_user.user_id,  # Now safe to access, as we've checked authentication
         content=content,
-        is_anonymous=is_anonymous,  # Set the is_anonymous field based on the checkbox
+        is_anonymous=is_anonymous
     )
     db.session.add(new_reply)
 
@@ -94,7 +92,7 @@ def submit_reply():
                 "message": "Reply posted successfully!",
                 "post_id": post_id,
                 "content": content,
-                "anonymous": is_anonymous,  # Include anonymity status in the response
+                "anonymous": is_anonymous,
             }
         )
     except Exception as e:
@@ -104,28 +102,31 @@ def submit_reply():
 
 @post.route("/connect/<int:post_id>", methods=["POST"])
 def connect(post_id):
-    if "user_id" not in session:
-        flash("You need to log in to connect.", "danger")
-        return redirect(url_for("auth.login"))
 
-    user_id = session["user_id"]
+    if not current_user.is_authenticated:
+        flash("You need to login to connect.", "danger")
+        return redirect(url_for("post.browse"))
+
     post = Post.query.get_or_404(post_id)
     recipient_id = post.user_id
 
-    if user_id == recipient_id:
+    # Check if the current user is trying to connect with themselves
+    if current_user.user_id == recipient_id:
         flash("You cannot connect with yourself.", "info")
         return redirect(url_for("post.browse"))
 
+    # Check for existing notification to avoid duplicate requests
     existing_notification = Notification.query.filter_by(
-        user_id=user_id, recipient_id=recipient_id
+        user_id=current_user.user_id, recipient_id=recipient_id
     ).first()
 
     if existing_notification:
         flash("You have already sent a connection request to this user.", "info")
         return redirect(url_for("post.browse"))
 
+    # Create and save a new notification
     new_notification = Notification(
-        user_id=user_id, recipient_id=recipient_id, post_id=post_id
+        user_id=current_user.user_id, recipient_id=recipient_id, post_id=post_id
     )
     db.session.add(new_notification)
     try:
@@ -133,9 +134,6 @@ def connect(post_id):
         flash("Connect request sent.", "success")
     except IntegrityError:
         db.session.rollback()
-        flash(
-            "Connection request failed. You may have already connected to this user.",
-            "info",
-        )
+        flash("Connection request failed. You may have already connected to this user.", "info")
 
     return redirect(url_for("post.browse"))
