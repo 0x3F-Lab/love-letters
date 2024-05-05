@@ -5,7 +5,7 @@ import json
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 
 from flask_migrate import Migrate
-
+from flask_wtf.csrf import CSRFProtect
 from models import Post, Notification, User, db, Reply
 
 import random
@@ -21,6 +21,7 @@ def create_app(config_class=DevelopmentConfig):
 
     db.init_app(app)
     migrate = Migrate(app, db)  # Initialize Flask-Migrate
+    csrf = CSRFProtect(app) # Initialize CSRFProtect
 
     login_manager = LoginManager()
     login_manager.init_app(app)
