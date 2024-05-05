@@ -10,7 +10,13 @@ from flask import (
 )
 from models import Post, Reply, User, Notification, db
 from sqlalchemy.exc import IntegrityError
-from flask_login import LoginManager, login_user, current_user, logout_user, login_required
+from flask_login import (
+    LoginManager,
+    login_user,
+    current_user,
+    logout_user,
+    login_required,
+)
 
 
 post = Blueprint("post", __name__)
@@ -75,13 +81,15 @@ def submit_reply():
 
     post_id = request.form["post_id"]
     content = request.form["content"]
-    is_anonymous = "is_anonymous" in request.form  # Check if the checkbox for anonymous was checked
+    is_anonymous = (
+        "is_anonymous" in request.form
+    )  # Check if the checkbox for anonymous was checked
 
     new_reply = Reply(
         post_id=post_id,
         user_id=current_user.user_id,  # Now safe to access, as we've checked authentication
         content=content,
-        is_anonymous=is_anonymous
+        is_anonymous=is_anonymous,
     )
     db.session.add(new_reply)
 
@@ -134,6 +142,9 @@ def connect(post_id):
         flash("Connect request sent.", "success")
     except IntegrityError:
         db.session.rollback()
-        flash("Connection request failed. You may have already connected to this user.", "info")
+        flash(
+            "Connection request failed. You may have already connected to this user.",
+            "info",
+        )
 
     return redirect(url_for("post.browse"))

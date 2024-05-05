@@ -35,6 +35,7 @@ class User(db.Model):
     def get_id(self):
         return str(self.user_id)
 
+
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"))

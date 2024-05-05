@@ -5,7 +5,13 @@ from sqlalchemy.exc import IntegrityError
 from flask import jsonify
 import re
 import json
-from flask_login import LoginManager, login_user, current_user, logout_user, login_required
+from flask_login import (
+    LoginManager,
+    login_user,
+    current_user,
+    logout_user,
+    login_required,
+)
 
 auth = Blueprint("auth", __name__)
 
@@ -255,7 +261,7 @@ def account():
 def change_password():
 
     user = current_user
-    
+
     if not user:
         flash("User not found.", "danger")
         return redirect(url_for("auth.login"))
@@ -299,6 +305,7 @@ def change_password():
 
 # Log-in
 
+
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     # if current_user.is_authenticated:
@@ -321,14 +328,15 @@ def login():
 
     return render_template("landing.html")
 
+
 # Logout
+
 
 @auth.route("/logout")
 def logout():
-    logout_user() 
+    logout_user()
     flash("You have been logged out.", "success")
-    return redirect(url_for("auth.login")) 
-
+    return redirect(url_for("auth.login"))
 
 
 # Notifications
@@ -337,7 +345,9 @@ def logout():
 @auth.route("/notifications")
 @login_required
 def notifications():
-    user_notifications = Notification.query.filter_by(recipient_id=current_user.get_id()).all()
+    user_notifications = Notification.query.filter_by(
+        recipient_id=current_user.get_id()
+    ).all()
     return render_template("notifications.html", notifications=user_notifications)
 
 
