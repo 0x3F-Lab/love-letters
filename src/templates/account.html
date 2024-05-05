@@ -10,7 +10,9 @@
   <p><strong>Email:</strong> {{ user.email }}</p>
   <p><strong>Gender:</strong> {{ user.gender or 'Not provided' }}</p>
   <p><strong>Phone Number:</strong> {{ user.phone_number or 'Not provided' }}</p>
-  <p><strong>Socials:</strong> {{ user.socials or 'Not provided' }}</p>
+  <p><strong>Instagram:</strong> {{ user.instagram or 'Not provided' }}</p>
+  <p><strong>Facebook:</strong> {{ user.facebook or 'Not provided' }}</p>
+  <p><strong>Snapchat:</strong> {{ user.snapchat or 'Not provided' }}</p>
 
   <button class="btn btn-primary" id="editButton">Edit</button>
   <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Logout</a>
@@ -18,17 +20,18 @@
 </div>
 
 <!-- User information form initially hidden -->
-<div id="editForm" style="display: none" class="container mt-4">
-  <form method="post" action="{{ url_for('auth.account') }}">
+<div id="editFormDiv" style="display: none" class="container mt-4">
+  <form id="editForm" method="post" action="{{ url_for('auth.account') }}">
     <div class="form-group">
       <label for="email">Email</label>
       <input
         type="email"
         class="form-control"
-        id="email"
+        id="edit_email"
         name="email"
         value="{{ user.email }}"
         required
+        maxlength="50"
       />
     </div>
     <div class="form-group">
@@ -50,38 +53,42 @@
       </select>
     </div>
     <div class="form-group">
-      <label for="phone_number">Phone Number</label>
-      <input
-        type="tel"
-        class="form-control"
-        id="phone_number"
-        name="phone_number"
-        value="{{ user.phone_number }}"
-      />
+      <label for="phone_number">Phone Number (optional)</label>
+      <input type="tel" class="form-control" id="edit_phone_number" name="phone_number" value="{{ user.phone_number }}" maxlength="20"/>
     </div>
     <div class="form-group">
-      <label for="socials">Socials</label>
-      <textarea class="form-control" id="socials" name="socials"> {{ user.socials }}</textarea>
+      <label for="instagram">Instagram (optional)</label>
+      <input type="text" class="form-control" id="edit_instagram" name="instagram" value="{{ user.instagram }}" placeholder="Instagram username" maxlength="30" />
     </div>
+    <div class="form-group">
+      <label for="facebook">Facebook (optional)</label>
+      <input type="text" class="form-control" id="edit_facebook" name="facebook" value="{{ user.facebook }}" placeholder="Facebook profile link" maxlength="60" />
+    </div>
+    <div class="form-group">
+      <label for="snapchat">Snapchat (optional)</label>
+      <input type="text" class="form-control" id="edit_snapchat" name="snapchat" value="{{ user.snapchat }}" placeholder="Snapchat username" maxlength="30" />
+    </div>
+    <div id="missingSocialError" class="alert alert-danger" style="display:none;"></div>
     <button type="submit" class="btn btn-primary">Update</button>
   </form>
 </div>
 
 <!-- Password update form initially hidden -->
-<div id="passwordForm" style="display:none;" class="container mt-4">
-  <form method="post" action="{{ url_for('auth.change_password') }}">
+<div id="passwordFormDiv" style="display:none;" class="container mt-4">
+  <form id="passwordForm" method="post" action="{{ url_for('auth.change_password') }}">
     <div class="form-group">
       <label for="current-password">Current Password</label>
-      <input type="password" class="form-control" id="current-password" name="current_password" required>
+      <input type="password" class="form-control" id="current_password" name="current_password" required maxlength="30">
     </div>
     <div class="form-group">
       <label for="new-password">New Password</label>
-      <input type="password" class="form-control" id="new-password" name="new_password" required>
+      <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Uppercase, lowercase, number, special (!@#$%^&*)" required maxlength="30">
     </div>
     <div class="form-group">
       <label for="confirm-password">Confirm New Password</label>
-      <input type="password" class="form-control" id="confirm-password" name="confirm_password" required>
+      <input type="password" class="form-control" id="confirm_password" name="confirm_password" required maxlength="30">
     </div>
+    <div id="passwordError" class="alert alert-danger" style="display:none;"></div>
     <button type="submit" class="btn btn-primary">Update Password</button>
   </form>
 </div>

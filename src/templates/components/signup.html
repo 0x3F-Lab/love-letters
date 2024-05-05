@@ -9,16 +9,17 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="signUpForm" method="post" action="{{ url_for('auth.signup') }}">
+        <div id="errorMessages" style="color: red;"></div>
+        <form id="signUpForm" method="post" action="{{ url_for('auth.signup') }}" data-redirect-url="{{ url_for('home') }}">
           <input type="hidden" name="signup_form" value="true" />
           
           <div class="form-group">
             <label for="first-name">First Name</label>
-            <input type="text" class="form-control" id="first-name" name="first_name" required />
+            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Cameron" required maxlength="20" />
           </div>
           <div class="form-group">
             <label for="last-name">Last Name</label>
-            <input type="text" class="form-control" id="last-name" name="last_name" required />
+            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="O'Niell" required maxlength="20" />
           </div>
           <div class="form-group">
             <label for="gender">Gender (optional)</label>
@@ -32,28 +33,29 @@
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required />
+            <input type="email" class="form-control" id="email" name="email" placeholder="cameron@example.com" required maxlength="50"/>
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required />
+            <input type="password" class="form-control" id="password" name="password" placeholder="Uppercase, lowercase, number, special (!@#$%^&*)" requried maxlength="30" />
           </div>
           <div class="form-group">
             <label for="phone_number">Phone Number (optional)</label>
-            <input type="tel" class="form-control" id="phone-number" name="phone_number" placeholder="Phone number" />
+            <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Phone number" maxlength="20" />
           </div>
           <div class="form-group">
             <label for="instagram">Instagram (optional)</label>
-            <input type="text" class="form-control" id="instagram" name="instagram" placeholder="Instagram username" />
+            <input type="text" class="form-control" id="instagram" name="instagram" placeholder="Instagram username" maxlength="30" />
           </div>
           <div class="form-group">
             <label for="facebook">Facebook (optional)</label>
-            <input type="text" class="form-control" id="facebook" name="facebook" placeholder="Facebook profile link" />
+            <input type="text" class="form-control" id="facebook" name="facebook" placeholder="Facebook profile link" maxlength="60" />
           </div>
           <div class="form-group">
             <label for="snapchat">Snapchat (optional)</label>
-            <input type="text" class="form-control" id="snapchat" name="snapchat" placeholder="Snapchat username" />
+            <input type="text" class="form-control" id="snapchat" name="snapchat" placeholder="Snapchat username" maxlength="30" />
           </div>
+          <div id="socials"></div>
           <button type="submit" class="btn btn-primary">Sign Up</button>
         </form>
       </div>
