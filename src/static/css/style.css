@@ -414,3 +414,31 @@ select:focus {
     top: var(--fallHeight); /* Falls to the calculated page height */
   }
 }
+
+#gameCanvas {
+  background-color: black;
+  border: 1px solid white;
+}
+
+button {
+  display: none;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* Computer */
+@media (min-width: 768px) {
+  #gameCanvas {
+      width: 45vw;
+      height: 65vh;
+  }
+}
+
+/* Phone */
+@media (max-width: 768px) {
+  #gameCanvas {
+      width: 75vw;
+      height: 50vh;
+  }
+}

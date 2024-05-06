@@ -4,6 +4,13 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
+    <div class="col-md-9 d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+      <div class="game-container d-flex justify-content-center align-items-center">
+        <canvas id="gameCanvas" style="overflow: hidden;"></canvas>
+        <button id="restartBtn">Restart Game</button>
+      </div>
+      <script src="{{ url_for('static', filename='js/heart.js') }}"></script>
+    </div>
     <div class="col-md-3 sidebar mt-5 mb-md-5">
         <h3 class="centered-text mb-md-5">Love Letters</h3>
       <div class="list-group">
@@ -19,16 +26,6 @@
     </div>
 
     <!-- Main Content -->
-    <div class="col-md-9">
-      
-
-      <!-- Random Posts -->
-      <div class="row m-5" >
-        {% for post in random_posts %}
-            {% include 'components/postcard.html' %}
-        {% endfor %}
-      </div>
-    </div>
   </div>
 </div>
 {% endblock %}
