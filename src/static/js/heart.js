@@ -6,18 +6,29 @@ function resizeCanvas() {
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
 }
-resizeCanvas(); // Set initial size
-window.addEventListener('resize', resizeCanvas); // Adjust size on window resize
+resizeCanvas(); 
+window.addEventListener('resize', resizeCanvas); 
 
-resizeCanvas(); // Set initial size
-window.addEventListener('resize', resizeCanvas); // Adjust size on window resize
+resizeCanvas(); 
+window.addEventListener('resize', resizeCanvas);
 
-const player = { x: 50, y: canvas.height - 50, width: 40, height: 40, velocityY: 0 }; // Player with dynamic position // Increased player size
+const player = { x: 50, y: canvas.height - 50, width: 40, height: 40, velocityY: 0 }; 
 let obstacles = [];
 let gravity = 1.5, jumpPower = -25, score = 0, gameOver = false;
-let jumpCount = 0; // To track consecutive jumps
-let obstacleFrequency = 0.01; // Starting frequency of obstacles
-let obstacleIncreaseRate = 0.00005; // Increase in obstacle frequency over time
+let jumpCount = 0; 
+let obstacleFrequency = 0.01; 
+let obstacleIncreaseRate = 0.00005; 
+
+const overlapBuffer = 7; 
+
+function checkCollision(player, obs) {
+    return (
+        obs.x + overlapBuffer < player.x + player.width - overlapBuffer &&
+        obs.x + obs.width - overlapBuffer > player.x + overlapBuffer &&
+        obs.y + overlapBuffer < player.y + player.height - overlapBuffer &&
+        obs.y + obs.height - overlapBuffer > player.y + overlapBuffer
+    );
+}
 
 // Function to draw the heart shape
 function drawHeart(x, y, size) {
@@ -33,26 +44,39 @@ function drawHeart(x, y, size) {
 
 // Draw the player as a heart
 function drawPlayer() {
-    drawHeart(player.x, player.y, 20); // Doubled the heart size
+    drawHeart(player.x, player.y, 20);
 }
 
-// Create a thinner and more spaced out obstacle
+
 function createObstacle() {
-    const height = Math.random() * (canvas.height / 3) + 15; // Reduced max height
-    obstacles.push({ x: canvas.width, y: canvas.height - height, width: 35, height: height }); // Reduced obstacle width to 10
+    const height = Math.random() * (canvas.height / 3) + 15; 
+    obstacles.push({ x: canvas.width, y: canvas.height - height, width: 35, height: height }); 
 }
 
 function drawObstacle() {
-    ctx.fillStyle = "darkred"; // Darker color for better visibility
+    ctx.fillStyle = "darkred"; 
     obstacles.forEach(obs => {
         ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
     });
 }
 
 function drawScore() {
-    ctx.fillStyle = "#FFF";
-    ctx.font = "24px Arial"; // Larger score font
-    ctx.fillText(`Score: ${score}`, 10, 30);
+    ctx.font = "14px Arial"; 
+    ctx.fillStyle = "#FFF"; 
+    let scoreText = `Score: ${score}`;
+    
+    if (gameOver) {
+        // Center score on game over
+        ctx.font = "30px Arial";
+        let textWidth = ctx.measureText(scoreText).width;
+        let xPosition = (canvas.width - textWidth) / 2; 
+        let yPosition = canvas.height / 2; 
+        ctx.fillText(scoreText, xPosition, yPosition);
+    } else {
+        ctx.font = "14px Arial";
+        // Display score at the top left corner during gameplay
+        ctx.fillText(scoreText, 10, 30);
+    }
 }
 
 function update() {
@@ -68,22 +92,23 @@ function update() {
     if (player.y + player.height > canvas.height) {
         player.y = canvas.height - player.height;
         player.velocityY = 0;
-        jumpCount = 0; // Reset jump count when on the ground
+        jumpCount = 0; 
     }
 
     // Move and remove obstacles
     obstacles.forEach((obs, index) => {
-        obs.x -= 6; // Slightly increased speed
+        obs.x -= 6; // Example speed adjustment
         if (obs.x + obs.width < 0) obstacles.splice(index, 1);
-        if (obs.x < player.x + player.width && obs.x + obs.width > player.x &&
-            obs.y < player.y + player.height && obs.y + obs.height > player.y) {
+
+        if (checkCollision(player, obs)) {
             gameOver = true;
             restartBtn.style.display = "block";
         }
     });
 
+
     // Increase the obstacle frequency over time
-    obstacleFrequency = Math.min(0.005, obstacleFrequency + obstacleIncreaseRate); // Limit maximum frequency
+    obstacleFrequency = Math.min(0.005, obstacleFrequency + obstacleIncreaseRate); 
 
     // Score and new obstacles
     if (Math.random() < obstacleFrequency) createObstacle();
@@ -106,13 +131,12 @@ function resetGame() {
     gameOver = false;
     jumpCount = 0; // Reset jump count
     obstacleFrequency = 0.0005; // Reset to starting frequency
-    restartBtn.style.display = "none";
     update();
 }
 
 // Handle player jump on keyboard press, mouse click, and touch events
 function handleJump() {
-    if (!gameOver && jumpCount < 3) { // Limit to triple jumps
+    if (!gameOver && jumpCount < 3) { 
         player.velocityY = jumpPower;
         jumpCount++;
     }
@@ -130,4 +154,4 @@ canvas.addEventListener("touchstart", handleJump);
 
 restartBtn.addEventListener("click", resetGame);
 
-resetGame(); // Start the game initially
+resetGame(); 

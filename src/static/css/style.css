@@ -11,7 +11,6 @@ body {
 
 /* Sidebar Styles */
 .sidebar {
-  background-color: black; /* Black background for the sidebar */
   color: white; /* White text for the sidebar */
   padding: 15px; /* Adjust padding as needed */
 }
@@ -375,10 +374,10 @@ select:focus {
 }
 
 .heart {
-  position: absolute; /* Allows hearts to move freely within the viewport */
-  top: -20px; /* Starts above the viewport */
-  width: 20px; /* Adjust heart size */
-  height: 20px; /* Adjust heart size */
+  position: absolute; 
+  top: -20px; 
+  width: 20px; 
+  height: 20px; 
   background-color: red; /* Red hearts */
   transform: rotate(45deg);
   animation: fall linear infinite; /* Infinite falling animation */
@@ -406,6 +405,21 @@ select:focus {
   left: -10px; /* Adjust according to heart size */
 }
 
+
+.btn {
+  color: white !important; /* White text for links */
+  border: 1px solid white !important; /* Thin white border around each link */
+  background: black !important;
+  padding: 5px 10px !important; /* Adjust padding as needed */
+}
+
+.btn:hover {
+  background-color: red !important; /* Red background on hover */
+  color: white; /* Ensure text color remains white */
+  border: 1px solid white !important;
+  transition: background-color 0.3s, border-color 0.3s !important; /* Smooth transition */
+}
+
 @keyframes fall {
   0% {
     top: -20px; /* Starts above the viewport */
@@ -420,18 +434,12 @@ select:focus {
   border: 1px solid white;
 }
 
-button {
-  display: none;
-  padding: 10px;
-  font-size: 16px;
-  margin-top: 10px;
-}
 
 /* Computer */
 @media (min-width: 768px) {
   #gameCanvas {
       width: 45vw;
-      height: 65vh;
+      height: 50vh;
   }
 }
 

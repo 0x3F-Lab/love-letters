@@ -3,16 +3,21 @@
 {% block content %}
 <div class="container-fluid">
   <div class="row">
-    <!-- Sidebar -->
-    <div class="col-md-9 d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-      <div class="game-container d-flex justify-content-center align-items-center">
-        <canvas id="gameCanvas" style="overflow: hidden;"></canvas>
-        <button id="restartBtn">Restart Game</button>
+    <!-- Main Content Area -->
+    <div class="col-md-9 game-col d-flex flex-column align-items-center justify-content-center">
+      <div class="mb-4" style="color: white; font-weight: normal !important;">
+        <h1 class="centered-text mb-md-3">Welcome to Love Letters</h1>
+        <h3>Write love letters and meet new people!</h3>
       </div>
+      <div class="game-container mb-md-3">
+        <canvas id="gameCanvas" style="overflow: hidden;"></canvas>
+      </div>
+      <button id="restartBtn" class="btn">Restart Game</button>
       <script src="{{ url_for('static', filename='js/heart.js') }}"></script>
     </div>
+
+    <!-- Sidebar -->
     <div class="col-md-3 sidebar mt-5 mb-md-5">
-        <h3 class="centered-text mb-md-5">Love Letters</h3>
       <div class="list-group">
         <a href="{{ url_for('post.browse') }}" class="list-group-item list-group-item-action">Browse Letters</a>
         <a href="{{ url_for('post.create') }}" class="list-group-item list-group-item-action">Post Letters</a>
@@ -24,8 +29,6 @@
         {% endif %}
       </div>
     </div>
-
-    <!-- Main Content -->
   </div>
 </div>
 {% endblock %}
