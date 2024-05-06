@@ -262,12 +262,12 @@ $(document).ready(function () {
 
 // Falling hearts animation function
 function createHeart() {
-  const heart = document.createElement('div');
-  heart.classList.add('heart');
-  
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+
   // Randomize position, size, and animation duration
-  heart.style.left = Math.random() * 100 + 'vw';
-  heart.style.animationDuration = Math.random() * 5 + 5 + 's'; // Varying speed
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = Math.random() * 5 + 5 + "s"; // Varying speed
   heart.style.opacity = Math.random() * 0.5 + 0.5; // Random opacity between 0.5 and 1
 
   // Calculate fall height dynamically based on document height
@@ -277,7 +277,7 @@ function createHeart() {
   document.body.appendChild(heart);
 
   // Remove heart after the animation is complete
-  heart.addEventListener('animationend', () => {
+  heart.addEventListener("animationend", () => {
     heart.remove();
   });
 }
