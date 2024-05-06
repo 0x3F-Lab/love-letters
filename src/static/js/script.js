@@ -271,8 +271,8 @@ function createHeart() {
   heart.style.opacity = Math.random() * 0.5 + 0.5; // Random opacity between 0.5 and 1
 
   // Calculate fall height dynamically based on document height
-  const fallHeight = document.body.scrollHeight - 22 + 'px';
-  heart.style.setProperty('--fallHeight', fallHeight);
+  const fallHeight = document.body.scrollHeight - 22 + "px";
+  heart.style.setProperty("--fallHeight", fallHeight);
 
   document.body.appendChild(heart);
 
@@ -283,16 +283,15 @@ function createHeart() {
 }
 
 function adjustGameCanvas() {
-  const navbarHeight = document.querySelector('.navbar').offsetHeight || 0;
-  const footerHeight = document.querySelector('.footer').offsetHeight || 0;
+  const navbarHeight = document.querySelector(".navbar").offsetHeight || 0;
+  const footerHeight = document.querySelector(".footer").offsetHeight || 0;
   const availableHeight = window.innerHeight - navbarHeight - footerHeight;
 
-  const col = document.querySelector('.game-col');
-  col.style.height = availableHeight + 'px';
+  const col = document.querySelector(".game-col");
+  col.style.height = availableHeight + "px";
 }
 
-window.addEventListener('resize', adjustGameCanvas);
-window.addEventListener('load', adjustGameCanvas);
-
+window.addEventListener("resize", adjustGameCanvas);
+window.addEventListener("load", adjustGameCanvas);
 
 setInterval(createHeart, 1500);
