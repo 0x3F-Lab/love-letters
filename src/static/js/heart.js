@@ -3,26 +3,23 @@ const ctx = canvas.getContext("2d");
 const restartBtn = document.getElementById("restartBtn");
 const startBtn = document.getElementById("startBtn");
 
-restartBtn.style.display = "none"
+restartBtn.style.display = "none";
 
 startBtn.addEventListener("click", startGame);
 
-
-
 function startGame() {
-    startBtn.style.display = "none"
-    restartBtn.style.display = "block"
-    gameOver = false;
-    resetGame();
+  startBtn.style.display = "none";
+  restartBtn.style.display = "block";
+  gameOver = false;
+  resetGame();
 }
-
 
 function resizeCanvas() {
   canvas.width = canvas.clientWidth;
   canvas.height = canvas.clientHeight;
 }
-resizeCanvas(); 
-window.addEventListener('resize', resizeCanvas); 
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 const player = {
   x: 50,
@@ -32,10 +29,13 @@ const player = {
   velocityY: 0,
 };
 let obstacles = [];
-let gravity = 1.5, jumpPower = -25, score = 0, gameOver = true;
-let jumpCount = 0; 
-let obstacleFrequency = 0.01; 
-let obstacleIncreaseRate = 0.00005; 
+let gravity = 1.5,
+  jumpPower = -25,
+  score = 0,
+  gameOver = true;
+let jumpCount = 0;
+let obstacleFrequency = 0.01;
+let obstacleIncreaseRate = 0.00005;
 
 const overlapBuffer = 7;
 
