@@ -1,6 +1,21 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const restartBtn = document.getElementById("restartBtn");
+const startBtn = document.getElementById("startBtn");
+
+restartBtn.style.display = "none"
+
+startBtn.addEventListener("click", startGame);
+
+
+
+function startGame() {
+    startBtn.style.display = "none"
+    restartBtn.style.display = "block"
+    gameOver = false;
+    resetGame();
+}
+
 
 function resizeCanvas() {
     canvas.width = canvas.clientWidth;
@@ -9,12 +24,9 @@ function resizeCanvas() {
 resizeCanvas(); 
 window.addEventListener('resize', resizeCanvas); 
 
-resizeCanvas(); 
-window.addEventListener('resize', resizeCanvas);
-
 const player = { x: 50, y: canvas.height - 50, width: 40, height: 40, velocityY: 0 }; 
 let obstacles = [];
-let gravity = 1.5, jumpPower = -25, score = 0, gameOver = false;
+let gravity = 1.5, jumpPower = -25, score = 0, gameOver = true;
 let jumpCount = 0; 
 let obstacleFrequency = 0.01; 
 let obstacleIncreaseRate = 0.00005; 
@@ -153,5 +165,3 @@ canvas.addEventListener("click", handleJump);
 canvas.addEventListener("touchstart", handleJump);
 
 restartBtn.addEventListener("click", resetGame);
-
-resetGame(); 

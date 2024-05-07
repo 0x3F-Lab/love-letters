@@ -4,7 +4,7 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Main Content Area -->
-    <div class="col-md-9 game-col d-flex flex-column align-items-center justify-content-center">
+    <div class="col-md-9 game-col d-flex flex-column align-items-center justify-content-center" style="overflow: hidden;">
       <div class="mb-4" style="color: white; font-weight: normal !important;">
         <h1 class="centered-text mb-md-3">Welcome to Love Letters</h1>
         <h3>Write love letters and meet new people!</h3>
@@ -12,7 +12,10 @@
       <div class="game-container mb-md-3">
         <canvas id="gameCanvas" style="overflow: hidden;"></canvas>
       </div>
-      <button id="restartBtn" class="btn">Restart Game</button>
+      <div class="row">
+          <button id="startBtn" class="btn">Start Game</button>
+          <button id="restartBtn" class="btn">Restart Game</button>
+      </div>
       <script src="{{ url_for('static', filename='js/heart.js') }}"></script>
     </div>
 
