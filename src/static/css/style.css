@@ -379,10 +379,10 @@ select:focus {
 }
 
 .heart {
-  position: absolute; 
-  top: -20px; 
-  width: 20px; 
-  height: 20px; 
+  position: absolute;
+  top: -20px;
+  width: 20px;
+  height: 20px;
   background-color: red; /* Red hearts */
   transform: rotate(45deg);
   animation: fall linear infinite; /* Infinite falling animation */
@@ -455,7 +455,7 @@ select:focus {
 /* Phone */
 @media (max-width: 768px) {
   #gameCanvas {
-      width: 75vw;
-      height: 50vh;
+    width: 75vw;
+    height: 50vh;
   }
 }
