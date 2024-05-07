@@ -413,22 +413,24 @@ select:focus {
 .btn {
   color: white !important;
   border: 1px solid white !important;
-  padding: 5px 10px !important; 
+  padding: 5px 10px !important;
 }
 
 .btn:hover {
-  background-color: red !important; 
+  background-color: red !important;
   color: white;
   border: 1px solid white !important;
-  transition: background-color 0.3s, border-color 0.3s !important; 
+  transition:
+    background-color 0.3s,
+    border-color 0.3s !important;
 }
 
 @keyframes fall {
   0% {
-    top: -20px; 
+    top: -20px;
   }
   100% {
-    top: var(--fallHeight); 
+    top: var(--fallHeight);
   }
 }
 
@@ -447,8 +449,8 @@ select:focus {
 /* Computer */
 @media (min-width: 768px) {
   #gameCanvas {
-      width: 40vw;
-      height: 40vh;
+    width: 40vw;
+    height: 40vh;
   }
 }
 
