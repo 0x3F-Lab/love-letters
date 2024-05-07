@@ -285,6 +285,7 @@ select:focus {
   border: 1px solid white !important; /* Thin white border around posts */
   margin-bottom: 20px; /* Spacing between cards */
   padding: 2.5%;
+  max-width: 600px;
 }
 
 .postcard-title {
@@ -406,44 +407,48 @@ select:focus {
 
 .heart::after {
   top: 0;
-  left: -10px; /* Adjust according to heart size */
+  left: -10px;
 }
 
-
 .btn {
-  color: white !important; /* White text for links */
-  border: 1px solid white !important; /* Thin white border around each link */
-  background: black !important;
-  padding: 5px 10px !important; /* Adjust padding as needed */
+  color: white !important;
+  border: 1px solid white !important;
+  padding: 5px 10px !important; 
 }
 
 .btn:hover {
-  background-color: red !important; /* Red background on hover */
-  color: white; /* Ensure text color remains white */
+  background-color: red !important; 
+  color: white;
   border: 1px solid white !important;
-  transition: background-color 0.3s, border-color 0.3s !important; /* Smooth transition */
+  transition: background-color 0.3s, border-color 0.3s !important; 
 }
 
 @keyframes fall {
   0% {
-    top: -20px; /* Starts above the viewport */
+    top: -20px; 
   }
   100% {
-    top: var(--fallHeight); /* Falls to the calculated page height */
+    top: var(--fallHeight); 
   }
 }
 
 #gameCanvas {
   background-color: black;
   border: 1px solid white;
+  border-radius: 10px;
 }
 
+#startBtn {
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+}
 
 /* Computer */
 @media (min-width: 768px) {
   #gameCanvas {
-      width: 45vw;
-      height: 50vh;
+      width: 40vw;
+      height: 40vh;
   }
 }
 
