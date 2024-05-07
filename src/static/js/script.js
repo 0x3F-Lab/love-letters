@@ -268,7 +268,7 @@ function createHeart() {
   // Randomize position, size, and animation duration
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.animationDuration = Math.random() * 5 + 5 + "s"; // Varying speed
-  heart.style.opacity = Math.random() * 0.5 + 0.5; // Random opacity between 0.5 and 1
+  heart.style.opacity = Math.random() * 0.4 + 0.2; // Random opacity between 0.5 and 1
 
   // Calculate fall height dynamically based on document height
   const fallHeight = document.body.scrollHeight - 22 + "px";

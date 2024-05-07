@@ -92,13 +92,15 @@ body {
 }
 
 .modal-content {
-  background: none;
-  border: none;
+  background: black !important;
+  border: 1px solid white !important;
+  color: white !important;
 }
 
 .modal-header {
+  color: white !important;
   background-color: transparent !important; /* Makes the background transparent */
-  border-bottom: none !important; /* Removes the bottom border if not needed */
+  border-bottom: 1px solid white !important; /* Removes the bottom border if not needed */
 }
 
 .modal-body {
@@ -156,32 +158,35 @@ body {
   }
 }
 
+.form-control {
+  background: black !important;
+  color: white !important;
+}
+
 /* Form Container */
 .form-container {
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.8
-  ); /* Semi-transparent white background */
+  background-color: black !important; /* Semi-transparent white background */
+  color: white !important;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 90%; /* Responsive width */
   max-width: 500px; /* Maximum width */
-  margin: 20px; /* Margin to separate from other content */
+  margin: 20px; 
+  border: 1px solid white;
 }
 
 /* Form Elements */
 input[type="text"],
 textarea,
 select {
+  background-color: black !important;
+  color: white !important;
   width: 100%; /* Full width of the form container */
   padding: 10px;
   margin-top: 8px;
   margin-bottom: 16px;
   display: inline-block;
-  border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box; /* Include padding and border in the width */
 }
@@ -193,7 +198,7 @@ input[type="checkbox"] {
 /* Submit Button */
 input[type="submit"] {
   background-color: #4caf50; /* Green background */
-  color: white;
+  color: white !important;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
@@ -209,7 +214,7 @@ input[type="submit"]:hover {
 input[type="text"]:hover,
 textarea:hover,
 select:hover {
-  border-color: #888; /* Darken the border color on hover */
+  border-color: red; /* Darken the border color on hover */
 }
 
 /* Focus Effects for Accessibility */
@@ -217,29 +222,15 @@ input[type="text"]:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: #555;
-}
-
-/* Modal Content Styling */
-.modal-content {
-  background-color: #ffffff; /* White background for clarity */
-  padding: 20px; /* Padding around the content */
-  border-radius: 8px; /* Soften the edges */
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
-
-.modal-header {
-  background-color: #f8f9fa; /* Light grey background for the header */
-  border-bottom: 1px solid #e9ecef; /* Subtle line to separate header from body */
-  color: #495057; /* Dark color for text for better readability */
+  border-color: red;
 }
 
 .close {
-  color: #6c757d; /* Muted color for the close button */
+  color: black; /* Muted color for the close button */
 }
 
 .close:hover {
-  color: #343a40; /* Darker shade on hover for better interaction feedback */
+  color: red; /* Darker shade on hover for better interaction feedback */
 }
 
 /* User Info Styling */
@@ -285,7 +276,7 @@ select:focus {
   border: 1px solid white !important; /* Thin white border around posts */
   margin-bottom: 20px; /* Spacing between cards */
   padding: 2.5%;
-  max-width: 600px;
+  max-width: 650px;
 }
 
 .postcard-title {
@@ -387,15 +378,15 @@ select:focus {
   transform: rotate(45deg);
   animation: fall linear infinite; /* Infinite falling animation */
   z-index: -1; /* Sends hearts behind other content */
-  opacity: 0.7; /* Slightly transparent */
+  opacity: 0.5; /* Slightly transparent */
 }
 
 .heart::before,
 .heart::after {
   content: "";
   position: absolute;
-  width: 20px; /* Adjust according to heart size */
-  height: 20px; /* Adjust according to heart size */
+  width: 20px; 
+  height: 20px; 
   background-color: red;
   border-radius: 50%;
 }
