@@ -172,7 +172,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 90%; /* Responsive width */
   max-width: 500px; /* Maximum width */
-  margin: 20px; 
+  margin: 20px;
   border: 1px solid white;
 }
 
@@ -385,8 +385,8 @@ select:focus {
 .heart::after {
   content: "";
   position: absolute;
-  width: 20px; 
-  height: 20px; 
+  width: 20px;
+  height: 20px;
   background-color: red;
   border-radius: 50%;
 }
