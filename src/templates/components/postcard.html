@@ -14,6 +14,13 @@
                 Posted {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
             </small>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" onclick="setPostId({{ post.post_id }})">Reply</button>
+            {% if user %}
+                <button type="button" class="btn btn-outline-primary like-btn" data-post-id="{{ post.post_id }}" onclick="toggleLikePost({{ post.post_id }}, {{ user.user_id }})">
+                    {{ 'Unlike' if post.likes.filter_by(user_id=user.user_id).first() else 'Like' }} (<span id="like-count-{{ post.post_id }}">{{ post.likes.count() }}</span>)
+                </button>
+            {% else %}
+                <button type="button" class="btn btn-outline-primary" onclick="alert('Please log in to like posts')">Like (<span id="like-count-{{ post.post_id }}">{{ post.likes.count() }}</span>)</button>
+            {% endif %}
             <button type="button" class="btn btn-info" onclick="toggleReplies({{ post.post_id }})">View Replies</button>
             <form action="{{ url_for('post.connect', post_id=post.post_id) }}" method="POST">
                 <button type="submit" class="btn btn-primary">Connect</button>
@@ -21,22 +28,29 @@
         </div>
         <div id="replies-{{ post.post_id }}" class="replies-container" style="display: none;">
             {% for reply in post.replies %}
-            <div class="card mt-2">
-                <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Reply by 
-                        {% if reply.is_anonymous %}
-                            Anonymous
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Reply by 
+                            {% if reply.is_anonymous %}
+                                Anonymous
+                            {% else %}
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="loadUserProfile({{ reply.user_id }})"> 
+                                    {{ reply.replier.first_name }} {{ reply.replier.last_name }}
+                                </a>
+                            {% endif %}
+                        </h6>
+                        <p class="card-text">{{ reply.content }}</p>
+                        {% if user %}
+                            <button type="button" class="btn btn-outline-primary like-btn" data-reply-id="{{ reply.reply_id }}" onclick="toggleLikeReply({{ reply.reply_id }}, {{ user.user_id }})">
+                                {{ 'Unlike' if reply.likes.filter_by(user_id=user.user_id).first() else 'Like' }} (<span id="like-count-reply-{{ reply.reply_id }}">{{ reply.likes.count() }}</span>)
+                            </button>
                         {% else %}
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="loadUserProfile({{ reply.user_id }})"> 
-                                {{ reply.replier.first_name }} {{ reply.replier.last_name }}
-                            </a>
+                            <button type="button" class="btn btn-outline-primary" onclick="alert('Please log in to like replies')">Like (<span id="like-count-reply-{{ reply.reply_id }}">{{ reply.likes.count() }}</span>)</button>
                         {% endif %}
-                    </h6>
-                    <p class="card-text">{{ reply.content }}</p>
+                    </div>
                 </div>
-            </div>
             {% endfor %}
         </div>
+        
     </div>
 </div>
-

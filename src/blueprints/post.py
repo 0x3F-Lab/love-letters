@@ -8,8 +8,9 @@ from flask import (
     session,
     jsonify,
 )
-from models import Post, Reply, User, Notification, db
+from models import LikePost, LikeReply, Post, Reply, User, Notification, db
 from sqlalchemy.exc import IntegrityError
+
 
 
 post = Blueprint("post", __name__)
@@ -68,7 +69,7 @@ def create():
 def browse(page=1):
     sort_order = request.args.get('sort', 'newest')
     per_page = 10
-    
+
     if sort_order == 'oldest':
         sort_criteria = Post.created_at.asc()
     else:  # Default to newest
@@ -78,12 +79,54 @@ def browse(page=1):
         db.joinedload(Post.replies).joinedload(Reply.replier)
     ).order_by(sort_criteria).paginate(page=page, per_page=per_page, error_out=False)
 
+    user = None
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        posts_html = render_template('posts_list.html', posts=posts.items)
+        posts_html = render_template('posts_list.html', posts=posts.items, user=user)
         return jsonify({'posts': posts_html, 'has_next': posts.has_next})
 
-    return render_template("browse.html", posts=posts.items)
+    return render_template("browse.html", posts=posts.items, user=user)
 
+@post.route('/like_post', methods=['POST'])
+def like_post():
+    if not session.get('user_id'):
+        return jsonify({'error': 'You need to log in to like posts'}), 403
+
+    post_id = request.form.get('post_id')
+    user_id = request.form.get('user_id')
+    like = LikePost.query.filter_by(user_id=user_id, post_id=post_id).first()
+    if like:
+        db.session.delete(like)
+        db.session.commit()
+        return jsonify({'status': 'like', 'count': LikePost.query.filter_by(post_id=post_id).count()})
+    else:
+        new_like = LikePost(user_id=user_id, post_id=post_id)
+        db.session.add(new_like)
+        db.session.commit()
+        return jsonify({'status': 'unlike', 'count': LikePost.query.filter_by(post_id=post_id).count()})
+
+
+@post.route('/like_reply', methods=['POST'])
+def like_reply():
+    if not session.get('user_id'):
+        return jsonify({'error': 'You need to log in to like replies'}), 403
+
+    reply_id = request.form.get('reply_id')
+    user_id = request.form.get('user_id')
+    like = LikeReply.query.filter_by(user_id=user_id, reply_id=reply_id).first()
+    if like:
+        db.session.delete(like)
+        db.session.commit()
+        new_count = LikeReply.query.filter_by(reply_id=reply_id).count()
+        return jsonify({'status': 'like', 'count': new_count})
+    else:
+        new_like = LikeReply(user_id=user_id, reply_id=reply_id)
+        db.session.add(new_like)
+        db.session.commit()
+        new_count = LikeReply.query.filter_by(reply_id=reply_id).count()
+        return jsonify({'status': 'unlike', 'count': new_count})
 
 
 
@@ -92,24 +135,24 @@ def browse(page=1):
 
 @post.route("/submit_reply", methods=["POST"])
 def submit_reply():
-    user_id = session.get("user_id")
-    if not user_id:
-        return jsonify({"error": "You need to log in to reply"}), 403
-
-    post_id = request.form["post_id"]
-    content = request.form["content"]
-    is_anonymous = "is_anonymous" in request.form  # Check if the checkbox was checked
-
-    new_reply = Reply(
-        post_id=post_id,
-        user_id=user_id,
-        content=content,
-        is_anonymous=is_anonymous,  # Set the is_anonymous field based on the checkbox
-    )
-    db.session.add(new_reply)
-
     try:
-        db.session.commit()
+        user_id = session.get("user_id")
+        if not user_id:
+            return jsonify({"error": "You need to log in to reply"}), 403
+
+        post_id = request.form["post_id"]
+        content = request.form["content"]
+        is_anonymous = "is_anonymous" in request.form  # Check if the checkbox was checked
+
+        new_reply = Reply(
+            post_id=post_id,
+            user_id=user_id,
+            content=content,
+            is_anonymous=is_anonymous,  # Set the is_anonymous field based on the checkbox
+        )
+        db.session.add(new_reply)
+        db.session.commit()  # Commit the reply to the database
+
         return jsonify(
             {
                 "message": "Reply posted successfully!",
@@ -119,8 +162,11 @@ def submit_reply():
             }
         )
     except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+        # Log the exception to the console
+        print("Error submitting reply:", e)
+        db.session.rollback()  # Rollback any changes made before the error occurred
+        return jsonify({"error": "An error occurred while submitting the reply"}), 500
+
 
 
 @post.route("/connect/<int:post_id>", methods=["POST"])
