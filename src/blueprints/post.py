@@ -66,93 +66,107 @@ def create():
 
 from sqlalchemy import case
 
+
 @post.route("/browse")
 @post.route("/browse/<int:page>")
 def browse(page=1):
-    sort_option = request.args.get('sort', 'newest')
+    sort_option = request.args.get("sort", "newest")
     per_page = 10
 
-    # Count number of likes each post has 
-    likes_count_subq = db.session.query(
-        LikePost.post_id,
-        db.func.count(LikePost.post_id).label('like_count')
-    ).group_by(LikePost.post_id).subquery()
+    # Count number of likes each post has
+    likes_count_subq = (
+        db.session.query(
+            LikePost.post_id, db.func.count(LikePost.post_id).label("like_count")
+        )
+        .group_by(LikePost.post_id)
+        .subquery()
+    )
 
-    # Query all posts even those with no likes (use of outerjoin) 
+    # Query all posts even those with no likes (use of outerjoin)
     base_query = db.session.query(Post).outerjoin(
         likes_count_subq, likes_count_subq.c.post_id == Post.post_id
     )
 
     # Determine sorting based on the option
-    if sort_option == 'oldest':
+    if sort_option == "oldest":
         sort_criteria = Post.created_at.asc()
-    elif sort_option == 'most_liked':
+    elif sort_option == "most_liked":
         sort_criteria = db.desc(likes_count_subq.c.like_count)
-    elif sort_option == 'least_liked':
+    elif sort_option == "least_liked":
         sort_criteria = likes_count_subq.c.like_count
-    elif sort_option.startswith('type_'):
-        post_type = sort_option.split('_')[1]  # Extract post type from the sort_option
+    elif sort_option.startswith("type_"):
+        post_type = sort_option.split("_")[1]  # Extract post type from the sort_option
         # Adjust the use of case to correctly pass arguments
         type_sort = case((Post.post_type == post_type, 0), else_=1)
         base_query = base_query.order_by(type_sort, Post.created_at.desc())
     else:  # Default to newest
         sort_criteria = Post.created_at.desc()
 
-    if not sort_option.startswith('type_'):
+    if not sort_option.startswith("type_"):
         # Only apply sort_criteria directly if it's not 'type_' option to avoid confusion in handling multiple criteria
         base_query = base_query.order_by(sort_criteria)
 
     posts = base_query.paginate(page=page, per_page=per_page, error_out=False)
 
     user = None
-    if 'user_id' in session:
-        user = User.query.get(session['user_id'])
+    if "user_id" in session:
+        user = User.query.get(session["user_id"])
 
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        posts_html = render_template('posts_list.html', posts=posts.items, user=user)
-        return jsonify({'posts': posts_html, 'has_next': posts.has_next})
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        posts_html = render_template("posts_list.html", posts=posts.items, user=user)
+        return jsonify({"posts": posts_html, "has_next": posts.has_next})
 
     return render_template("browse.html", posts=posts.items, user=user)
 
 
-@post.route('/like_post', methods=['POST'])
+@post.route("/like_post", methods=["POST"])
 def like_post():
-    if not session.get('user_id'):
-        return jsonify({'error': 'You need to log in to like posts'}), 403
+    if not session.get("user_id"):
+        return jsonify({"error": "You need to log in to like posts"}), 403
 
-    post_id = request.form.get('post_id')
-    user_id = request.form.get('user_id')
+    post_id = request.form.get("post_id")
+    user_id = request.form.get("user_id")
     like = LikePost.query.filter_by(user_id=user_id, post_id=post_id).first()
     if like:
         db.session.delete(like)
         db.session.commit()
-        return jsonify({'status': 'like', 'count': LikePost.query.filter_by(post_id=post_id).count()})
+        return jsonify(
+            {
+                "status": "like",
+                "count": LikePost.query.filter_by(post_id=post_id).count(),
+            }
+        )
     else:
         new_like = LikePost(user_id=user_id, post_id=post_id)
         db.session.add(new_like)
         db.session.commit()
-        return jsonify({'status': 'unlike', 'count': LikePost.query.filter_by(post_id=post_id).count()})
+        return jsonify(
+            {
+                "status": "unlike",
+                "count": LikePost.query.filter_by(post_id=post_id).count(),
+            }
+        )
 
 
-@post.route('/like_reply', methods=['POST'])
+@post.route("/like_reply", methods=["POST"])
 def like_reply():
-    if not session.get('user_id'):
-        return jsonify({'error': 'You need to log in to like replies'}), 403
+    if not session.get("user_id"):
+        return jsonify({"error": "You need to log in to like replies"}), 403
 
-    reply_id = request.form.get('reply_id')
-    user_id = request.form.get('user_id')
+    reply_id = request.form.get("reply_id")
+    user_id = request.form.get("user_id")
     like = LikeReply.query.filter_by(user_id=user_id, reply_id=reply_id).first()
     if like:
         db.session.delete(like)
         db.session.commit()
         new_count = LikeReply.query.filter_by(reply_id=reply_id).count()
-        return jsonify({'status': 'like', 'count': new_count})
+        return jsonify({"status": "like", "count": new_count})
     else:
         new_like = LikeReply(user_id=user_id, reply_id=reply_id)
         db.session.add(new_like)
         db.session.commit()
         new_count = LikeReply.query.filter_by(reply_id=reply_id).count()
-        return jsonify({'status': 'unlike', 'count': new_count})
+        return jsonify({"status": "unlike", "count": new_count})
 
 
 @post.route("/submit_reply", methods=["POST"])
@@ -164,7 +178,9 @@ def submit_reply():
 
         post_id = request.form["post_id"]
         content = request.form["content"]
-        is_anonymous = "is_anonymous" in request.form  # Check if the checkbox was checked
+        is_anonymous = (
+            "is_anonymous" in request.form
+        )  # Check if the checkbox was checked
 
         new_reply = Reply(
             post_id=post_id,
@@ -188,7 +204,6 @@ def submit_reply():
         print("Error submitting reply:", e)
         db.session.rollback()  # Rollback any changes made before the error occurred
         return jsonify({"error": "An error occurred while submitting the reply"}), 500
-
 
 
 @post.route("/connect/<int:post_id>", methods=["POST"])
