@@ -10,7 +10,7 @@ from flask import (
 )
 from models import LikePost, LikeReply, Post, Reply, User, Notification, db
 from sqlalchemy.exc import IntegrityError
-
+from sqlalchemy import case
 
 
 post = Blueprint("post", __name__)
@@ -64,20 +64,45 @@ def create():
     return render_template("post.html")
 
 
+from sqlalchemy import case
+
 @post.route("/browse")
 @post.route("/browse/<int:page>")
 def browse(page=1):
-    sort_order = request.args.get('sort', 'newest')
+    sort_option = request.args.get('sort', 'newest')
     per_page = 10
 
-    if sort_order == 'oldest':
+    # Count number of likes each post has 
+    likes_count_subq = db.session.query(
+        LikePost.post_id,
+        db.func.count(LikePost.post_id).label('like_count')
+    ).group_by(LikePost.post_id).subquery()
+
+    # Query all posts even those with no likes (use of outerjoin) 
+    base_query = db.session.query(Post).outerjoin(
+        likes_count_subq, likes_count_subq.c.post_id == Post.post_id
+    )
+
+    # Determine sorting based on the option
+    if sort_option == 'oldest':
         sort_criteria = Post.created_at.asc()
+    elif sort_option == 'most_liked':
+        sort_criteria = db.desc(likes_count_subq.c.like_count)
+    elif sort_option == 'least_liked':
+        sort_criteria = likes_count_subq.c.like_count
+    elif sort_option.startswith('type_'):
+        post_type = sort_option.split('_')[1]  # Extract post type from the sort_option
+        # Adjust the use of case to correctly pass arguments
+        type_sort = case((Post.post_type == post_type, 0), else_=1)
+        base_query = base_query.order_by(type_sort, Post.created_at.desc())
     else:  # Default to newest
         sort_criteria = Post.created_at.desc()
 
-    posts = Post.query.options(
-        db.joinedload(Post.replies).joinedload(Reply.replier)
-    ).order_by(sort_criteria).paginate(page=page, per_page=per_page, error_out=False)
+    if not sort_option.startswith('type_'):
+        # Only apply sort_criteria directly if it's not 'type_' option to avoid confusion in handling multiple criteria
+        base_query = base_query.order_by(sort_criteria)
+
+    posts = base_query.paginate(page=page, per_page=per_page, error_out=False)
 
     user = None
     if 'user_id' in session:
@@ -88,6 +113,7 @@ def browse(page=1):
         return jsonify({'posts': posts_html, 'has_next': posts.has_next})
 
     return render_template("browse.html", posts=posts.items, user=user)
+
 
 @post.route('/like_post', methods=['POST'])
 def like_post():
@@ -127,10 +153,6 @@ def like_reply():
         db.session.commit()
         new_count = LikeReply.query.filter_by(reply_id=reply_id).count()
         return jsonify({'status': 'unlike', 'count': new_count})
-
-
-
-
 
 
 @post.route("/submit_reply", methods=["POST"])
