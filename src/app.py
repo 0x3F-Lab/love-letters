@@ -50,7 +50,8 @@ def create_app(config_class=DevelopmentConfig):
                 recipient_id=user_id
             ).count()
 
-        return render_template("landing.html", notification_count=notification_count)
+        posts = Post.query.options(db.joinedload(Post.replies)).all()
+        return render_template("landing.html", notification_count=notification_count, posts=posts)
 
     return app
 

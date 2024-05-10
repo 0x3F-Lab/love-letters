@@ -246,3 +246,31 @@ select:focus {
   font-size: small;
   margin-top: -5px;
 }
+
+#cards-container {
+  position: relative;
+  height: 600px;  
+  width: 100%;
+}
+
+.swipe-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  will-change: transform, opacity;
+  cursor: grab;
+  background: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  user-select: none; 
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  cursor: grab;
+}
+
+.swipe-card:not(:last-child) {
+  pointer-events: none;  
+}
