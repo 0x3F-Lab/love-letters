@@ -249,7 +249,7 @@ select:focus {
 
 #cards-container {
   position: relative;
-  height: 600px;  
+  height: 600px;
   width: 100%;
 }
 
@@ -264,7 +264,7 @@ select:focus {
   background: white;
   border: 1px solid black;
   border-radius: 10px;
-  user-select: none; 
+  user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -272,5 +272,5 @@ select:focus {
 }
 
 .swipe-card:not(:last-child) {
-  pointer-events: none;  
+  pointer-events: none;
 }

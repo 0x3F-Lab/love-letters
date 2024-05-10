@@ -219,56 +219,56 @@ $(document).ready(function () {
   let isDragging = false;
   let startX, startY;
 
-  $('.swipe-card').on('mousedown touchstart', function(e) {
-      e.preventDefault();
-      startX = e.pageX || e.originalEvent.touches[0].pageX;
-      startY = e.pageY || e.originalEvent.touches[0].pageY;
-      isDragging = true;
-      let card = $(this); 
+  $(".swipe-card").on("mousedown touchstart", function (e) {
+    e.preventDefault();
+    startX = e.pageX || e.originalEvent.touches[0].pageX;
+    startY = e.pageY || e.originalEvent.touches[0].pageY;
+    isDragging = true;
+    let card = $(this);
 
-      $(document).on('mousemove touchmove', function(e) {
-          if (!isDragging) return;
-          let moveX = e.pageX || e.originalEvent.touches[0].pageX;
-          let diffX = moveX - startX;
+    $(document).on("mousemove touchmove", function (e) {
+      if (!isDragging) return;
+      let moveX = e.pageX || e.originalEvent.touches[0].pageX;
+      let diffX = moveX - startX;
 
-          // Adjust the sensitivity by reducing the divisor for 'diffX', enhancing the movement feel
-          if (Math.abs(diffX) > 10) { 
-              card.css({
-                  'margin-left': `${diffX}px`,
-                  'opacity': 1 - Math.abs(diffX) / 500,  // Increased sensitivity
-                  'background-color': diffX > 0 ? '#ccffcc' : '#ffcccc'
-              });
-          }
-      });
+      // Adjust the sensitivity by reducing the divisor for 'diffX', enhancing the movement feel
+      if (Math.abs(diffX) > 10) {
+        card.css({
+          "margin-left": `${diffX}px`,
+          opacity: 1 - Math.abs(diffX) / 500, // Increased sensitivity
+          "background-color": diffX > 0 ? "#ccffcc" : "#ffcccc",
+        });
+      }
+    });
 
-      $(document).on('mouseup touchend', function(e) {
-          $(document).off('mousemove touchmove');
-          isDragging = false;
-          let endX = e.pageX || e.changedTouches[0].pageX;
-          let diffX = endX - startX;
+    $(document).on("mouseup touchend", function (e) {
+      $(document).off("mousemove touchmove");
+      isDragging = false;
+      let endX = e.pageX || e.changedTouches[0].pageX;
+      let diffX = endX - startX;
 
-          if (Math.abs(diffX) > 150) { 
-              card.css({
-                  'transform': `translateX(${diffX > 0 ? 1000 : -1000}px)`,
-                  'opacity': 0
-              });
-              setTimeout(() => {
-                  card.remove();
-                  $('.swipe-card').last().css('pointer-events', 'auto');
-              }, 300);
-              if (diffX > 0) {
-                // left swipe
-              } else {
-                // right swipe
-              }
-          } else {
-              card.css({
-                  'margin-left': '0px',
-                  'opacity': 1,
-                  'background-color': '' 
-              });
-          }
-      });
+      if (Math.abs(diffX) > 150) {
+        card.css({
+          transform: `translateX(${diffX > 0 ? 1000 : -1000}px)`,
+          opacity: 0,
+        });
+        setTimeout(() => {
+          card.remove();
+          $(".swipe-card").last().css("pointer-events", "auto");
+        }, 300);
+        if (diffX > 0) {
+          // left swipe
+        } else {
+          // right swipe
+        }
+      } else {
+        card.css({
+          "margin-left": "0px",
+          opacity: 1,
+          "background-color": "",
+        });
+      }
+    });
   });
   $("#replyForm").submit(function (event) {
     event.preventDefault(); // Prevent the default form submission
