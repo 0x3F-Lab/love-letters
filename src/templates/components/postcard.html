@@ -19,7 +19,7 @@
                     {{ 'Unlike' if post.likes.filter_by(user_id=user.user_id).first() else 'Like' }} (<span id="like-count-{{ post.post_id }}">{{ post.likes.count() }}</span>)
                 </button>
             {% else %}
-                <button type="button" class="btn btn-outline-primary" onclick="alert('Please log in to like posts')">Like (<span id="like-count-{{ post.post_id }}">{{ post.likes.count() }}</span>)</button>
+                <button type="button" class="btn btn-outline-primary" onclick="$('#loginModal').modal('show')">Like (<span id="like-count-{{ post.post_id }}">{{ post.likes.count() }}</span>)</button>
             {% endif %}
             <button type="button" class="btn btn-info" onclick="toggleReplies({{ post.post_id }})">View Replies</button>
             <form action="{{ url_for('post.connect', post_id=post.post_id) }}" method="POST">
@@ -45,7 +45,7 @@
                                 {{ 'Unlike' if reply.likes.filter_by(user_id=user.user_id).first() else 'Like' }} (<span id="like-count-reply-{{ reply.reply_id }}">{{ reply.likes.count() }}</span>)
                             </button>
                         {% else %}
-                            <button type="button" class="btn btn-outline-primary" onclick="alert('Please log in to like replies')">Like (<span id="like-count-reply-{{ reply.reply_id }}">{{ reply.likes.count() }}</span>)</button>
+                            <button type="button" class="btn btn-outline-primary" onclick="$('#loginModal').modal('show')">Like (<span id="like-count-reply-{{ reply.reply_id }}">{{ reply.likes.count() }}</span>)</button>
                         {% endif %}
                     </div>
                 </div>
