@@ -11,6 +11,8 @@
       <div class="modal-body">
         <div id="errorMessages" style="color: red;"></div>
         <form id="signUpForm" method="post" action="{{ url_for('auth.signup') }}" data-redirect-url="{{ url_for('home') }}">
+          <!-- Hidden field that inclues the CSRF token -->
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
           <input type="hidden" name="signup_form" value="true" />
           
           <div class="form-group">
