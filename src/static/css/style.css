@@ -249,28 +249,96 @@ select:focus {
 
 #cards-container {
   position: relative;
-  height: 600px;
-  width: 100%;
+  width: 100%;  /* or specific width as needed */
+  height: 400px; /* Adjust to fit the card height */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .swipe-card {
   position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
   width: 80%;
-  will-change: transform, opacity;
-  cursor: grab;
-  background: white;
-  border: 1px solid black;
+  min-height: 300px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   border-radius: 10px;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: transform 0.5s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1; /* Set opacity to 1 to prevent see-through */
   cursor: grab;
 }
 
+.swipe-card:active {
+  cursor: grabbing; /* Cursor when card is being dragged */
+}
+
 .swipe-card:not(:last-child) {
-  pointer-events: none;
+  transform: translate(-55%, -60%) scale(0.95); /* slightly offset and scaled cards beneath top */
+}
+
+/* Base popup styling */
+.status-popup {
+  position: absolute;
+  bottom: 20px;  /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 30px;
+  border-radius: 20px;
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-out;
+  font-family: 'Poppins', sans-serif; /* Modern, rounded font */
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* For the pass popup */
+.status-popup.pass {
+  background: linear-gradient(135deg, #ff5858, #f857a6); /* A vibrant red-pink gradient */
+  animation: pulse-red 1s infinite;
+}
+
+/* For the add popup */
+.status-popup.add {
+  background: linear-gradient(135deg, #00b09b, #96c93d); /* A fresh green-blue gradient */
+  animation: pulse-green 1s infinite;
+}
+
+/* Pulse animation for the pass popup */
+@keyframes pulse-red {
+  0% {
+      box-shadow: 0 0 0 0 rgba(248, 87, 166, 0.7);
+  }
+  70% {
+      box-shadow: 0 0 0 10px rgba(248, 87, 166, 0);
+  }
+  100% {
+      box-shadow: 0 0 0 0 rgba(248, 87, 166, 0);
+  }
+}
+
+/* Pulse animation for the add popup */
+@keyframes pulse-green {
+  0% {
+      box-shadow: 0 0 0 0 rgba(150, 201, 61, 0.7);
+  }
+  70% {
+      box-shadow: 0 0 0 10px rgba(150, 201, 61, 0);
+  }
+  100% {
+      box-shadow: 0 0 0 0 rgba(150, 201, 61, 0);
+  }
 }

@@ -215,61 +215,86 @@ function toggleReplies(postId) {
 
 // Dynamically show the reply without refresching the page
 
-$(document).ready(function () {
-  let isDragging = false;
-  let startX, startY;
+document.addEventListener('DOMContentLoaded', function () {
+  const cards = Array.from(document.querySelectorAll('.swipe-card')).reverse();
+  const popup = document.querySelector('#cards-container .status-popup');  // Get the popup from the container
+  let isDragging = false, startX, startY;
 
-  $(".swipe-card").on("mousedown touchstart", function (e) {
-    e.preventDefault();
-    startX = e.pageX || e.originalEvent.touches[0].pageX;
-    startY = e.pageY || e.originalEvent.touches[0].pageY;
-    isDragging = true;
-    let card = $(this);
+  cards.forEach((card, index) => {
+      card.style.zIndex = cards.length - index;
+      card.addEventListener('mousedown', startDrag);
+      card.addEventListener('touchstart', startDrag, {passive: true});
 
-    $(document).on("mousemove touchmove", function (e) {
-      if (!isDragging) return;
-      let moveX = e.pageX || e.originalEvent.touches[0].pageX;
-      let diffX = moveX - startX;
-
-      // Adjust the sensitivity by reducing the divisor for 'diffX', enhancing the movement feel
-      if (Math.abs(diffX) > 10) {
-        card.css({
-          "margin-left": `${diffX}px`,
-          opacity: 1 - Math.abs(diffX) / 500, // Increased sensitivity
-          "background-color": diffX > 0 ? "#ccffcc" : "#ffcccc",
-        });
+      function startDrag(e) {
+          e.preventDefault();
+          isDragging = true;
+          startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+          startY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
+          card.style.transition = 'none'; // Disable transition during drag
+          card.style.cursor = 'grabbing';
+          document.addEventListener('mousemove', onDrag);
+          document.addEventListener('touchmove', onDrag, {passive: true});
+          document.addEventListener('mouseup', endDrag);
+          document.addEventListener('touchend', endDrag);
       }
-    });
 
-    $(document).on("mouseup touchend", function (e) {
-      $(document).off("mousemove touchmove");
-      isDragging = false;
-      let endX = e.pageX || e.changedTouches[0].pageX;
-      let diffX = endX - startX;
-
-      if (Math.abs(diffX) > 150) {
-        card.css({
-          transform: `translateX(${diffX > 0 ? 1000 : -1000}px)`,
-          opacity: 0,
-        });
-        setTimeout(() => {
-          card.remove();
-          $(".swipe-card").last().css("pointer-events", "auto");
-        }, 300);
-        if (diffX > 0) {
-          // left swipe
-        } else {
-          // right swipe
-        }
-      } else {
-        card.css({
-          "margin-left": "0px",
-          opacity: 1,
-          "background-color": "",
-        });
+      function onDrag(e) {
+          if (!isDragging) return;
+          const currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+          const currentY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
+          const diffX = currentX - startX;
+          const diffY = currentY - startY;
+          card.style.transform = `translate(${diffX}px, ${diffY}px)`;
       }
-    });
+
+      function endDrag() {
+          isDragging = false;
+          card.style.cursor = 'grab';
+          const endX = parseFloat(card.style.transform.split(',')[0].replace('translate(', '').replace('px', ''));
+          const endY = parseFloat(card.style.transform.split(',')[1].replace('px)', ''));
+          
+          card.style.transition = 'transform 0.5s ease-out';
+          const threshold = 100;
+          if (Math.abs(endX) > threshold) {
+              let directionMultiplierX = (endX > 0 ? 1 : -1);
+              let moveOutWidth = directionMultiplierX * screen.width;
+              let moveOutHeight = (endY > 0 ? 1 : -1) * screen.height;
+              card.style.transform = `translate(${moveOutWidth * 2}px, ${moveOutHeight * 2}px)`;
+              setTimeout(() => {
+                  card.style.display = 'none';
+              }, 500);
+
+              // Show popup
+              popup.style.display = 'block';
+              popup.style.opacity = 1;
+              if (directionMultiplierX === -1) {
+                  popup.textContent = 'Pass';
+                  popup.className = 'status-popup pass';
+              } else {
+                  popup.textContent = 'Add';
+                  popup.className = 'status-popup add';
+              }
+              setTimeout(() => { 
+                  popup.style.opacity = 0;
+                  setTimeout(() => popup.style.display = 'none', 500);
+              }, 2000); // Keep visible longer
+          } else {
+              card.style.transform = 'translate(0, 0)'; // Reset position
+          }
+          document.removeEventListener('mousemove', onDrag);
+          document.removeEventListener('touchmove', onDrag);
+          document.removeEventListener('mouseup', endDrag);
+          document.removeEventListener('touchend', endDrag);
+      }
   });
+});
+
+
+
+
+
+$(document).ready(function () {
+
   $("#replyForm").submit(function (event) {
     event.preventDefault(); // Prevent the default form submission
 
