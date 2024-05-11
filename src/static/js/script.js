@@ -267,7 +267,7 @@ $(document).ready(function () {
 });
 
 function toggleLikePost(postId, userId) {
-  var csrfToken = $('#csrf_token').val();
+  var csrfToken = $("#csrf_token").val();
   $.ajax({
     url: "/post/like_post",
     type: "POST",
@@ -305,7 +305,7 @@ function toggleLikePost(postId, userId) {
 }
 
 function toggleLikeReply(replyId, userId) {
-  var csrfToken = $('#csrf_token').val();
+  var csrfToken = $("#csrf_token").val();
   $.ajax({
     url: "/post/like_reply",
     type: "POST",

@@ -130,7 +130,9 @@ def like_post():
 
     post_id = request.form.get("post_id")
     user_id = request.form.get("user_id")
-    like = LikePost.query.filter_by(user_id=current_user.user_id, post_id=post_id).first()
+    like = LikePost.query.filter_by(
+        user_id=current_user.user_id, post_id=post_id
+    ).first()
     if like:
         db.session.delete(like)
         db.session.commit()
@@ -159,7 +161,9 @@ def like_reply():
 
     reply_id = request.form.get("reply_id")
     user_id = request.form.get("user_id")
-    like = LikeReply.query.filter_by(user_id=current_user.user_id, reply_id=reply_id).first()
+    like = LikeReply.query.filter_by(
+        user_id=current_user.user_id, reply_id=reply_id
+    ).first()
     if like:
         db.session.delete(like)
         db.session.commit()
