@@ -5,6 +5,13 @@ from sqlalchemy.exc import IntegrityError
 from flask import jsonify
 import re
 import json
+from flask_login import (
+    LoginManager,
+    login_user,
+    current_user,
+    logout_user,
+    login_required,
+)
 
 auth = Blueprint("auth", __name__)
 
@@ -166,14 +173,12 @@ def signup():
 
 
 @auth.route("/account", methods=["GET", "POST"])
+@login_required
 def account():
-    if "user_id" not in session:
-        flash("You must be logged in to access this page.", "danger")
-        return redirect(url_for("auth.login"))
 
-    user = User.query.get(session["user_id"])
+    user = current_user
 
-    if not user:
+    if not current_user.is_authenticated:
         flash("User not found.", "danger")
         return redirect(url_for("auth.login"))
 
@@ -252,12 +257,10 @@ def account():
 
 
 @auth.route("/change_password", methods=["POST"])
+@login_required
 def change_password():
-    if "user_id" not in session:
-        flash("You must be logged in to access this page.", "danger")
-        return redirect(url_for("auth.login"))
 
-    user = User.query.get(session["user_id"])
+    user = current_user
 
     if not user:
         flash("User not found.", "danger")
@@ -305,14 +308,16 @@ def change_password():
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
+    # if current_user.is_authenticated:
+    #     return redirect(url_for('auth.'))  # Redirect if already logged in
+
     if request.method == "POST":
         email = request.form["email"].lower()
         password = request.form["password"]
         user = User.query.filter_by(email=email).first()
 
         if user and check_password_hash(user.password_hash, password):
-            session["user_id"] = user.user_id
-            session["user_name"] = f"{user.first_name} {user.last_name}"
+            login_user(user)
             flash("Successfully logged in", "success")
             return jsonify({"status": "success", "message": "Login successful!"}), 200
         else:
@@ -329,7 +334,7 @@ def login():
 
 @auth.route("/logout")
 def logout():
-    session.pop("user_id", None)
+    logout_user()
     flash("You have been logged out.", "success")
     return redirect(url_for("auth.login"))
 
@@ -338,20 +343,18 @@ def logout():
 
 
 @auth.route("/notifications")
+@login_required
 def notifications():
-    if "user_id" not in session:
-        flash("You must be logged in to view notifications.", "warning")
-        return redirect(url_for("auth.login"))
-
-    user_id = session["user_id"]
-    user_notifications = Notification.query.filter_by(recipient_id=user_id).all()
+    user_notifications = Notification.query.filter_by(
+        recipient_id=current_user.get_id()
+    ).all()
     return render_template("notifications.html", notifications=user_notifications)
 
 
 @auth.route("/dismiss_notification/<int:notification_id>", methods=["POST"])
 def dismiss_notification(notification_id):
     notification = Notification.query.get_or_404(notification_id)
-    if notification.recipient_id != session.get("user_id"):
+    if str(notification.recipient_id) != current_user.get_id():
         flash("You do not have permission to delete this notification.", "danger")
         return redirect(url_for("auth.notifications"))
 

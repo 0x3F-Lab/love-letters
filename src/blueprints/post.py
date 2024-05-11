@@ -10,6 +10,13 @@ from flask import (
 )
 from models import LikePost, LikeReply, Post, Reply, User, Notification, db
 from sqlalchemy.exc import IntegrityError
+from flask_login import (
+    LoginManager,
+    login_user,
+    current_user,
+    logout_user,
+    login_required,
+)
 from sqlalchemy import case
 
 
@@ -19,8 +26,8 @@ post = Blueprint("post", __name__)
 @post.route("/create_post", methods=["POST"])
 def create_post():
     if request.method == "POST":
-        user_id = session.get("user_id")
-        if not user_id:
+
+        if not current_user.is_authenticated:
             flash("You need to login to post.", "danger")
             return redirect(url_for("auth.login"))
 
@@ -30,7 +37,7 @@ def create_post():
         is_anonymous = "is_anonymous" in request.form
 
         new_post = Post(
-            user_id=user_id,
+            user_id=current_user.user_id,
             title=title,
             content=content,
             post_type=post_type,
@@ -56,11 +63,8 @@ def create_post():
 
 
 @post.route("/create")
+@login_required
 def create():
-    user_id = session.get("user_id")
-    if not user_id:
-        flash("You need to login to post.", "danger")
-        return redirect(url_for("auth.login"))
     return render_template("post.html")
 
 
@@ -121,12 +125,12 @@ def browse(page=1):
 
 @post.route("/like_post", methods=["POST"])
 def like_post():
-    if not session.get("user_id"):
+    if not current_user.is_authenticated:
         return jsonify({"error": "You need to log in to like posts"}), 403
 
     post_id = request.form.get("post_id")
     user_id = request.form.get("user_id")
-    like = LikePost.query.filter_by(user_id=user_id, post_id=post_id).first()
+    like = LikePost.query.filter_by(user_id=current_user.user_id, post_id=post_id).first()
     if like:
         db.session.delete(like)
         db.session.commit()
@@ -137,7 +141,7 @@ def like_post():
             }
         )
     else:
-        new_like = LikePost(user_id=user_id, post_id=post_id)
+        new_like = LikePost(user_id=current_user.user_id, post_id=post_id)
         db.session.add(new_like)
         db.session.commit()
         return jsonify(
@@ -150,19 +154,19 @@ def like_post():
 
 @post.route("/like_reply", methods=["POST"])
 def like_reply():
-    if not session.get("user_id"):
+    if not current_user.is_authenticated:
         return jsonify({"error": "You need to log in to like replies"}), 403
 
     reply_id = request.form.get("reply_id")
     user_id = request.form.get("user_id")
-    like = LikeReply.query.filter_by(user_id=user_id, reply_id=reply_id).first()
+    like = LikeReply.query.filter_by(user_id=current_user.user_id, reply_id=reply_id).first()
     if like:
         db.session.delete(like)
         db.session.commit()
         new_count = LikeReply.query.filter_by(reply_id=reply_id).count()
         return jsonify({"status": "like", "count": new_count})
     else:
-        new_like = LikeReply(user_id=user_id, reply_id=reply_id)
+        new_like = LikeReply(user_id=current_user.user_id, reply_id=reply_id)
         db.session.add(new_like)
         db.session.commit()
         new_count = LikeReply.query.filter_by(reply_id=reply_id).count()
@@ -171,32 +175,32 @@ def like_reply():
 
 @post.route("/submit_reply", methods=["POST"])
 def submit_reply():
+    # Check if the user is authenticated
+    if not current_user.is_authenticated:
+        return jsonify({"error": "You need to log in to reply"}), 403
+
+    post_id = request.form["post_id"]
+    content = request.form["content"]
+    is_anonymous = (
+        "is_anonymous" in request.form
+    )  # Check if the checkbox for anonymous was checked
+
+    new_reply = Reply(
+        post_id=post_id,
+        user_id=current_user.user_id,  # Now safe to access, as we've checked authentication
+        content=content,
+        is_anonymous=is_anonymous,
+    )
+    db.session.add(new_reply)
+
     try:
-        user_id = session.get("user_id")
-        if not user_id:
-            return jsonify({"error": "You need to log in to reply"}), 403
-
-        post_id = request.form["post_id"]
-        content = request.form["content"]
-        is_anonymous = (
-            "is_anonymous" in request.form
-        )  # Check if the checkbox was checked
-
-        new_reply = Reply(
-            post_id=post_id,
-            user_id=user_id,
-            content=content,
-            is_anonymous=is_anonymous,  # Set the is_anonymous field based on the checkbox
-        )
-        db.session.add(new_reply)
-        db.session.commit()  # Commit the reply to the database
-
+        db.session.commit()
         return jsonify(
             {
                 "message": "Reply posted successfully!",
                 "post_id": post_id,
                 "content": content,
-                "anonymous": is_anonymous,  # Include anonymity status in the response
+                "anonymous": is_anonymous,
             }
         )
     except Exception as e:
@@ -208,28 +212,31 @@ def submit_reply():
 
 @post.route("/connect/<int:post_id>", methods=["POST"])
 def connect(post_id):
-    if "user_id" not in session:
-        flash("You need to log in to connect.", "danger")
-        return redirect(url_for("auth.login"))
 
-    user_id = session["user_id"]
+    if not current_user.is_authenticated:
+        flash("You need to login to connect.", "danger")
+        return redirect(url_for("post.browse"))
+
     post = Post.query.get_or_404(post_id)
     recipient_id = post.user_id
 
-    if user_id == recipient_id:
+    # Check if the current user is trying to connect with themselves
+    if current_user.user_id == recipient_id:
         flash("You cannot connect with yourself.", "info")
         return redirect(url_for("post.browse"))
 
+    # Check for existing notification to avoid duplicate requests
     existing_notification = Notification.query.filter_by(
-        user_id=user_id, recipient_id=recipient_id
+        user_id=current_user.user_id, recipient_id=recipient_id
     ).first()
 
     if existing_notification:
         flash("You have already sent a connection request to this user.", "info")
         return redirect(url_for("post.browse"))
 
+    # Create and save a new notification
     new_notification = Notification(
-        user_id=user_id, recipient_id=recipient_id, post_id=post_id
+        user_id=current_user.user_id, recipient_id=recipient_id, post_id=post_id
     )
     db.session.add(new_notification)
     try:

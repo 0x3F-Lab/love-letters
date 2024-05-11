@@ -10,6 +10,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="replyForm" method="POST">
+                <!-- Hidden field that inclues the CSRF token -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <div class="modal-body">
                     <input type="hidden" name="post_id" id="post-id">
                     <textarea class="form-control" name="content" required placeholder="Write your reply here..."></textarea>

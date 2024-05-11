@@ -252,6 +252,12 @@ $(document).ready(function () {
         console.error("Error:", error); // Log any errors to the console
         if (xhr.status == 403) {
           $("#replyError").text("You need to be logged in to reply.").show(); // Update and show error div
+          $("#replyModal")
+            .modal("hide")
+            .on("hidden.bs.modal", function () {
+              $("#loginModal").modal("show"); // Show login modal only after reply modal has hidden
+              $(this).off("hidden.bs.modal"); // Remove the event handler to avoid stacking handlers
+            });
         } else {
           $("#replyError").text("An error occurred. Please try again.").show(); // Handle other errors
         }
@@ -261,10 +267,11 @@ $(document).ready(function () {
 });
 
 function toggleLikePost(postId, userId) {
+  var csrfToken = $('#csrf_token').val();
   $.ajax({
     url: "/post/like_post",
     type: "POST",
-    data: { post_id: postId, user_id: userId },
+    data: { post_id: postId, user_id: userId, csrf_token: csrfToken },
     success: function (response) {
       var likeButton = $('.like-btn[data-post-id="' + postId + '"]');
       if (response.status === "unlike") {
@@ -298,10 +305,11 @@ function toggleLikePost(postId, userId) {
 }
 
 function toggleLikeReply(replyId, userId) {
+  var csrfToken = $('#csrf_token').val();
   $.ajax({
     url: "/post/like_reply",
     type: "POST",
-    data: { reply_id: replyId, user_id: userId },
+    data: { reply_id: replyId, user_id: userId, csrf_token: csrfToken },
     success: function (response) {
       var likeButton = $('.like-btn[data-reply-id="' + replyId + '"]');
       var likeCount = $("#like-count-reply-" + replyId);

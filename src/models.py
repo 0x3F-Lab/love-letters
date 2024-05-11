@@ -1,3 +1,4 @@
+from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import JSON
 
@@ -17,6 +18,22 @@ class User(db.Model):
     # Relationships
     posts = db.relationship("Post", backref="author", lazy=True)
     replies = db.relationship("Reply", backref="replier", lazy=True)
+
+    # Flask-Login integration
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True  # You can later modify this based on your application's logic
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return str(self.user_id)
 
 
 class Post(db.Model):
