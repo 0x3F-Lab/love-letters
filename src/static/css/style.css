@@ -249,7 +249,7 @@ select:focus {
 
 #cards-container {
   position: relative;
-  width: 100%;  /* or specific width as needed */
+  width: 100%; /* or specific width as needed */
   height: 400px; /* Adjust to fit the card height */
   overflow: hidden;
   display: flex;
@@ -262,7 +262,7 @@ select:focus {
   width: 80%;
   min-height: 300px;
   background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 20px;
   box-sizing: border-box;
@@ -288,7 +288,7 @@ select:focus {
 /* Base popup styling */
 .status-popup {
   position: absolute;
-  bottom: 20px;  /* Adjust as needed */
+  bottom: 20px; /* Adjust as needed */
   left: 50%;
   transform: translateX(-50%);
   padding: 15px 30px;
@@ -296,8 +296,10 @@ select:focus {
   z-index: 1000;
   display: none;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease-out;
-  font-family: 'Poppins', sans-serif; /* Modern, rounded font */
+  transition:
+    opacity 0.5s ease-in-out,
+    transform 0.5s ease-out;
+  font-family: "Poppins", sans-serif; /* Modern, rounded font */
   font-size: 24px;
   font-weight: 600;
   text-align: center;
@@ -307,38 +309,46 @@ select:focus {
 
 /* For the pass popup */
 .status-popup.pass {
-  background: linear-gradient(135deg, #ff5858, #f857a6); /* A vibrant red-pink gradient */
+  background: linear-gradient(
+    135deg,
+    #ff5858,
+    #f857a6
+  ); /* A vibrant red-pink gradient */
   animation: pulse-red 1s infinite;
 }
 
 /* For the add popup */
 .status-popup.add {
-  background: linear-gradient(135deg, #00b09b, #96c93d); /* A fresh green-blue gradient */
+  background: linear-gradient(
+    135deg,
+    #00b09b,
+    #96c93d
+  ); /* A fresh green-blue gradient */
   animation: pulse-green 1s infinite;
 }
 
 /* Pulse animation for the pass popup */
 @keyframes pulse-red {
   0% {
-      box-shadow: 0 0 0 0 rgba(248, 87, 166, 0.7);
+    box-shadow: 0 0 0 0 rgba(248, 87, 166, 0.7);
   }
   70% {
-      box-shadow: 0 0 0 10px rgba(248, 87, 166, 0);
+    box-shadow: 0 0 0 10px rgba(248, 87, 166, 0);
   }
   100% {
-      box-shadow: 0 0 0 0 rgba(248, 87, 166, 0);
+    box-shadow: 0 0 0 0 rgba(248, 87, 166, 0);
   }
 }
 
 /* Pulse animation for the add popup */
 @keyframes pulse-green {
   0% {
-      box-shadow: 0 0 0 0 rgba(150, 201, 61, 0.7);
+    box-shadow: 0 0 0 0 rgba(150, 201, 61, 0.7);
   }
   70% {
-      box-shadow: 0 0 0 10px rgba(150, 201, 61, 0);
+    box-shadow: 0 0 0 10px rgba(150, 201, 61, 0);
   }
   100% {
-      box-shadow: 0 0 0 0 rgba(150, 201, 61, 0);
+    box-shadow: 0 0 0 0 rgba(150, 201, 61, 0);
   }
 }
