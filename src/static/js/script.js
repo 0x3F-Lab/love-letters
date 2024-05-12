@@ -236,7 +236,7 @@ $(document).ready(function () {
           $("#replyModal").modal("hide"); // Hide the modal using jQuery
           $('#replyForm textarea[name="content"]').val(""); // Clear the reply box
 
-          // Dynamically add reply and immediately show the current replies
+          // Dynamically add reply and immediatley show the current replies
           let replyHtml =
             '<div class="card mt-2"><div class="card-body">' +
             '<h6 class="card-subtitle mb-2 text-muted">Reply by You</h6>' +
@@ -249,7 +249,6 @@ $(document).ready(function () {
         }
       },
       error: function (xhr, status, error) {
-        console.error("Error:", error); // Log any errors to the console
         if (xhr.status == 403) {
           $("#replyError").text("You need to be logged in to reply.").show(); // Update and show error div
           $("#replyModal")
@@ -261,69 +260,8 @@ $(document).ready(function () {
         } else {
           $("#replyError").text("An error occurred. Please try again.").show(); // Handle other errors
         }
+        console.error("Error:", error);
       },
     });
   });
 });
-
-function toggleLikePost(postId, userId) {
-  var csrfToken = $("#csrf_token").val();
-  $.ajax({
-    url: "/post/like_post",
-    type: "POST",
-    data: { post_id: postId, user_id: userId, csrf_token: csrfToken },
-    success: function (response) {
-      var likeButton = $('.like-btn[data-post-id="' + postId + '"]');
-      if (response.status === "unlike") {
-        // If the response says 'unlike', it means the post is now liked
-        likeButton.html(
-          'Unlike (<span id="like-count-' +
-            postId +
-            '">' +
-            response.count +
-            "</span>)",
-        );
-      } else {
-        // If the response says 'like', it means the post is now unliked
-        likeButton.html(
-          'Like (<span id="like-count-' +
-            postId +
-            '">' +
-            response.count +
-            "</span>)",
-        );
-      }
-    },
-    error: function (xhr) {
-      console.log(
-        xhr.responseJSON && xhr.responseJSON.error
-          ? xhr.responseJSON.error
-          : "An error occurred",
-      );
-    },
-  });
-}
-
-function toggleLikeReply(replyId, userId) {
-  var csrfToken = $("#csrf_token").val();
-  $.ajax({
-    url: "/post/like_reply",
-    type: "POST",
-    data: { reply_id: replyId, user_id: userId, csrf_token: csrfToken },
-    success: function (response) {
-      var likeButton = $('.like-btn[data-reply-id="' + replyId + '"]');
-      var likeCount = $("#like-count-reply-" + replyId);
-      if (response.status === "unlike") {
-        // If currently liked, show unlike
-        likeButton.html("Unlike (" + response.count + ")");
-      } else {
-        // If currently unliked, show like
-        likeButton.html("Like (" + response.count + ")");
-      }
-    },
-    error: function (xhr) {
-      console.error("An error occurred:", xhr.responseText);
-      alert("Failed to like the reply. Please try again.");
-    },
-  });
-}
