@@ -174,7 +174,7 @@ def test_checkReplies(page: Page):
     expect(page.locator("#replies-1")).to_contain_text("Reply by Anonymous")
     page.locator("div:nth-child(6) > div > .d-flex > button:nth-child(5)").click()
     expect(page.locator("#replies-2")).to_contain_text("Reply by Anonymous")
-    
+
     reset_database()
 
 
@@ -192,6 +192,5 @@ def test_makeReplies(page: Page):
     page.get_by_placeholder("Write your reply here...").fill("testing")
     page.get_by_role("button", name="Submit Reply").click()
     expect(page.locator("#replies-2")).to_contain_text("Reply by Youtesting")
-    
-    reset_database()
 
+    reset_database()
