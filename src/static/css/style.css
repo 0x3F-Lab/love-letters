@@ -5,6 +5,7 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
+  font-family: 'Great Vibes', cursive;
 }
 
 /* Center Content */
@@ -39,6 +40,7 @@ body {
   text-align: center;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Great Vibes', cursive;
 }
 
 .card:hover {
@@ -58,6 +60,7 @@ body {
   color: #666;
   text-align: center;
   padding: 10px 0;
+  font-family: 'Great Vibes', cursive;
 }
 
 .modal-content {
@@ -84,6 +87,7 @@ body {
   width: 80%; /* Sets the card width to 80% of its parent container */
   margin: 0 auto 20px; /* Centers the card horizontally and adds space below */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow for better visibility */
+  font-family: 'Great Vibes', cursive;
 }
 
 @media (max-width: 768px) {
@@ -261,7 +265,7 @@ select:focus {
   position: absolute;
   width: 80%;
   min-height: 300px;
-  background-color: #fff;
+  background-color: rgb(238, 163, 194);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 20px;
@@ -352,3 +356,98 @@ select:focus {
     box-shadow: 0 0 0 0 rgba(150, 201, 61, 0);
   }
 }
+
+.container-fluid, .row {
+  height: 100%;
+}
+
+/* Sidebar styling */
+.sidebar {
+  background-color: transparent;
+  padding: 20px;
+}
+
+.list-group {
+  width: 100%; /* Ensure the group takes full width of the sidebar */
+}
+
+.list-group-item {
+  background-color: #fff; /* White background */
+  color: #333; /* Dark text color */
+  border: none; /* No borders for a cleaner look */
+  padding: 20px; /* Increased padding for taller buttons */
+  margin-bottom: 45px; /* Space between buttons */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  display: block; /* Block display to fill the container */
+  width: 100%; /* Full width */
+  height: 200px;
+  text-align: center; /* Center text */
+  font-size: 1.2rem; /* Larger font size */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
+  font-family: 'Great Vibes', cursive;
+}
+
+.list-group-item:hover, .list-group-item:focus {
+  background-color: #e2e2e2; /* Light grey on hover/focus */
+  color: #212529; /* Darker text on hover/focus */
+  text-decoration: none; /* Remove underline from links */
+}
+
+/* Adjustments for responsiveness and interaction */
+@media (max-width: 768px) {
+  .sidebar {
+    padding: 10px;
+  }
+  .list-group-item {
+    padding: 15px; /* Slightly smaller padding on smaller screens */
+  }
+}
+
+
+.game-col {
+  background-color: transparent; /* White background */
+  overflow: hidden; /* Hide anything outside the bounds */
+}
+
+.recent-activity {
+  padding: 10px;
+}
+
+.activity-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #fff; /* White background for each item */
+  border-radius: 5px; /* Rounded corners for each item */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+  font-family: 'Great Vibes', cursive;
+}
+
+/* Ensure the sidebar and the recent activity panel take full height */
+.sidebar, .col-md-3 {
+  height: 100vh;
+  overflow-y: auto; /* Makes sidebar scrollable if needed */
+  font-family: 'Great Vibes', cursive;
+}
+
+/* Adjust main content width */
+.col-md-6 {
+  overflow: hidden;
+}
+
+/* Ensure all content areas are above the particles */
+.container-fluid, .row, .col-md-3, .col-md-6, .list-group-item, .card, .status-popup {
+  position: relative;
+  z-index: 1; /* Higher z-index than particles.js */
+}
+
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ffe5e5, #e6627a); /* Same as body for a consistent look */
+  z-index: 0; /* Ensures it's behind all content */
+}
+

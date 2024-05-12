@@ -1,37 +1,51 @@
 {% extends "base.html" %}
 {% block title %}Connect Hearts at UWA{% endblock %}
 {% block content %}
-<div class="container-fluid">
-  <div class="row">
-    <!-- Main Content Area -->
-    <div class="col-md-9 game-col d-flex flex-column align-items-center justify-content-center" style="overflow: hidden;">
-      <div class="container mt-5">
-        <h1 class="text-center">Swipe on Posts</h1>
-        <div id="cards-container">
-          {% for post in posts %}
-              <div class="swipe-card" data-post-id="{{ post.id }}">
-                  <div class="card-body">
-                      <h5 class="card-title">{{ post.title }}</h5>
-                      <p class="card-text">{{ post.content }}</p>
-                  </div>
-              </div>
-          {% endfor %}
-          <div class="status-popup" style="display: none;"></div>
-      </div>
-      
-    </div>
-    </div>
+<div class="container-fluid h-100">
+  <div class="row h-100">
     <!-- Sidebar -->
-    <div class="col-md-3 sidebar mt-5 mb-md-5">
+    <div class="col-md-3 sidebar">
       <div class="list-group">
         <a href="{{ url_for('post.browse') }}" class="list-group-item list-group-item-action">Browse Letters</a>
         <a href="{{ url_for('post.create') }}" class="list-group-item list-group-item-action">Post Letters</a>
+        <a href="{{ url_for('auth.notifications') }}" class="list-group-item list-group-item-action">Notifications</a>
         {% if 'user_id' in session %}
-          <a href="{{ url_for('auth.notifications') }}" class="list-group-item list-group-item-action">Responses</a>
-          <a href="{{ url_for('auth.account') }}" class="list-group-item list-group-item-action">My Account</a>
+          <a href="{{ url_for('auth.account') }}" class="list-group-item list-group-item-action">{{ session['user_name'] }}</a>
+          <a href="{{ url_for('auth.logout') }}" class="list-group-item list-group-item-action">Log Out</a>
         {% else %}
           <a href="#" data-toggle="modal" data-target="#loginModal" class="list-group-item list-group-item-action">Login</a>
+          <a href="#" data-toggle="modal" data-target="#signUpModal" class="list-group-item list-group-item-action">Sign Up</a>
         {% endif %}
+      </div>
+    </div>
+    <!-- Main Content Area -->
+    <div class="col-md-6 game-col d-flex flex-column align-items-center justify-content-center">
+      <div class="container">
+        <h1 class="text-center">Some title text</h1>
+        <div id="cards-container">
+          {% for post in posts %}
+          <div class="swipe-card" data-post-id="{{ post.id }}">
+              <div class="card-body">
+                  <h5 class="card-title">{{ post.title }}</h5>
+                  <p class="card-text">{{ post.content }}</p>
+              </div>
+          </div>
+          {% endfor %}
+          <div class="status-popup" style="display: none;"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Recent Activity Section -->
+    <div class="col-md-3" style="height: 100vh; overflow-y: scroll;">
+      <div class="recent-activity">
+        <h3>Recent Activity</h3>
+        <!-- Adding fake content for scroll testing -->
+        {% for i in range(1, 21) %}
+          <div class="activity-item">
+            <h5>Activity {{ i }}</h5>
+            <p>This is a summary of activity {{ i }}. It was really interesting!</p>
+          </div>
+        {% endfor %}
       </div>
     </div>
   </div>
