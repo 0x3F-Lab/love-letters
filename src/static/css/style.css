@@ -451,3 +451,50 @@ select:focus {
   z-index: 0; /* Ensures it's behind all content */
 }
 
+/* Specific modal styling to avoid conflicts */
+#signUpModal .modal-content {
+  background-color: #8B0000; /* Dark red background */
+  color: white; /* White text */
+  border-radius: 10px; /* Rounded corners */
+}
+
+#signUpModal .modal-header,
+#signUpModal .modal-footer {
+  border-bottom: none;
+  border-top: none;
+}
+
+#signUpModal .form-control {
+  background-color: #A52A2A; /* Slightly lighter red for input fields */
+  color: white; /* White text for input fields */
+  border: 1px solid #640000; /* Border to match dark theme */
+}
+
+#signUpModal .form-control:focus {
+  background-color: #800000; /* Darker red when focused */
+  border-color: #550000; /* Even darker border on focus */
+}
+
+#signUpModal .btn-primary {
+  background-color: #640000; /* Darker red for buttons */
+  border-color: #450000; /* Dark border for buttons */
+}
+
+#signUpModal .btn-primary:hover {
+  background-color: #450000; /* Even darker red on hover */
+}
+
+#signUpModal .close {
+  color: white;
+}
+
+#signUpModal .close:hover {
+  color: #ffcccc; /* Light red when hovered or focused */
+}
+
+#signUpModal .form-control::placeholder {
+  color: #FFC0CB; /* Light pink color */
+  opacity: 1; /* Full opacity to ensure visibility */
+}
+
+
