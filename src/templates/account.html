@@ -22,17 +22,11 @@
 <!-- User information form initially hidden -->
 <div id="editFormDiv" style="display: none" class="container mt-4">
   <form id="editForm" method="post" action="{{ url_for('auth.account') }}">
+    <!-- Hidden field that inclues the CSRF token -->
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <div class="form-group">
       <label for="email">Email</label>
-      <input
-        type="email"
-        class="form-control"
-        id="edit_email"
-        name="email"
-        value="{{ user.email }}"
-        required
-        maxlength="50"
-      />
+      <input  type="email"  class="form-control"  id="edit_email"  name="email"  value="{{ user.email }}"  required  maxlength="50" />
     </div>
     <div class="form-group">
       <label for="gender">Gender</label>
@@ -76,6 +70,8 @@
 <!-- Password update form initially hidden -->
 <div id="passwordFormDiv" style="display:none;" class="container mt-4">
   <form id="passwordForm" method="post" action="{{ url_for('auth.change_password') }}">
+    <!-- Hidden field that inclues the CSRF token -->
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <div class="form-group">
       <label for="current-password">Current Password</label>
       <input type="password" class="form-control" id="current_password" name="current_password" required maxlength="30">

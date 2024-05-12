@@ -3,6 +3,8 @@ content %}
 <div class="centered-content">
   <div class="form-container">
     <form method="POST" action="{{ url_for('post.create_post') }}">
+      <!-- Hidden field that inclues the CSRF token -->
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
       <input type="text" name="title" placeholder="Enter Title" required />
       <textarea
         name="content"

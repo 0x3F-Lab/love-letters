@@ -33,11 +33,11 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <!-- If the user is logged in -->
-        {% if 'user_id' in session %}
+        {% if current_user.is_authenticated %}
         <li class="nav-item">
           <!-- Replace sign-up with username that links to account settings -->
           <a class="nav-link" href="{{ url_for('auth.account') }}"
-            >{{ session['user_name'] }}</a
+            >{{ current_user.first_name }} {{ current_user.last_name }}</a
           >
         </li>
         <li class="nav-item">
