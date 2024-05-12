@@ -232,7 +232,7 @@ def test_profileEdit(page: Page):
         "Facebook: https://www.facebook.com/alice"
     )
     expect(page.locator("body")).to_contain_text("Snapchat: alicetest")
-    
+
     reset_database()
 
 
@@ -284,6 +284,5 @@ def test_notificationMake(page: Page):
     page.get_by_role("textbox", name="Password").press("Enter")
     page.get_by_role("heading", name="Responses").click()
     expect(page.get_by_role("link", name="Playwright Test")).to_be_visible()
-    
-    reset_database()
 
+    reset_database()
