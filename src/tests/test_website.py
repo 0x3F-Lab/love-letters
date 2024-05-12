@@ -31,7 +31,7 @@ def test_login(page: Page):
     page.get_by_role("textbox", name="Email").press("Tab")
     page.get_by_role("textbox", name="Password").fill("password123")
     page.get_by_role("button", name="Log In").click()
-    expect(page.get_by_role("alert")).to_contain_text("Login successful! ×")
+    expect(page.get_by_role("alert")).to_contain_text("Successfully logged in ×")
 
     reset_database()
 
@@ -47,17 +47,31 @@ def test_passwordChange(page: Page):
     page.get_by_role("textbox", name="Password").fill("password123")
     page.get_by_role("button", name="Log In").click()
     page.get_by_role("heading", name="My Account").click()
+    
     page.get_by_role("button", name="Change Password").click()
-    page.get_by_label("Current Password").click()
-    page.get_by_label("Current Password").fill("password123")
-    page.get_by_label("Current Password").press("Tab")
-    page.get_by_label("New Password", exact=True).fill("password1234")
-    page.get_by_label("New Password", exact=True).press("Tab")
-    page.get_by_label("Confirm New Password").fill("password1234")
+    page.locator("#current_password").click()
+    page.locator("#current_password").fill("password123")
+    page.locator("#current_password").press("Tab")
+    page.get_by_role("textbox", name="Uppercase, lowercase, number").fill("password1234")
+    page.locator("#confirm_password").click()
+    page.locator("#confirm_password").fill("password1234")
     page.get_by_role("button", name="Update Password").click()
-    expect(page.get_by_role("alert")).to_contain_text(
-        "Password successfully changed. ×"
-    )
+    expect(page.locator("#passwordError")).to_contain_text("Password must contain at least one uppercase letter.")
+
+    page.get_by_role("textbox", name="Uppercase, lowercase, number").click()
+    page.get_by_role("textbox", name="Uppercase, lowercase, number").fill("Password1234")
+    page.locator("#confirm_password").click()
+    page.locator("#confirm_password").fill("Password1234")
+    page.get_by_role("button", name="Update Password").click()
+    expect(page.locator("#passwordError")).to_contain_text("Password must contain at least one special character.")
+
+    page.get_by_role("textbox", name="Uppercase, lowercase, number").click()
+    page.get_by_role("textbox", name="Uppercase, lowercase, number").fill("Password1234!")
+    page.locator("#confirm_password").click()
+    page.locator("#confirm_password").fill("Password1234!")
+    page.get_by_role("button", name="Update Password").click()
+    expect(page.get_by_role("alert")).to_contain_text("Password successfully updated ×")
+
     page.get_by_role("link", name="Log Out").click()
     expect(page.get_by_role("alert")).to_contain_text("You have been logged out. ×")
     page.get_by_role("link", name="Log In").click()
@@ -66,14 +80,11 @@ def test_passwordChange(page: Page):
     page.get_by_role("textbox", name="Email").press("Tab")
     page.get_by_role("textbox", name="Password").fill("password123")
     page.get_by_role("button", name="Log In").click()
-    expect(page.get_by_role("alert")).to_contain_text("Invalid email or password. ×")
-    page.get_by_role("link", name="Log In").click()
-    page.get_by_role("textbox", name="Email").click()
-    page.get_by_role("textbox", name="Email").fill("alice@example.com")
-    page.get_by_role("textbox", name="Email").press("Tab")
-    page.get_by_role("textbox", name="Password").fill("password1234")
+    expect(page.locator("#loginError")).to_contain_text("Invalid email or password.")
+    page.get_by_role("textbox", name="Password").click()
+    page.get_by_role("textbox", name="Password").fill("Password1234!")
     page.get_by_role("button", name="Log In").click()
-    expect(page.get_by_role("alert")).to_contain_text("Login successful! ×")
+    expect(page.get_by_role("alert")).to_contain_text("Successfully logged in ×")
 
     reset_database()
 
