@@ -321,15 +321,19 @@ def test_likeButton(page: Page):
     page.get_by_role("button", name="Like (1)").click()
     expect(page.locator("body")).to_contain_text("Unlike (2)")
 
+
 def test_notLoggedIn(page: Page):
     page.goto("http://127.0.0.1:5000/")
     page.get_by_role("link", name="Create Post").click()
-    expect(page.get_by_role("alert")).to_contain_text("You must log in to access this page. ×")
+    expect(page.get_by_role("alert")).to_contain_text(
+        "You must log in to access this page. ×"
+    )
     page.get_by_role("link", name="Notifications").click()
-    expect(page.get_by_role("alert")).to_contain_text("You must log in to access this page. ×")
+    expect(page.get_by_role("alert")).to_contain_text(
+        "You must log in to access this page. ×"
+    )
     page.get_by_role("link", name="Browse Posts").click()
     page.locator(".d-flex > form > .btn").first.click()
     expect(page.get_by_role("alert")).to_contain_text("You need to login to connect. ×")
 
     reset_database()
-
