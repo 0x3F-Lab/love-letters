@@ -132,7 +132,7 @@ def add_replies():
             post_id=post.post_id,
             user_id=replier.user_id,
             content=random.choice(sample_replies),
-            is_anonymous=random.choice([True, False]),
+            is_anonymous=True,
         )
         db.session.add(new_reply)
 
