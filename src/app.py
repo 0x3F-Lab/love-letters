@@ -62,10 +62,9 @@ def create_app(config_class=DevelopmentConfig):
 
         notification_count = 0
 
-        if "user_id" in session:
-            user_id = session["user_id"]
+        if current_user.is_authenticated:
             notification_count = Notification.query.filter_by(
-                recipient_id=user_id
+                recipient_id=current_user.user_id
             ).count()
 
         return render_template("landing.html", notification_count=notification_count)
