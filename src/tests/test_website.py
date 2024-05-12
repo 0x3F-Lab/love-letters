@@ -99,7 +99,7 @@ def test_passwordChange(page: Page):
 
 
 # Logs into Alice's account, checks there are 2 responses, then removes them and checks that there are 0
-def test_notifications(page: Page):
+def test_notificationCheck(page: Page):
     page.goto("http://127.0.0.1:5000/")
     page.get_by_role("link", name="Log In").click()
     page.get_by_role("textbox", name="Email").click()
@@ -232,3 +232,58 @@ def test_profileEdit(page: Page):
         "Facebook: https://www.facebook.com/alice"
     )
     expect(page.locator("body")).to_contain_text("Snapchat: alicetest")
+    
+    reset_database()
+
+
+def test_notificationMake(page: Page):
+    page.goto("http://127.0.0.1:5000/")
+    page.get_by_role("link", name="Sign Up").click()
+    page.get_by_placeholder("Cameron", exact=True).click()
+    page.get_by_placeholder("Cameron", exact=True).fill("Playwright")
+    page.get_by_placeholder("Cameron", exact=True).press("Tab")
+    page.get_by_placeholder("O'Niell").fill("Test")
+    page.get_by_label("Gender (optional)").select_option("male")
+    page.get_by_placeholder("cameron@example.com").click()
+    page.get_by_placeholder("cameron@example.com").fill("playwright@example.com")
+    page.get_by_placeholder("Uppercase, lowercase, number").click()
+    page.get_by_placeholder("Uppercase, lowercase, number").fill("Password123!")
+    page.get_by_placeholder("Instagram username").click()
+    page.get_by_placeholder("Instagram username").fill("playwright")
+    page.get_by_role("button", name="Sign Up").click()
+    expect(page.get_by_role("alert")).to_contain_text("Account successfully created ×")
+    page.get_by_role("link", name="Log In").click()
+    page.get_by_role("textbox", name="Email").click()
+    page.get_by_role("textbox", name="Email").fill("playwright@example.com")
+    page.get_by_role("textbox", name="Email").press("Tab")
+    page.get_by_role("textbox", name="Password").fill("Password123!")
+    page.get_by_role("button", name="Log In").click()
+    expect(page.get_by_role("alert")).to_contain_text("Successfully logged in ×")
+    page.get_by_role("link", name="Browse Posts").click()
+    page.locator(".d-flex > form > .btn").first.click()
+    expect(page.get_by_role("alert")).to_contain_text("Connect request sent. ×")
+    page.locator("div:nth-child(10) > div > .d-flex > form > .btn").click()
+    expect(page.get_by_role("alert")).to_contain_text("Connect request sent. ×")
+    page.get_by_role("link", name="Log Out").click()
+    expect(page.get_by_role("alert")).to_contain_text("You have been logged out. ×")
+    page.get_by_role("link", name="Log In").click()
+    page.get_by_role("textbox", name="Email").click()
+    page.get_by_role("textbox", name="Email").fill("alice@example.com")
+    page.get_by_role("textbox", name="Email").press("Tab")
+    page.get_by_role("textbox", name="Password").fill("password123")
+    page.get_by_role("textbox", name="Password").press("Enter")
+    page.get_by_role("heading", name="Responses").click()
+    expect(page.get_by_role("link", name="Playwright Test")).to_be_visible()
+    page.get_by_role("link", name="Log Out").click()
+    expect(page.get_by_role("alert")).to_contain_text("You have been logged out. ×")
+    page.get_by_role("link", name="Log In").click()
+    page.get_by_role("textbox", name="Email").click()
+    page.get_by_role("textbox", name="Email").fill("bob@example.com")
+    page.get_by_role("textbox", name="Email").press("Tab")
+    page.get_by_role("textbox", name="Password").fill("password123")
+    page.get_by_role("textbox", name="Password").press("Enter")
+    page.get_by_role("heading", name="Responses").click()
+    expect(page.get_by_role("link", name="Playwright Test")).to_be_visible()
+    
+    reset_database()
+
