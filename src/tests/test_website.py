@@ -177,6 +177,7 @@ def test_checkReplies(page: Page):
 
     reset_database()
 
+
 # Logs into Alice's account, and then writes a reply and checks if its there
 def test_makeReplies(page: Page):
     page.goto("http://127.0.0.1:5000/")
@@ -194,6 +195,7 @@ def test_makeReplies(page: Page):
     expect(page.locator("#replies-2")).to_contain_text("Reply by Youtesting")
 
     reset_database()
+
 
 # Logs into Alice's account, checks her details
 # then updates them and checks if they were updated
@@ -235,6 +237,7 @@ def test_profileEdit(page: Page):
     expect(page.locator("body")).to_contain_text("Snapchat: alicetest")
 
     reset_database()
+
 
 # Makes a new account called Playwright Test, then sends connections to Alice and Bob
 # Then signs into their respective accounts and checks for a request from Playwright
@@ -287,6 +290,7 @@ def test_notificationMake(page: Page):
     page.get_by_role("heading", name="Responses").click()
     expect(page.get_by_role("link", name="Playwright Test")).to_be_visible()
 
+
 # Signs into Alice's account, and test like functionality on her own post
 # Then signs into Bob's and checks that Alice's likes carry over
 def test_likeButton(page: Page):
@@ -316,8 +320,6 @@ def test_likeButton(page: Page):
     expect(page.locator("body")).to_contain_text("Like (1)")
     page.get_by_role("button", name="Like (1)").click()
     expect(page.locator("body")).to_contain_text("Unlike (2)")
-    
-    reset_database()
 
 def test_notLoggedIn(page: Page):
     page.goto("http://127.0.0.1:5000/")
