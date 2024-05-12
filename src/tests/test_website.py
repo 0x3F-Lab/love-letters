@@ -100,7 +100,7 @@ def test_passwordChange(page: Page):
 
 # Logs into Alice's account, checks there are 2 responses, then removes them and checks that there are 0
 
-#Notifs not working rn
+# Notifs not working rn
 """ def test_notifications(page: Page):
     page.goto("http://127.0.0.1:5000/")
     page.get_by_role("link", name="Log In").click()
@@ -160,9 +160,11 @@ def test_checkBrowse(page: Page):
 
     reset_database()
 
+
 # Had to change the generate_example_db to test this, as the randomness was too much
 
 # Logs in as Alice, and then checks that there are replies on the first two posts.
+
 
 def test_checkReplies(page: Page):
     page.goto("http://127.0.0.1:5000/")
