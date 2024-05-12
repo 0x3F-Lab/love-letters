@@ -36,7 +36,7 @@ def test_login(page: Page):
     reset_database()
 
 
-# Logs in to Alice's account, changes the password, and then signs out,
+# Logs in to Alice's account, changes the password, fighting against validation, and then signs out,
 # then checks that the old password doesn't work, then checks that the new one does
 def test_passwordChange(page: Page):
     page.goto("http://127.0.0.1:5000/")
@@ -47,7 +47,7 @@ def test_passwordChange(page: Page):
     page.get_by_role("textbox", name="Password").fill("password123")
     page.get_by_role("button", name="Log In").click()
     page.get_by_role("heading", name="My Account").click()
-    
+
     page.get_by_role("button", name="Change Password").click()
     page.locator("#current_password").click()
     page.locator("#current_password").fill("password123")
@@ -148,3 +148,4 @@ def test_checkBrowse(page: Page):
     expect(page.get_by_role("heading", name="Carol's Post #2")).to_be_visible()
 
     reset_database()
+
