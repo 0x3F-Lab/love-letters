@@ -44,7 +44,7 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     post_type = db.Column(db.String(50), nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    likes = db.relationship("LikePost", backref="post", lazy="dynamic")
+
     # Relationship
     replies = db.relationship(
         "Reply", backref="post", lazy=True, order_by="desc(Reply.created_at)"
@@ -58,7 +58,6 @@ class Reply(db.Model):
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     is_anonymous = db.Column(db.Boolean, default=False)
-    likes = db.relationship("LikeReply", backref="reply", lazy="dynamic")
 
 
 class Notification(db.Model):
@@ -84,15 +83,3 @@ class Notification(db.Model):
     __table_args__ = (
         db.UniqueConstraint("user_id", "recipient_id", name="_user_recipient_uc"),
     )
-
-
-class LikePost(db.Model):
-    user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), primary_key=True)
-    post_id = db.Column(db.Integer, db.ForeignKey("post.post_id"), primary_key=True)
-    liked_at = db.Column(db.DateTime, server_default=db.func.now())
-
-
-class LikeReply(db.Model):
-    user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), primary_key=True)
-    reply_id = db.Column(db.Integer, db.ForeignKey("reply.reply_id"), primary_key=True)
-    liked_at = db.Column(db.DateTime, server_default=db.func.now())
