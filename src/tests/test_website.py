@@ -177,7 +177,7 @@ def test_checkReplies(page: Page):
 
     reset_database()
 
-
+# Logs into Alice's account, and then writes a reply and checks if its there
 def test_makeReplies(page: Page):
     page.goto("http://127.0.0.1:5000/")
     page.get_by_role("link", name="Log In").click()
@@ -195,7 +195,8 @@ def test_makeReplies(page: Page):
 
     reset_database()
 
-
+# Logs into Alice's account, checks her details
+# then updates them and checks if they were updated
 def test_profileEdit(page: Page):
     page.goto("http://127.0.0.1:5000/")
     page.get_by_role("link", name="Log In").click()
@@ -235,7 +236,8 @@ def test_profileEdit(page: Page):
     
     reset_database()
 
-
+# Makes a new account called Playwright Test, then sends connections to Alice and Bob
+# Then signs into their respective accounts and checks for a request from Playwright
 def test_notificationMake(page: Page):
     page.goto("http://127.0.0.1:5000/")
     page.get_by_role("link", name="Sign Up").click()
@@ -284,6 +286,38 @@ def test_notificationMake(page: Page):
     page.get_by_role("textbox", name="Password").press("Enter")
     page.get_by_role("heading", name="Responses").click()
     expect(page.get_by_role("link", name="Playwright Test")).to_be_visible()
+    
+    reset_database()
+
+# Signs into Alice's account, and test like functionality on her own post
+# Then signs into Bob's and checks that Alice's likes carry over
+def test_likeButton(page: Page):
+    page.goto("http://127.0.0.1:5000/")
+    page.get_by_role("link", name="Log In").click()
+    page.get_by_role("textbox", name="Email").click()
+    page.get_by_role("textbox", name="Email").fill("alice@example.com")
+    page.get_by_role("textbox", name="Email").press("Tab")
+    page.get_by_role("textbox", name="Password").fill("password123")
+    page.get_by_role("textbox", name="Password").press("Enter")
+    page.get_by_role("link", name="Browse Posts").click()
+    page.locator("button:nth-child(4)").first.click()
+    expect(page.locator("body")).to_contain_text("Unlike (1)")
+    page.get_by_role("button", name="Unlike (1)").click()
+    expect(page.locator("body")).to_contain_text("Like (0)")
+    page.locator("button").filter(has_text=re.compile(r"^Like \(0\)$")).click()
+    expect(page.locator("body")).to_contain_text("Unlike (1)")
+    page.get_by_role("link", name="Log Out").click()
+    expect(page.get_by_role("alert")).to_contain_text("You have been logged out. ×")
+    page.get_by_role("link", name="Log In").click()
+    page.get_by_role("textbox", name="Email").click()
+    page.get_by_role("textbox", name="Email").fill("bob@example.com")
+    page.get_by_role("textbox", name="Email").press("Tab")
+    page.get_by_role("textbox", name="Password").fill("password123")
+    page.get_by_role("textbox", name="Password").press("Enter")
+    page.get_by_role("link", name="Browse Posts").click()
+    expect(page.locator("body")).to_contain_text("Like (1)")
+    page.get_by_role("button", name="Like (1)").click()
+    expect(page.locator("body")).to_contain_text("Unlike (2)")
     
     reset_database()
 
