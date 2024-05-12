@@ -13,6 +13,9 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
                         <p class="card-text">{{ post.content }}</p>
+                        <form action="{{ url_for('post.connect', post_id=post.post_id) }}" method="POST" class="connect-form">
+                          <input type="hidden" name="post_id" value="{{ post.id }}">
+                        </form>
                     </div>
                 </div>
             {% endfor %}
@@ -34,4 +37,9 @@
     </div>
   </div>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
 {% endblock %}

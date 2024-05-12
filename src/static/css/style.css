@@ -269,7 +269,9 @@ select:focus {
   -webkit-user-select: none;
   -ms-user-select: none;
   cursor: grab;
+  transition: transform 0.1s ease-out; /* Smooth transition for transform */
 }
+
 
 .swipe-card:not(:last-child) {
   pointer-events: none;
