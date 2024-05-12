@@ -52,21 +52,31 @@ def test_passwordChange(page: Page):
     page.locator("#current_password").click()
     page.locator("#current_password").fill("password123")
     page.locator("#current_password").press("Tab")
-    page.get_by_role("textbox", name="Uppercase, lowercase, number").fill("password1234")
+    page.get_by_role("textbox", name="Uppercase, lowercase, number").fill(
+        "password1234"
+    )
     page.locator("#confirm_password").click()
     page.locator("#confirm_password").fill("password1234")
     page.get_by_role("button", name="Update Password").click()
-    expect(page.locator("#passwordError")).to_contain_text("Password must contain at least one uppercase letter.")
+    expect(page.locator("#passwordError")).to_contain_text(
+        "Password must contain at least one uppercase letter."
+    )
 
     page.get_by_role("textbox", name="Uppercase, lowercase, number").click()
-    page.get_by_role("textbox", name="Uppercase, lowercase, number").fill("Password1234")
+    page.get_by_role("textbox", name="Uppercase, lowercase, number").fill(
+        "Password1234"
+    )
     page.locator("#confirm_password").click()
     page.locator("#confirm_password").fill("Password1234")
     page.get_by_role("button", name="Update Password").click()
-    expect(page.locator("#passwordError")).to_contain_text("Password must contain at least one special character.")
+    expect(page.locator("#passwordError")).to_contain_text(
+        "Password must contain at least one special character."
+    )
 
     page.get_by_role("textbox", name="Uppercase, lowercase, number").click()
-    page.get_by_role("textbox", name="Uppercase, lowercase, number").fill("Password1234!")
+    page.get_by_role("textbox", name="Uppercase, lowercase, number").fill(
+        "Password1234!"
+    )
     page.locator("#confirm_password").click()
     page.locator("#confirm_password").fill("Password1234!")
     page.get_by_role("button", name="Update Password").click()
