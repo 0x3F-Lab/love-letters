@@ -344,4 +344,3 @@ $(document).ready(function () {
     });
   });
 });
-
