@@ -158,4 +158,3 @@ def test_checkBrowse(page: Page):
     expect(page.get_by_role("heading", name="Carol's Post #2")).to_be_visible()
 
     reset_database()
-
