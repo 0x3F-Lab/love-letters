@@ -233,7 +233,7 @@ def test_profileEdit(page: Page):
         "Facebook: https://www.facebook.com/alice"
     )
     expect(page.locator("body")).to_contain_text("Snapchat: alicetest")
-    
+
     reset_database()
 
 # Makes a new account called Playwright Test, then sends connections to Alice and Bob
@@ -286,8 +286,6 @@ def test_notificationMake(page: Page):
     page.get_by_role("textbox", name="Password").press("Enter")
     page.get_by_role("heading", name="Responses").click()
     expect(page.get_by_role("link", name="Playwright Test")).to_be_visible()
-    
-    reset_database()
 
 # Signs into Alice's account, and test like functionality on her own post
 # Then signs into Bob's and checks that Alice's likes carry over
