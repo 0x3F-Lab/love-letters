@@ -218,11 +218,17 @@ def test_profileEdit(page: Page):
     page.get_by_role("textbox", name="Snapchat username").click()
     page.get_by_role("textbox", name="Snapchat username").fill("alicetest")
     page.get_by_role("button", name="Update").click()
-    expect(page.locator("#editForm")).to_contain_text("Please enter a valid Facebook URL")
+    expect(page.locator("#editForm")).to_contain_text(
+        "Please enter a valid Facebook URL"
+    )
     page.get_by_role("textbox", name="Facebook profile link").click()
-    page.get_by_role("textbox", name="Facebook profile link").fill("https://www.facebook.com/alice")
+    page.get_by_role("textbox", name="Facebook profile link").fill(
+        "https://www.facebook.com/alice"
+    )
     page.get_by_role("button", name="Update").click()
     expect(page.locator("body")).to_contain_text("Gender: Male")
     expect(page.locator("body")).to_contain_text("Instagram: alice_james")
-    expect(page.locator("body")).to_contain_text("Facebook: https://www.facebook.com/alice")
+    expect(page.locator("body")).to_contain_text(
+        "Facebook: https://www.facebook.com/alice"
+    )
     expect(page.locator("body")).to_contain_text("Snapchat: alicetest")
