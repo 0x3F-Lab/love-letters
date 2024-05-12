@@ -338,6 +338,7 @@ def test_notLoggedIn(page: Page):
 
     reset_database()
 
+
 def test_accountValidation(page: Page):
     page.goto("http://127.0.0.1:5000/")
     page.get_by_role("link", name="Sign Up").click()
@@ -358,8 +359,12 @@ def test_accountValidation(page: Page):
     page.get_by_placeholder("cameron@example.com").click()
     page.get_by_placeholder("cameron@example.com").fill("test@test")
     page.get_by_role("button", name="Sign Up").click()
-    expect(page.locator("#signUpForm")).to_contain_text("First Name should contain only alphabetic characters.")
-    expect(page.locator("#signUpForm")).to_contain_text("Last Name should contain only alphabetic characters.")
+    expect(page.locator("#signUpForm")).to_contain_text(
+        "First Name should contain only alphabetic characters."
+    )
+    expect(page.locator("#signUpForm")).to_contain_text(
+        "Last Name should contain only alphabetic characters."
+    )
     expect(page.get_by_text("First Name should contain")).to_be_visible()
     expect(page.get_by_text("Last Name should contain only")).to_be_visible()
     expect(page.get_by_text("Invalid email format.")).to_be_visible()
