@@ -466,7 +466,7 @@ select:focus {
 }
 /* Specific modal styling to avoid conflicts */
 #signUpModal .modal-content {
-  background-color: #8B0000; /* Dark red background */
+  background-color: #8b0000; /* Dark red background */
   color: white; /* White text */
   border-radius: 10px; /* Rounded corners */
 }
@@ -478,7 +478,7 @@ select:focus {
 }
 
 #signUpModal .form-control {
-  background-color: #A52A2A; /* Slightly lighter red for input fields */
+  background-color: #a52a2a; /* Slightly lighter red for input fields */
   color: white; /* White text for input fields */
   border: 1px solid #640000; /* Border to match dark theme */
 }
@@ -506,6 +506,6 @@ select:focus {
 }
 
 #signUpModal .form-control::placeholder {
-  color: #FFC0CB; /* Light pink color */
+  color: #ffc0cb; /* Light pink color */
   opacity: 1; /* Full opacity to ensure visibility */
 }
