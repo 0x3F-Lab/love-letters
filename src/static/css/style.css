@@ -300,6 +300,10 @@ select:focus {
   }
 }
 
+.card-animation {
+  opacity: 0; /* Start fully transparent */
+}
+
 @keyframes slideIn {
   from {
       transform: translateX(-100%);
@@ -311,7 +315,6 @@ select:focus {
   }
 }
 
-.postcard {
-  animation: slideIn 0.8s ease-out forwards;
-  opacity: 0;  /* Start elements as invisible */
+.card-slide-in {
+  animation: slideIn 0.7s ease-out forwards;
 }

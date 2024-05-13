@@ -398,3 +398,13 @@ setTimeout(() => {
 
   window.addEventListener('scroll', handleScroll);
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const cards = document.querySelectorAll('.card-animation');
+  cards.forEach((card, index) => {
+      // This staggers the animation start slightly for each card
+      setTimeout(() => {
+          card.classList.add('card-slide-in');
+      }, 100 * index);
+  });
+});

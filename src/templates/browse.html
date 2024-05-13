@@ -21,7 +21,6 @@
     </div>
 
     {% for post in posts %}
-        <div class="postcard" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
         {% include 'components/postcard.html' %}
     {% endfor %}
     <!-- Skeleton Loader Template -->
