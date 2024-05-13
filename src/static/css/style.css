@@ -247,17 +247,15 @@ select:focus {
   margin-top: -5px;
 }
 
-
 .sort-posts select {
-  font-size: 14px;  
-  padding: 5px 10px; 
-  margin-bottom: 20px;  
+  font-size: 14px;
+  padding: 5px 10px;
+  margin-bottom: 20px;
 }
 
 .sort-posts form {
-  display: inline-block;  
+  display: inline-block;
 }
-
 
 .post-skeleton {
   margin: 10px 0;
@@ -266,7 +264,9 @@ select:focus {
   border-radius: 5px;
 }
 
-.skeleton-header, .skeleton-body, .skeleton-footer {
+.skeleton-header,
+.skeleton-body,
+.skeleton-footer {
   background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
   background-size: 1000px 104px;
   height: 20px;
@@ -293,10 +293,10 @@ select:focus {
 
 @keyframes shimmer {
   0% {
-      background-position: -1000px 0;
+    background-position: -1000px 0;
   }
   100% {
-      background-position: 1000px 0;
+    background-position: 1000px 0;
   }
 }
 
@@ -306,12 +306,12 @@ select:focus {
 
 @keyframes slideIn {
   from {
-      transform: translateX(-100%);
-      opacity: 0;
+    transform: translateX(-100%);
+    opacity: 0;
   }
   to {
-      transform: translateX(0);
-      opacity: 1;
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
@@ -322,10 +322,18 @@ select:focus {
 .gradient-custom {
   /* fallback for old browsers */
   background: #f6d365;
-  
+
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
-  
+  background: -webkit-linear-gradient(
+    to right bottom,
+    rgba(246, 211, 101, 1),
+    rgba(253, 160, 133, 1)
+  );
+
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
-  }
+  background: linear-gradient(
+    to right bottom,
+    rgba(246, 211, 101, 1),
+    rgba(253, 160, 133, 1)
+  );
+}

@@ -328,7 +328,7 @@ function toggleLikeReply(replyId, userId) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   let page = 1;
   let loading = false;
   let debounceTimer;
@@ -336,75 +336,79 @@ document.addEventListener("DOMContentLoaded", function() {
   let footerVisible = true; // Track the visibility of the footer
 
   function loadMorePosts() {
-if (loading || allPostsLoaded) return;
-loading = true;
-displaySkeletons(5);
+    if (loading || allPostsLoaded) return;
+    loading = true;
+    displaySkeletons(5);
 
-const sort = document.querySelector('select[name="sort"]').value; // Get current sort order
+    const sort = document.querySelector('select[name="sort"]').value; // Get current sort order
 
-setTimeout(() => {
-  fetch(`/post/browse/${page + 1}?sort=${sort}`, { // Include sort parameter
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
-  })
-  .then(response => response.json())
-  .then(data => {
-      if (data.posts.length > 0) {
-          const container = document.querySelector('.container');
-          container.insertAdjacentHTML('beforeend', data.posts);
-          page += 1;
-      } else {
-          allPostsLoaded = true;
-      }
-  })
-  .catch(error => {
-      console.error('Error loading posts:', error);
-  })
-  .finally(() => {
-      removeSkeletons();
-      loading = false;
-  });
-}, 600);
-}
+    setTimeout(() => {
+      fetch(`/post/browse/${page + 1}?sort=${sort}`, {
+        // Include sort parameter
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.posts.length > 0) {
+            const container = document.querySelector(".container");
+            container.insertAdjacentHTML("beforeend", data.posts);
+            page += 1;
+          } else {
+            allPostsLoaded = true;
+          }
+        })
+        .catch((error) => {
+          console.error("Error loading posts:", error);
+        })
+        .finally(() => {
+          removeSkeletons();
+          loading = false;
+        });
+    }, 600);
+  }
 
   function displaySkeletons(count) {
-      const container = document.querySelector('.container');
-      const skeletonTemplate = document.getElementById('skeleton-template').content;
-      for (let i = 0; i < count; i++) {
-          container.appendChild(document.importNode(skeletonTemplate, true));
-      }
+    const container = document.querySelector(".container");
+    const skeletonTemplate =
+      document.getElementById("skeleton-template").content;
+    for (let i = 0; i < count; i++) {
+      container.appendChild(document.importNode(skeletonTemplate, true));
+    }
   }
 
   function removeSkeletons() {
-      document.querySelectorAll('.post-skeleton').forEach(skeleton => skeleton.remove());
+    document
+      .querySelectorAll(".post-skeleton")
+      .forEach((skeleton) => skeleton.remove());
   }
 
   function handleScroll() {
-      if (debounceTimer) {
-          clearTimeout(debounceTimer);
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+    debounceTimer = setTimeout(() => {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const totalHeight = document.body.scrollHeight;
+      const threshold = 300;
+      if (scrollPosition >= totalHeight - threshold && !loading) {
+        loadMorePosts();
+        if (footerVisible) {
+          document.getElementById("page-footer").style.display = "none"; // Hide the footer
+          footerVisible = false; // Update the visibility flag
+        }
       }
-      debounceTimer = setTimeout(() => {
-          const scrollPosition = window.scrollY + window.innerHeight;
-          const totalHeight = document.body.scrollHeight;
-          const threshold = 300;
-          if (scrollPosition >= totalHeight - threshold && !loading) {
-              loadMorePosts();
-              if (footerVisible) {
-                  document.getElementById('page-footer').style.display = 'none'; // Hide the footer
-                  footerVisible = false; // Update the visibility flag
-              }
-          }
-      }, 100);
+    }, 100);
   }
 
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener("scroll", handleScroll);
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  const cards = document.querySelectorAll('.card-animation');
+document.addEventListener("DOMContentLoaded", function () {
+  const cards = document.querySelectorAll(".card-animation");
   cards.forEach((card, index) => {
-      // This staggers the animation start slightly for each card
-      setTimeout(() => {
-          card.classList.add('card-slide-in');
-      }, 100 * index);
+    // This staggers the animation start slightly for each card
+    setTimeout(() => {
+      card.classList.add("card-slide-in");
+    }, 100 * index);
   });
 });
