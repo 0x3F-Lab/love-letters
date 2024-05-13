@@ -246,3 +246,72 @@ select:focus {
   font-size: small;
   margin-top: -5px;
 }
+
+
+.sort-posts select {
+  font-size: 14px;  
+  padding: 5px 10px; 
+  margin-bottom: 20px;  
+}
+
+.sort-posts form {
+  display: inline-block;  
+}
+
+
+.post-skeleton {
+  margin: 10px 0;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.skeleton-header, .skeleton-body, .skeleton-footer {
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 1000px 104px;
+  height: 20px;
+  margin: 10px 0;
+  animation-duration: 1.2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: shimmer;
+  animation-timing-function: linear;
+}
+
+.skeleton-header {
+  width: 70%;
+}
+
+.skeleton-body {
+  width: 90%;
+  height: 10px;
+}
+
+.skeleton-footer {
+  width: 50%;
+}
+
+@keyframes shimmer {
+  0% {
+      background-position: -1000px 0;
+  }
+  100% {
+      background-position: 1000px 0;
+  }
+}
+
+@keyframes slideIn {
+  from {
+      transform: translateX(-100%);
+      opacity: 0;
+  }
+  to {
+      transform: translateX(0);
+      opacity: 1;
+  }
+}
+
+.postcard {
+  animation: slideIn 0.8s ease-out forwards;
+  opacity: 0;  /* Start elements as invisible */
+}
