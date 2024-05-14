@@ -337,3 +337,167 @@ select:focus {
     rgba(253, 160, 133, 1)
   );
 }
+
+.card.love {
+  background-color: transparent; 
+}
+
+.buttons {
+  width: 100%;
+  height: 100px;
+  font-family: cursive;
+  font-size: 25px;
+  border: 2px solid #f2c2c8;
+  border-radius: 10px;
+  background: linear-gradient(70deg, #FFE5E9, #FFC3CC);
+  color: #F05757;
+  outline: none;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  position: relative;
+}
+
+.buttons:active {
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.23);
+  transform: scale(0.99);
+}
+
+.love {
+  position: relative;
+}
+
+.hearts {
+  position: absolute;
+  background-color: #ffdae0;
+  height: 50px;
+  width: 50px;
+  opacity: 0;
+  transform: rotate(-45deg);
+}
+
+#heart1 {
+  top: 50%;
+  left: 50%;
+  margin-top: -25px;
+  margin-left: -75px;
+}
+
+#heart2 {
+  top: 50%;
+  left: 50%;
+  margin-top: -75px;
+  margin-left: -25px;
+}
+
+#heart3 {
+  top: 50%;
+  left: 50%;
+  margin-top: 25px;
+  margin-left: -25px;
+}
+
+#heart4 {
+  top: 50%;
+  left: 50%;
+  margin-top: -75px;
+  margin-left: 50px;
+}
+
+#heart5 {
+  top: 50%;
+  left: 50%;
+  margin-top: 0;
+  margin-left: 50px;
+}
+
+.hearts:before,
+.hearts:after {
+  content: "";
+  position: absolute;
+  background-color: #ffdae0;
+  border-radius: 50%;
+}
+
+.hearts:before {
+  width: 50px;
+  height: 50px;
+  top: -25px;
+  left: 0;
+}
+
+.hearts:after {
+  width: 50px;
+  height: 50px;
+  top: 0;
+  left: 25px;
+}
+
+.love:hover > #heart1 {
+  animation: hearts1 1.1s infinite;
+}
+.love:hover > #heart2 {
+  animation: hearts2 0.9s infinite;
+}
+.love:hover > #heart3 {
+  animation: hearts3 0.9s infinite;
+}
+.love:hover > #heart4 {
+  animation: hearts4 1s infinite;
+}
+.love:hover > #heart5 {
+  animation: hearts5 1.1s infinite;
+}
+
+@keyframes hearts1 {
+  0%, 100% {
+    transform: scale(0.1) rotate(-45deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes hearts2 {
+  0%, 100% {
+    transform: scale(0.1) rotate(-45deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes hearts3 {
+  0%, 100% {
+    transform: scale(0.1) rotate(-45deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes hearts4 {
+  0%, 100% {
+    transform: scale(0.1) rotate(-45deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes hearts5 {
+  0%, 100% {
+    transform: scale(0.1) rotate(-45deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1) rotate(-45deg);
+    opacity: 0;
+  }
+}
