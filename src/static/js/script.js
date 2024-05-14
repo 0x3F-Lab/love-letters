@@ -413,7 +413,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-
 $(document).ready(function () {
   let isDragging = false;
   let startX, startY;

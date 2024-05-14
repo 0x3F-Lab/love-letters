@@ -68,7 +68,9 @@ def create_app(config_class=DevelopmentConfig):
 
         posts = Post.query.all()  # Query to get all posts
 
-        return render_template("landing.html", notification_count=notification_count, posts=posts)
+        return render_template(
+            "landing.html", notification_count=notification_count, posts=posts
+        )
 
     return app
 
