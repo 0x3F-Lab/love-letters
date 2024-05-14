@@ -215,7 +215,6 @@ function toggleReplies(postId) {
 
 // Dynamically show the reply without refresching the page
 
-
 $("#replyForm").submit(function (event) {
   event.preventDefault(); // Prevent the default form submission
 
@@ -258,8 +257,6 @@ $("#replyForm").submit(function (event) {
     },
   });
 });
-
-
 
 // $(document).ready(function () {
 //   $(".swipe-card").each(function() { // Ensure each card sets up its own handlers
@@ -327,8 +324,6 @@ $("#replyForm").submit(function (event) {
 //   });
 // });
 
-
-
 $(document).ready(function () {
   let isDragging = false;
   let startX, startY;
@@ -352,7 +347,7 @@ $(document).ready(function () {
       // Use translate for movement keeping the initial centering
       card.css({
         transform: `translateX(calc(-50% + ${diffX}px)) translateY(${diffY}px)`,
-        cursor: 'grabbing'
+        cursor: "grabbing",
       });
     });
 
@@ -367,17 +362,21 @@ $(document).ready(function () {
 
       // Check distance for snapping or resetting
       if (Math.sqrt(diffX * diffX + diffY * diffY) > 200) {
-        card.animate({
-          transform: `translateX(${diffX > 0 ? '1000px' : '-1000px'})`,
-          opacity: 0
-        }, 300, function() {
-          card.remove();
-        });
+        card.animate(
+          {
+            transform: `translateX(${diffX > 0 ? "1000px" : "-1000px"})`,
+            opacity: 0,
+          },
+          300,
+          function () {
+            card.remove();
+          },
+        );
       } else {
         // Reset to the original position with transform
         card.css({
-          transform: 'translateX(-50%)',
-          cursor: 'grab'
+          transform: "translateX(-50%)",
+          cursor: "grab",
         });
       }
     });
