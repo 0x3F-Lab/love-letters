@@ -59,7 +59,6 @@ def create_app(config_class=DevelopmentConfig):
 
     @app.route("/")
     def home():
-
         notification_count = 0
 
         if current_user.is_authenticated:
@@ -67,7 +66,9 @@ def create_app(config_class=DevelopmentConfig):
                 recipient_id=current_user.user_id
             ).count()
 
-        return render_template("landing.html", notification_count=notification_count)
+        posts = Post.query.all()  # Query to get all posts
+
+        return render_template("landing.html", notification_count=notification_count, posts=posts)
 
     return app
 

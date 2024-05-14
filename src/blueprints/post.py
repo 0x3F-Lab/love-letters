@@ -99,15 +99,13 @@ def browse(page=1):
     elif sort_option == "least_liked":
         sort_criteria = likes_count_subq.c.like_count
     elif sort_option.startswith("type_"):
-        post_type = sort_option.split("_")[1]  # Extract post type from the sort_option
-        # Adjust the use of case to correctly pass arguments
+        post_type = sort_option.split("_")[1]
         type_sort = case((Post.post_type == post_type, 0), else_=1)
         base_query = base_query.order_by(type_sort, Post.created_at.desc())
-    else:  # Default to newest
+    else:
         sort_criteria = Post.created_at.desc()
 
     if not sort_option.startswith("type_"):
-        # Only apply sort_criteria directly if it's not 'type_' option to avoid confusion in handling multiple criteria
         base_query = base_query.order_by(sort_criteria)
 
     posts = base_query.paginate(page=page, per_page=per_page, error_out=False)
@@ -121,6 +119,7 @@ def browse(page=1):
         return jsonify({"posts": posts_html, "has_next": posts.has_next})
 
     return render_template("browse.html", posts=posts.items, user=user)
+
 
 
 @post.route("/like_post", methods=["POST"])

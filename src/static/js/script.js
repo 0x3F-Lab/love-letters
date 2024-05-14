@@ -412,3 +412,63 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 100 * index);
   });
 });
+
+
+$(document).ready(function () {
+  let isDragging = false;
+  let startX, startY;
+
+  $(".swipe-card").on("mousedown touchstart", function (e) {
+    e.preventDefault();
+    isDragging = true;
+    let card = $(this);
+
+    // Get the starting point of the touch/drag
+    startX = e.pageX || e.originalEvent.touches[0].pageX;
+    startY = e.pageY || e.originalEvent.touches[0].pageY;
+
+    $(document).on("mousemove touchmove", function (e) {
+      if (!isDragging) return;
+      let moveX = e.pageX || e.originalEvent.touches[0].pageX;
+      let moveY = e.pageY || e.originalEvent.touches[0].pageY;
+      let diffX = moveX - startX;
+      let diffY = moveY - startY;
+
+      // Use translate for movement keeping the initial centering
+      card.css({
+        transform: `translateX(calc(-50% + ${diffX}px)) translateY(${diffY}px)`,
+        cursor: "grabbing",
+      });
+    });
+
+    $(document).on("mouseup touchend", function (e) {
+      $(document).off("mousemove touchmove");
+      isDragging = false;
+
+      let endX = e.pageX || e.changedTouches[0].pageX;
+      let endY = e.pageY || e.changedTouches[0].pageY;
+      let diffX = endX - startX;
+      let diffY = endY - startY;
+
+      // Check distance for snapping or resetting
+      if (Math.sqrt(diffX * diffX + diffY * diffY) > 200) {
+        card.animate(
+          {
+            transform: `translateX(${diffX > 0 ? "1000px" : "-1000px"})`,
+            opacity: 0,
+          },
+          300,
+          function () {
+            card.remove();
+          },
+        );
+      } else {
+        // Reset to the original position with transform
+        card.css({
+          transform: "translateX(-50%)",
+          cursor: "grab",
+        });
+      }
+    });
+  });
+});
