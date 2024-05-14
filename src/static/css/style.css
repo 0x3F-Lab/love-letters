@@ -339,7 +339,7 @@ select:focus {
 }
 
 .card.love {
-  background-color: transparent; 
+  background-color: transparent;
 }
 
 .buttons {
@@ -349,10 +349,12 @@ select:focus {
   font-size: 25px;
   border: 2px solid #f2c2c8;
   border-radius: 10px;
-  background: linear-gradient(70deg, #FFE5E9, #FFC3CC);
-  color: #F05757;
+  background: linear-gradient(70deg, #ffe5e9, #ffc3cc);
+  color: #f05757;
   outline: none;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.19),
+    0 6px 6px rgba(0, 0, 0, 0.23);
   position: relative;
 }
 
@@ -448,7 +450,8 @@ select:focus {
 }
 
 @keyframes hearts1 {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0.1) rotate(-45deg);
     opacity: 0.8;
   }
@@ -459,7 +462,8 @@ select:focus {
 }
 
 @keyframes hearts2 {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0.1) rotate(-45deg);
     opacity: 0.8;
   }
@@ -470,7 +474,8 @@ select:focus {
 }
 
 @keyframes hearts3 {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0.1) rotate(-45deg);
     opacity: 0.8;
   }
@@ -481,7 +486,8 @@ select:focus {
 }
 
 @keyframes hearts4 {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0.1) rotate(-45deg);
     opacity: 0.8;
   }
@@ -492,7 +498,8 @@ select:focus {
 }
 
 @keyframes hearts5 {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0.1) rotate(-45deg);
     opacity: 0.8;
   }
@@ -501,7 +508,6 @@ select:focus {
     opacity: 0;
   }
 }
-
 
 #cards-container {
   position: relative;
