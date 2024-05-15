@@ -406,45 +406,29 @@ select:focus {
 
 /* Sidebar Styling */
 .sidebar {
-  height: 100vh; /* Ensure the sidebar reaches the top and bottom of the page */
-  width: 250px;
   position: fixed;
-  top: 56px; /* Match the height of the navbar */
   left: 0;
-  background-color: pink; /* Light pink color */
-  overflow-x: hidden;
-  padding-top: 20px;
-  z-index: 1; /* Ensure the sidebar is above the background but below the flash messages */
-}
-
-.sidebar-header {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px 15px;
-  text-align: center;
-  font-size: 1.5em;
-  font-weight: bold;
-  background: #ffb6c1; /* Light pink color */
-  color: #fff;
-  border-bottom: 1px solid #ddd;
-}
-
-.sidebar-content {
-  padding: 20px 15px;
+  background-color: transparent;
+  z-index: 1; /* Ensure the sidebar is above the background but below the flash messages */
 }
 
 .sidebar .card {
-  margin-bottom: 50px; /* Increased margin to spread out the buttons more */
+  margin-bottom: 20px;
   background-color: transparent;
   position: relative;
 }
 
 .sidebar .buttons {
   width: 100%;
-  height: 100px; /* Increased height for larger buttons */
+  height: 60px; /* Decreased height for skinnier buttons */
   font-family: cursive;
-  font-size: 30px; /* Increased font size */
+  font-size: 24px; /* Adjusted font size */
   border: 2px solid #f2c2c8;
   border-radius: 10px;
   background: linear-gradient(70deg, #ffe5e9, #ffc3cc);
@@ -696,7 +680,7 @@ select:focus {
 
   .sidebar .buttons {
     width: 90%;
-    height: 90px; /* Increased height for larger buttons on smaller screens */
+    height: 70px; /* Adjusted height for buttons on smaller screens */
     margin: 40px 0; /* Increased margin for more spacing on smaller screens */
     font-size: 28px; /* Increased font size for readability on smaller screens */
   }
