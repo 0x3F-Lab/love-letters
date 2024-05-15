@@ -121,7 +121,6 @@ def browse(page=1):
     return render_template("browse.html", posts=posts.items, user=user)
 
 
-
 @post.route("/like_post", methods=["POST"])
 def like_post():
     if not current_user.is_authenticated:
