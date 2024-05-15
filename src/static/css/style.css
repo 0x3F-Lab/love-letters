@@ -1,6 +1,7 @@
 html,
 body {
   height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
   display: flex;
@@ -58,6 +59,8 @@ body {
   color: #666;
   text-align: center;
   padding: 10px 0;
+  flex-shrink: 0; /* Prevent the footer from shrinking */
+  position: relative; /* Ensure the footer stays in place */
 }
 
 .modal-content {
@@ -363,13 +366,100 @@ select:focus {
   transform: scale(0.99);
 }
 
-.love {
+#cards-container {
+  position: relative;
+  flex: 1; /* Allow it to grow and fill available space */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swipe-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  will-change: transform, opacity;
+  cursor: grab;
+  background: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  cursor: grab;
+  transition: transform 0.1s ease-out; /* Smooth transition for transform */
+}
+
+.swipe-card:not(:last-child) {
+  pointer-events: none;
+}
+
+/* Navbar Styling */
+.navbar {
+  background-color: #ffb6c1; /* Light pink color */
+  z-index: 2; /* Ensure the navbar is above other elements */
+}
+
+/* Sidebar Styling */
+.sidebar {
+  height: 100vh; /* Ensure the sidebar reaches the top and bottom of the page */
+  width: 250px;
+  position: fixed;
+  top: 56px; /* Match the height of the navbar */
+  left: 0;
+  background-color: pink; /* Light pink color */
+  overflow-x: hidden;
+  padding-top: 20px;
+  z-index: 1; /* Ensure the sidebar is above the background but below the flash messages */
+}
+
+.sidebar-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 15px;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  background: #ffb6c1; /* Light pink color */
+  color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.sidebar-content {
+  padding: 20px 15px;
+}
+
+.sidebar .card {
+  margin-bottom: 50px; /* Increased margin to spread out the buttons more */
+  background-color: transparent;
   position: relative;
 }
 
+.sidebar .buttons {
+  width: 100%;
+  height: 100px; /* Increased height for larger buttons */
+  font-family: cursive;
+  font-size: 30px; /* Increased font size */
+  border: 2px solid #f2c2c8;
+  border-radius: 10px;
+  background: linear-gradient(70deg, #ffe5e9, #ffc3cc);
+  color: #f05757;
+  outline: none;
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.19),
+    0 6px 6px rgba(0, 0, 0, 0.23);
+  position: relative;
+}
+
+/* Heart Animation Styling */
 .hearts {
   position: absolute;
-  background-color: #ffdae0;
+  background-color: #ffb3ba; /* Darker shade of pink */
   height: 50px;
   width: 50px;
   opacity: 0;
@@ -377,45 +467,45 @@ select:focus {
 }
 
 #heart1 {
-  top: 50%;
-  left: 50%;
+  top: 30%;
+  left: 10%;
   margin-top: -25px;
-  margin-left: -75px;
+  margin-left: -25px;
 }
 
 #heart2 {
-  top: 50%;
-  left: 50%;
-  margin-top: -75px;
+  top: 20%;
+  left: 30%;
+  margin-top: -35px;
   margin-left: -25px;
 }
 
 #heart3 {
-  top: 50%;
+  top: 40%;
   left: 50%;
-  margin-top: 25px;
+  margin-top: -25px;
   margin-left: -25px;
 }
 
 #heart4 {
-  top: 50%;
-  left: 50%;
-  margin-top: -75px;
-  margin-left: 50px;
+  top: 10%;
+  left: 70%;
+  margin-top: -35px;
+  margin-left: -25px;
 }
 
 #heart5 {
-  top: 50%;
-  left: 50%;
-  margin-top: 0;
-  margin-left: 50px;
+  top: 30%;
+  left: 90%;
+  margin-top: -25px;
+  margin-left: -25px;
 }
 
 .hearts:before,
 .hearts:after {
   content: "";
   position: absolute;
-  background-color: #ffdae0;
+  background-color: #ffb3ba; /* Darker shade of pink */
   border-radius: 50%;
 }
 
@@ -437,16 +527,16 @@ select:focus {
   animation: hearts1 1.1s infinite;
 }
 .love:hover > #heart2 {
-  animation: hearts2 0.9s infinite;
+  animation: hearts2 1.3s infinite;
 }
 .love:hover > #heart3 {
-  animation: hearts3 0.9s infinite;
+  animation: hearts3 1.5s infinite;
 }
 .love:hover > #heart4 {
-  animation: hearts4 1s infinite;
+  animation: hearts4 1.7s infinite;
 }
 .love:hover > #heart5 {
-  animation: hearts5 1.1s infinite;
+  animation: hearts5 1.9s infinite;
 }
 
 @keyframes hearts1 {
@@ -509,31 +599,123 @@ select:focus {
   }
 }
 
-#cards-container {
-  position: relative;
-  height: 600px;
-  width: 100%;
+/* Flash Messages Styling */
+.flash-messages {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10; /* Ensure flash messages are above the sidebar */
+  width: calc(100% - 40px);
+  max-width: 600px;
+  pointer-events: none; /* Allow interactions to pass through */
 }
 
-.swipe-card {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  will-change: transform, opacity;
-  cursor: grab;
-  background: white;
-  border: 1px solid black;
-  border-radius: 10px;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  cursor: grab;
-  transition: transform 0.1s ease-out; /* Smooth transition for transform */
+.flash-messages .alert {
+  pointer-events: all; /* Allow interactions with the alert itself */
 }
 
-.swipe-card:not(:last-child) {
-  pointer-events: none;
+/* Main Content Styling */
+.main-content {
+  margin-left: 260px;
+  padding: 20px;
+}
+
+/* Center Content */
+
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 60vh;
+  margin: 0;
+  padding: 0;
+  margin-top: -20px;
+}
+
+.centered-text {
+  font-size: 5em;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+.subtext {
+  font-size: 1em;
+  margin-top: 20px;
+}
+
+/* Navigation Cards */
+
+.card {
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  background-color: #cacaca;
+}
+
+.posts {
+  margin: 20px;
+}
+
+/* Footer */
+
+.footer {
+  margin-top: auto; /* Automatically adjusts margin to push footer at the bottom */
+  width: 100%; /* Full width */
+  background-color: #f5f5f5; /* Adjust the color as needed */
+  color: #666;
+  text-align: center;
+  padding: 10px 0;
+  flex-shrink: 0; /* Prevent the footer from shrinking */
+  position: relative; /* Ensure the footer stays in place */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .sidebar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidebar .buttons {
+    width: 90%;
+    height: 90px; /* Increased height for larger buttons on smaller screens */
+    margin: 40px 0; /* Increased margin for more spacing on smaller screens */
+    font-size: 28px; /* Increased font size for readability on smaller screens */
+  }
+
+  .hearts {
+    height: 45px; /* Adjusted for larger hearts on smaller screens */
+    width: 45px; /* Adjusted for larger hearts on smaller screens */
+  }
+
+  .hearts:before {
+    width: 45px; /* Adjusted for larger hearts on smaller screens */
+    height: 45px; /* Adjusted for larger hearts on smaller screens */
+    top: -22.5px; /* Adjusted for larger hearts on smaller screens */
+  }
+
+  .hearts:after {
+    width: 45px; /* Adjusted for larger hearts on smaller screens */
+    height: 45px; /* Adjusted for larger hearts on smaller screens */
+    top: 0;
+    left: 22.5px; /* Adjusted for larger hearts on smaller screens */
+  }
 }
