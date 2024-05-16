@@ -10,22 +10,33 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-class TestNotLoggedIn():
-  def setup_method(self, method):
-    self.driver = webdriver.Chrome()
-    self.vars = {}
-  
-  def teardown_method(self, method):
-    self.driver.quit()
-  
-  def test_notLoggedIn(self):
-    self.driver.get("http://127.0.0.1:5000")
-    self.driver.set_window_size(1227, 1020)
-    self.driver.find_element(By.LINK_TEXT, "Create Post").click()
-    assert self.driver.find_element(By.CSS_SELECTOR, ".alert-warning").text == "You must log in to access this page.\\\\n×"
-    self.driver.find_element(By.LINK_TEXT, "Notifications").click()
-    assert self.driver.find_element(By.CSS_SELECTOR, ".alert-warning").text == "You must log in to access this page.\\\\n×"
-    self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
-    self.driver.find_element(By.CSS_SELECTOR, ".card:nth-child(4) form > .btn").click()
-    assert self.driver.find_element(By.CSS_SELECTOR, ".alert-dismissible").text == "You need to login to connect.\\\\n×"
-  
+
+class TestNotLoggedIn:
+    def setup_method(self, method):
+        self.driver = webdriver.Chrome()
+        self.vars = {}
+
+    def teardown_method(self, method):
+        self.driver.quit()
+
+    def test_notLoggedIn(self):
+        self.driver.get("http://127.0.0.1:5000")
+        self.driver.set_window_size(1227, 1020)
+        self.driver.find_element(By.LINK_TEXT, "Create Post").click()
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-warning").text
+            == "You must log in to access this page.\\\\n×"
+        )
+        self.driver.find_element(By.LINK_TEXT, "Notifications").click()
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-warning").text
+            == "You must log in to access this page.\\\\n×"
+        )
+        self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
+        self.driver.find_element(
+            By.CSS_SELECTOR, ".card:nth-child(4) form > .btn"
+        ).click()
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-dismissible").text
+            == "You need to login to connect.\\\\n×"
+        )

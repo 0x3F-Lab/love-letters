@@ -10,30 +10,43 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-class TestCreatePost():
-  def setup_method(self, method):
-    self.driver = webdriver.Chrome()
-    self.vars = {}
-  
-  def teardown_method(self, method):
-    self.driver.quit()
-  
-  def test_createPost(self):
-    self.driver.get("http://127.0.0.1:5000")
-    self.driver.set_window_size(1245, 1040)
-    self.driver.find_element(By.LINK_TEXT, "Log In").click()
-    self.driver.find_element(By.ID, "login-email").click()
-    self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
-    self.driver.find_element(By.ID, "login-password").click()
-    self.driver.find_element(By.ID, "login-password").send_keys("password123")
-    self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
-    assert self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text == "Successfully logged in\\\\n×"
-    self.driver.find_element(By.CSS_SELECTOR, ".col-md-3:nth-child(2) .card-title").click()
-    self.driver.find_element(By.NAME, "title").click()
-    self.driver.find_element(By.NAME, "title").send_keys("Selenium Test")
-    self.driver.find_element(By.NAME, "content").click()
-    self.driver.find_element(By.NAME, "content").send_keys("Testing 123")
-    self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(7)").click()
-    assert self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text == "Post created successfully!\\\\n×"
-    assert self.driver.find_element(By.CSS_SELECTOR, ".card:nth-child(4) .card-title").text == "Selenium Test"
-  
+
+class TestCreatePost:
+    def setup_method(self, method):
+        self.driver = webdriver.Chrome()
+        self.vars = {}
+
+    def teardown_method(self, method):
+        self.driver.quit()
+
+    def test_createPost(self):
+        self.driver.get("http://127.0.0.1:5000")
+        self.driver.set_window_size(1245, 1040)
+        self.driver.find_element(By.LINK_TEXT, "Log In").click()
+        self.driver.find_element(By.ID, "login-email").click()
+        self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
+        self.driver.find_element(By.ID, "login-password").click()
+        self.driver.find_element(By.ID, "login-password").send_keys("password123")
+        self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
+            == "Successfully logged in\\\\n×"
+        )
+        self.driver.find_element(
+            By.CSS_SELECTOR, ".col-md-3:nth-child(2) .card-title"
+        ).click()
+        self.driver.find_element(By.NAME, "title").click()
+        self.driver.find_element(By.NAME, "title").send_keys("Selenium Test")
+        self.driver.find_element(By.NAME, "content").click()
+        self.driver.find_element(By.NAME, "content").send_keys("Testing 123")
+        self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(7)").click()
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
+            == "Post created successfully!\\\\n×"
+        )
+        assert (
+            self.driver.find_element(
+                By.CSS_SELECTOR, ".card:nth-child(4) .card-title"
+            ).text
+            == "Selenium Test"
+        )

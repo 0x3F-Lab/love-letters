@@ -10,37 +10,62 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-class TestProfileEdit():
-  def setup_method(self, method):
-    self.driver = webdriver.Chrome()
-    self.vars = {}
-  
-  def teardown_method(self, method):
-    self.driver.quit()
-  
-  def test_profileEdit(self):
-    self.driver.get("http://127.0.0.1:5000")
-    self.driver.set_window_size(1167, 1020)
-    self.driver.find_element(By.LINK_TEXT, "Log In").click()
-    self.driver.find_element(By.ID, "login-email").click()
-    self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
-    self.driver.find_element(By.ID, "login-password").send_keys("password123")
-    self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
-    self.driver.find_element(By.LINK_TEXT, "Alice Johnson").click()
-    assert self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(5)").text == "Gender: Female"
-    assert self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(7)").text == "Instagram: alice_j"
-    assert self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(9)").text == "Snapchat: Not provided"
-    self.driver.find_element(By.ID, "editButton").click()
-    self.driver.find_element(By.CSS_SELECTOR, ".form-group:nth-child(3) > #gender").click()
-    dropdown = self.driver.find_element(By.CSS_SELECTOR, ".form-group:nth-child(3) > #gender")
-    dropdown.find_element(By.XPATH, "//option[. = 'Male']").click()
-    self.driver.find_element(By.ID, "edit_instagram").click()
-    self.driver.find_element(By.ID, "edit_instagram").send_keys("alice_james")
-    self.driver.find_element(By.ID, "edit_snapchat").click()
-    self.driver.find_element(By.ID, "edit_snapchat").send_keys("Selenium")
-    self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(9)").click()
-    assert self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text == "Account details successfully updated\\\\n×"
-    assert self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(5)").text == "Gender: Male"
-    assert self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(7)").text == "Instagram: alice_james"
-    assert self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(9)").text == "Snapchat: Selenium"
-  
+
+class TestProfileEdit:
+    def setup_method(self, method):
+        self.driver = webdriver.Chrome()
+        self.vars = {}
+
+    def teardown_method(self, method):
+        self.driver.quit()
+
+    def test_profileEdit(self):
+        self.driver.get("http://127.0.0.1:5000")
+        self.driver.set_window_size(1167, 1020)
+        self.driver.find_element(By.LINK_TEXT, "Log In").click()
+        self.driver.find_element(By.ID, "login-email").click()
+        self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
+        self.driver.find_element(By.ID, "login-password").send_keys("password123")
+        self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
+        self.driver.find_element(By.LINK_TEXT, "Alice Johnson").click()
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(5)").text
+            == "Gender: Female"
+        )
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(7)").text
+            == "Instagram: alice_j"
+        )
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(9)").text
+            == "Snapchat: Not provided"
+        )
+        self.driver.find_element(By.ID, "editButton").click()
+        self.driver.find_element(
+            By.CSS_SELECTOR, ".form-group:nth-child(3) > #gender"
+        ).click()
+        dropdown = self.driver.find_element(
+            By.CSS_SELECTOR, ".form-group:nth-child(3) > #gender"
+        )
+        dropdown.find_element(By.XPATH, "//option[. = 'Male']").click()
+        self.driver.find_element(By.ID, "edit_instagram").click()
+        self.driver.find_element(By.ID, "edit_instagram").send_keys("alice_james")
+        self.driver.find_element(By.ID, "edit_snapchat").click()
+        self.driver.find_element(By.ID, "edit_snapchat").send_keys("Selenium")
+        self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(9)").click()
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
+            == "Account details successfully updated\\\\n×"
+        )
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(5)").text
+            == "Gender: Male"
+        )
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(7)").text
+            == "Instagram: alice_james"
+        )
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(9)").text
+            == "Snapchat: Selenium"
+        )

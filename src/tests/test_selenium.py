@@ -18,11 +18,14 @@ current_dir = Path(__file__).resolve()
 parent_dir = current_dir.parents[2]
 sys.path.append(str(parent_dir))
 
+
 def reset_database():
     runpy.run_module("generate_example_db", run_name="__main__")
 
+
 # Make sure the sample database has been generated before testing
 reset_database()
+
 
 class Test_login:
     def setup_method(self, method):
@@ -93,4 +96,3 @@ class Test_createPost:
             By.CSS_SELECTOR, ".card:nth-child(4) .card-title"
         )
         assert len(elements) > 0
-

@@ -10,61 +10,79 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-class TestPasswordChange():
-  def setup_method(self, method):
-    self.driver = webdriver.Chrome()
-    self.vars = {}
-  
-  def teardown_method(self, method):
-    self.driver.quit()
-  
-  def test_passwordChange(self):
-    self.driver.get("http://127.0.0.1:5000")
-    self.driver.set_window_size(1285, 1039)
-    self.driver.find_element(By.CSS_SELECTOR, "body").click()
-    self.driver.find_element(By.LINK_TEXT, "Log In").click()
-    element = self.driver.find_element(By.LINK_TEXT, "Log In")
-    actions = ActionChains(self.driver)
-    actions.move_to_element(element).perform()
-    element = self.driver.find_element(By.CSS_SELECTOR, "body")
-    actions = ActionChains(self.driver)
-    actions.move_to_element(element, 0, 0).perform()
-    self.driver.find_element(By.CSS_SELECTOR, "#loginModal .modal-header").click()
-    self.driver.find_element(By.ID, "login-email").click()
-    self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
-    self.driver.find_element(By.ID, "login-password").click()
-    self.driver.find_element(By.ID, "login-password").send_keys("password123")
-    self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
-    assert self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text == "Successfully logged in\\\\n×"
-    self.driver.find_element(By.LINK_TEXT, "Alice Johnson").click()
-    self.driver.find_element(By.ID, "changePasswordButton").click()
-    self.driver.find_element(By.ID, "current_password").click()
-    self.driver.find_element(By.ID, "current_password").send_keys("password123")
-    self.driver.find_element(By.ID, "new_password").click()
-    self.driver.find_element(By.ID, "new_password").send_keys("password1234")
-    self.driver.find_element(By.ID, "confirm_password").click()
-    self.driver.find_element(By.ID, "confirm_password").send_keys("password1234")
-    self.driver.find_element(By.CSS_SELECTOR, "#passwordForm > .btn").click()
-    assert self.driver.find_element(By.ID, "passwordError").text == "Password must contain at least one uppercase letter."
-    self.driver.find_element(By.ID, "new_password").click()
-    self.driver.find_element(By.ID, "new_password").send_keys("Password1234")
-    self.driver.find_element(By.ID, "confirm_password").click()
-    self.driver.find_element(By.ID, "confirm_password").send_keys("Password1234")
-    self.driver.find_element(By.CSS_SELECTOR, "#passwordForm > .btn").click()
-    assert self.driver.find_element(By.ID, "passwordError").text == "Password must contain at least one special character."
-    self.driver.find_element(By.ID, "new_password").click()
-    self.driver.find_element(By.ID, "new_password").send_keys("Password1234!")
-    self.driver.find_element(By.ID, "confirm_password").click()
-    self.driver.find_element(By.ID, "confirm_password").send_keys("Password1234!")
-    self.driver.find_element(By.CSS_SELECTOR, "#passwordForm > .btn").click()
-    assert self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text == "Password successfully updated\\\\n×"
-    self.driver.find_element(By.LINK_TEXT, "Log Out").click()
-    assert self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text == "You have been logged out.\\\\n×"
-    self.driver.find_element(By.LINK_TEXT, "Log In").click()
-    self.driver.find_element(By.ID, "login-email").click()
-    self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
-    self.driver.find_element(By.ID, "login-password").click()
-    self.driver.find_element(By.ID, "login-password").send_keys("Password1234!")
-    self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
-    assert self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text == "Successfully logged in\\\\n×"
-  
+
+class TestPasswordChange:
+    def setup_method(self, method):
+        self.driver = webdriver.Chrome()
+        self.vars = {}
+
+    def teardown_method(self, method):
+        self.driver.quit()
+
+    def test_passwordChange(self):
+        self.driver.get("http://127.0.0.1:5000")
+        self.driver.set_window_size(1285, 1039)
+        self.driver.find_element(By.CSS_SELECTOR, "body").click()
+        self.driver.find_element(By.LINK_TEXT, "Log In").click()
+        element = self.driver.find_element(By.LINK_TEXT, "Log In")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        element = self.driver.find_element(By.CSS_SELECTOR, "body")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element, 0, 0).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "#loginModal .modal-header").click()
+        self.driver.find_element(By.ID, "login-email").click()
+        self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
+        self.driver.find_element(By.ID, "login-password").click()
+        self.driver.find_element(By.ID, "login-password").send_keys("password123")
+        self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
+            == "Successfully logged in\\\\n×"
+        )
+        self.driver.find_element(By.LINK_TEXT, "Alice Johnson").click()
+        self.driver.find_element(By.ID, "changePasswordButton").click()
+        self.driver.find_element(By.ID, "current_password").click()
+        self.driver.find_element(By.ID, "current_password").send_keys("password123")
+        self.driver.find_element(By.ID, "new_password").click()
+        self.driver.find_element(By.ID, "new_password").send_keys("password1234")
+        self.driver.find_element(By.ID, "confirm_password").click()
+        self.driver.find_element(By.ID, "confirm_password").send_keys("password1234")
+        self.driver.find_element(By.CSS_SELECTOR, "#passwordForm > .btn").click()
+        assert (
+            self.driver.find_element(By.ID, "passwordError").text
+            == "Password must contain at least one uppercase letter."
+        )
+        self.driver.find_element(By.ID, "new_password").click()
+        self.driver.find_element(By.ID, "new_password").send_keys("Password1234")
+        self.driver.find_element(By.ID, "confirm_password").click()
+        self.driver.find_element(By.ID, "confirm_password").send_keys("Password1234")
+        self.driver.find_element(By.CSS_SELECTOR, "#passwordForm > .btn").click()
+        assert (
+            self.driver.find_element(By.ID, "passwordError").text
+            == "Password must contain at least one special character."
+        )
+        self.driver.find_element(By.ID, "new_password").click()
+        self.driver.find_element(By.ID, "new_password").send_keys("Password1234!")
+        self.driver.find_element(By.ID, "confirm_password").click()
+        self.driver.find_element(By.ID, "confirm_password").send_keys("Password1234!")
+        self.driver.find_element(By.CSS_SELECTOR, "#passwordForm > .btn").click()
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
+            == "Password successfully updated\\\\n×"
+        )
+        self.driver.find_element(By.LINK_TEXT, "Log Out").click()
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
+            == "You have been logged out.\\\\n×"
+        )
+        self.driver.find_element(By.LINK_TEXT, "Log In").click()
+        self.driver.find_element(By.ID, "login-email").click()
+        self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
+        self.driver.find_element(By.ID, "login-password").click()
+        self.driver.find_element(By.ID, "login-password").send_keys("Password1234!")
+        self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
+            == "Successfully logged in\\\\n×"
+        )

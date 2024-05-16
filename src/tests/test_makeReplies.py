@@ -10,28 +10,45 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-class TestMakeReplies():
-  def setup_method(self, method):
-    self.driver = webdriver.Chrome()
-    self.vars = {}
-  
-  def teardown_method(self, method):
-    self.driver.quit()
-  
-  def test_makeReplies(self):
-    self.driver.get("http://127.0.0.1:5000")
-    self.driver.set_window_size(1285, 1039)
-    self.driver.find_element(By.LINK_TEXT, "Log In").click()
-    self.driver.find_element(By.ID, "login-email").click()
-    self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
-    self.driver.find_element(By.ID, "login-password").send_keys("password123")
-    self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
-    assert self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text == "Successfully logged in\\\\n×"
-    self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
-    self.driver.find_element(By.CSS_SELECTOR, ".card:nth-child(4) .d-flex > .btn-primary").click()
-    self.driver.find_element(By.NAME, "content").click()
-    self.driver.find_element(By.NAME, "content").send_keys("Sent from Selenium")
-    self.driver.find_element(By.CSS_SELECTOR, ".modal-footer > .btn-primary").click()
-    assert self.driver.find_element(By.CSS_SELECTOR, "#replies-1 > .card:nth-child(1) .card-subtitle").text == "Reply by You"
-    assert self.driver.find_element(By.CSS_SELECTOR, "#replies-1 > .card:nth-child(1) .card-text").text == "Sent from Selenium"
-  
+
+class TestMakeReplies:
+    def setup_method(self, method):
+        self.driver = webdriver.Chrome()
+        self.vars = {}
+
+    def teardown_method(self, method):
+        self.driver.quit()
+
+    def test_makeReplies(self):
+        self.driver.get("http://127.0.0.1:5000")
+        self.driver.set_window_size(1285, 1039)
+        self.driver.find_element(By.LINK_TEXT, "Log In").click()
+        self.driver.find_element(By.ID, "login-email").click()
+        self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
+        self.driver.find_element(By.ID, "login-password").send_keys("password123")
+        self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
+            == "Successfully logged in\\\\n×"
+        )
+        self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
+        self.driver.find_element(
+            By.CSS_SELECTOR, ".card:nth-child(4) .d-flex > .btn-primary"
+        ).click()
+        self.driver.find_element(By.NAME, "content").click()
+        self.driver.find_element(By.NAME, "content").send_keys("Sent from Selenium")
+        self.driver.find_element(
+            By.CSS_SELECTOR, ".modal-footer > .btn-primary"
+        ).click()
+        assert (
+            self.driver.find_element(
+                By.CSS_SELECTOR, "#replies-1 > .card:nth-child(1) .card-subtitle"
+            ).text
+            == "Reply by You"
+        )
+        assert (
+            self.driver.find_element(
+                By.CSS_SELECTOR, "#replies-1 > .card:nth-child(1) .card-text"
+            ).text
+            == "Sent from Selenium"
+        )

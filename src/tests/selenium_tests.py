@@ -11,11 +11,14 @@ current_dir = Path(__file__).resolve()
 parent_dir = current_dir.parents[2]
 sys.path.append(str(parent_dir))
 
+
 def reset_database():
     runpy.run_module("generate_example_db", run_name="__main__")
 
+
 # Make sure the sample database has been generated before testing
 reset_database()
+
 
 def test_login(driver):
     driver.get("http://127.0.0.1:5000/")
@@ -24,9 +27,12 @@ def test_login(driver):
     driver.find_element(By.NAME, "password").send_keys("password123")
     driver.find_element(By.NAME, "password").send_keys(Keys.RETURN)
     WebDriverWait(driver, 10).until(
-        EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".alert"), "Successfully logged in")
+        EC.text_to_be_present_in_element(
+            (By.CSS_SELECTOR, ".alert"), "Successfully logged in"
+        )
     )
     reset_database()
+
 
 if __name__ == "__main__":
     driver = webdriver.Chrome()  # or webdriver.Firefox() or any other browser
