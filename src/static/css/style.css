@@ -8,8 +8,6 @@ body {
   flex-direction: column;
 }
 
-
-
 /* Navigation Cards */
 
 .card {
@@ -25,7 +23,6 @@ body {
 .posts {
   margin: 20px;
 }
-
 
 .modal-content {
   background: none;
@@ -573,7 +570,6 @@ select:focus {
   display: inline-block; /* Ensure the alert is inline-block for proper centering */
 }
 
-
 /* Center Content */
 
 .centered-content {
@@ -619,25 +615,54 @@ select:focus {
 }
 
 @keyframes showup {
-  0% {opacity: 0;}
-  20% {opacity: 1;}
-  80% {opacity: 1;}
-  100% {opacity: 0;}
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes slidein {
-  0% {margin-left: -800px;}
-  20% {margin-left: -800px;}
-  35% {margin-left: 0px;}
-  100% {margin-left: 0px;}
+  0% {
+    margin-left: -800px;
+  }
+  20% {
+    margin-left: -800px;
+  }
+  35% {
+    margin-left: 0px;
+  }
+  100% {
+    margin-left: 0px;
+  }
 }
 
 @keyframes reveal {
-  0% {opacity: 0; width: 0px;}
-  20% {opacity: 1; width: 0px;}
-  30% {width: 355px;}
-  80% {opacity: 1;}
-  100% {opacity: 0; width: 355px;}
+  0% {
+    opacity: 0;
+    width: 0px;
+  }
+  20% {
+    opacity: 1;
+    width: 0px;
+  }
+  30% {
+    width: 355px;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    width: 355px;
+  }
 }
 
 .subtext {
