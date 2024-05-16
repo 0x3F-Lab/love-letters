@@ -344,10 +344,10 @@ select:focus {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 80%;
+  width: 50%;
   will-change: transform, opacity;
   cursor: grab;
-  background: white;
+  background: rgb(255, 228, 252);
   border: 1px solid black;
   border-radius: 10px;
   user-select: none;
@@ -356,6 +356,7 @@ select:focus {
   -ms-user-select: none;
   cursor: grab;
   transition: transform 0.1s ease-out; /* Smooth transition for transform */
+  margin: 10px auto;
 }
 
 .swipe-card:not(:last-child) {
@@ -581,7 +582,7 @@ select:focus {
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 60vh;
+  height: 30vh;
   margin: 0;
   padding: 0;
   margin-top: -20px;
