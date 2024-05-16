@@ -10,14 +10,28 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
+import runpy
+import sys
+from pathlib import Path
 
-class TestLogin:
+current_dir = Path(__file__).resolve()
+parent_dir = current_dir.parents[2]
+sys.path.append(str(parent_dir))
+
+def reset_database():
+    runpy.run_module("generate_example_db", run_name="__main__")
+
+# Make sure the sample database has been generated before testing
+reset_database()
+
+class Test_login:
     def setup_method(self, method):
         self.driver = webdriver.Chrome()
         self.vars = {}
 
     def teardown_method(self, method):
         self.driver.quit()
+        reset_database()
 
     def test_login(self):
         self.driver.get("http://127.0.0.1:5000/auth/login")
@@ -33,13 +47,14 @@ class TestLogin:
         self.driver.find_element(By.CSS_SELECTOR, ".alert-success").click()
 
 
-class TestPost:
+class Test_createPost:
     def setup_method(self, method):
         self.driver = webdriver.Chrome()
         self.vars = {}
 
     def teardown_method(self, method):
         self.driver.quit()
+        reset_database()
 
     def test_post(self):
         self.driver.get("http://127.0.0.1:5000")
@@ -78,3 +93,4 @@ class TestPost:
             By.CSS_SELECTOR, ".card:nth-child(4) .card-title"
         )
         assert len(elements) > 0
+
