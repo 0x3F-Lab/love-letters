@@ -29,8 +29,9 @@ class TestLogin:
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
 
         self.driver.implicitly_wait(1)
-        
+
         self.driver.find_element(By.CSS_SELECTOR, ".alert-success").click()
+
 
 class TestPost:
     def setup_method(self, method):
@@ -70,7 +71,7 @@ class TestPost:
         self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(7)").click()
 
         self.driver.implicitly_wait(10)
-        
+
         elements = self.driver.find_elements(By.CSS_SELECTOR, ".alert-success")
         assert len(elements) > 0
         elements = self.driver.find_elements(
