@@ -1,63 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Connect Hearts at UWA{% endblock %}
 {% block content %}
-<div class="sidebar">
-  <div class="card love" onclick="location.href='{{ url_for('post.browse') }}';">
-    <button type="button" class="buttons">Browse Letters</button>
-    <div id="heart1" class="hearts"></div>
-    <div id="heart2" class="hearts"></div>
-    <div id="heart3" class="hearts"></div>
-    <div id="heart4" class="hearts"></div>
-    <div id="heart5" class="hearts"></div>
-  </div>
-  <div class="card love" onclick="location.href='{{ url_for('post.create') }}';">
-    <button type="button" class="buttons">Post Letters</button>
-    <div id="heart1" class="hearts"></div>
-    <div id="heart2" class="hearts"></div>
-    <div id="heart3" class="hearts"></div>
-    <div id="heart4" class="hearts"></div>
-    <div id="heart5" class="hearts"></div>
-  </div>
-  {% if current_user.is_authenticated %}
-    <div class="card love" onclick="location.href='{{ url_for('auth.notifications') }}';">
-      <button type="button" class="buttons">Responses<span class="badge badge-info">{{ notification_count|default(0) }}</span></button>
-      <div id="heart1" class="hearts"></div>
-      <div id="heart2" class="hearts"></div>
-      <div id="heart3" class="hearts"></div>
-      <div id="heart4" class="hearts"></div>
-      <div id="heart5" class="hearts"></div>
-    </div>
-    <div class="card love" onclick="location.href='{{ url_for('auth.account') }}';">
-      <button type="button" class="buttons">My Account</button>
-      <div id="heart1" class="hearts"></div>
-      <div id="heart2" class="hearts"></div>
-      <div id="heart3" class="hearts"></div>
-      <div id="heart4" class="hearts"></div>
-      <div id="heart5" class="hearts"></div>
-    </div>
-  {% else %}
-    <div class="card love" data-toggle="modal" data-target="#loginModal">
-      <button type="button" class="buttons">Login</button>
-      <div id="heart1" class="hearts"></div>
-      <div id="heart2" class="hearts"></div>
-      <div id="heart3" class="hearts"></div>
-      <div id="heart4" class="hearts"></div>
-      <div id="heart5" class="hearts"></div>
-    </div>
-  {% endif %}
-  <div class="card love">
-    <button type="button" class="buttons">Love Calculator</button>
-    <div id="heart1" class="hearts"></div>
-    <div id="heart2" class="hearts"></div>
-    <div id="heart3" class="hearts"></div>
-    <div id="heart4" class="hearts"></div>
-    <div id="heart5" class="hearts"></div>
-  </div>
-</div>
+
 <div class="main-content">
   <div class="centered-content m-4">
-    <div class="centered-text" style="background: white; border-radius: 20px;">Love Letters</div>
-    <div class="subtext" style="background: white; border-radius: 20px;">Find love or friendship! We don't care!</div>
+    <div class="centered-text">
+      <div>Love Letters</div>
+      <div><span>Find love or friendship!</span></div>
+    </div>
   </div>
 
   <!-- Swipe Cards Section -->

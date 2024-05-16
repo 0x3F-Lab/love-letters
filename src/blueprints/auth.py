@@ -180,7 +180,7 @@ def account():
 
     if not current_user.is_authenticated:
         flash("User not found.", "danger")
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("home"))
 
     if request.method == "POST":
         # print(request.form) debugging
@@ -264,7 +264,7 @@ def change_password():
 
     if not user:
         flash("User not found.", "danger")
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("home"))
 
     current_password = request.form.get("current_password")
     new_password = request.form.get("new_password")
@@ -336,7 +336,7 @@ def login():
 def logout():
     logout_user()
     flash("You have been logged out.", "success")
-    return redirect(url_for("auth.login"))
+    return redirect(url_for("home"))
 
 
 # Notifications

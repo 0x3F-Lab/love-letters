@@ -29,7 +29,7 @@ def create_post():
 
         if not current_user.is_authenticated:
             flash("You need to login to post.", "danger")
-            return redirect(url_for("auth.login"))
+            return redirect(url_for("home"))
 
         title = request.form.get("title")
         content = request.form.get("content")
