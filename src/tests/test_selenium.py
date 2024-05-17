@@ -136,6 +136,7 @@ class Test_checkReplies:
             == "Reply by Anonymous"
         )
 
+
 class Test_passwordChange:
     def setup_method(self, method):
         self.driver = webdriver.Chrome()
@@ -235,5 +236,3 @@ class Test_passwordChange:
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
             == "Successfully logged in\n×"
         )
-
-
