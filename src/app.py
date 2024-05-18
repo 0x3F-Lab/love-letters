@@ -54,7 +54,7 @@ def create_app(config_class=DevelopmentConfig):
                 "email": user.email,
                 "phone_number": user.phone_number,
                 "socials": socials,
-                "gender": user.gender
+                "gender": user.gender,
             }
         )
 
