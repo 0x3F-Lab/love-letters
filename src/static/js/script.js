@@ -414,8 +414,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 $(document).ready(function () {
-
-  let phrases = ["Find love or friendship!", "Connect with others!", "Share your story!"];
+  let phrases = [
+    "Find love or friendship!",
+    "Connect with others!",
+    "Share your story!",
+  ];
   let currentIndex = 0;
 
   function updateText() {
@@ -471,12 +474,14 @@ $(document).ready(function () {
           },
           300,
           function () {
-            card.css({
-              transform: "translateX(-50%) translateY(0)",
-              opacity: 1,
-              transition: "none", // Disable transition temporarily
-            }).prependTo("#cards-container"); // Move the card back to the top of the container
-            setTimeout(function() {
+            card
+              .css({
+                transform: "translateX(-50%) translateY(0)",
+                opacity: 1,
+                transition: "none", // Disable transition temporarily
+              })
+              .prependTo("#cards-container"); // Move the card back to the top of the container
+            setTimeout(function () {
               card.css({ transition: "transform 0.2s, opacity 0.2s" }); // Re-enable transition
             }, 0);
           },

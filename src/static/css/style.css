@@ -751,7 +751,9 @@ select:focus {
 .card.card-animation {
   border-radius: 10px !important;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
-  transition: transform 0.2s, box-shadow 0.2s !important;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s !important;
   padding: 20px !important; /* Added padding for more vertical space */
 }
 
@@ -823,10 +825,10 @@ select:focus {
 /* Mobile view adjustments */
 @media (max-width: 768px) {
   .btn-group .btn .btn-text {
-      display: none !important; /* Hide button text on mobile */
+    display: none !important; /* Hide button text on mobile */
   }
   .post-meta .post-type {
-      display: none !important; /* Hide post type on mobile */
+    display: none !important; /* Hide post type on mobile */
   }
 }
 
@@ -856,15 +858,18 @@ select:focus {
 }
 
 @keyframes textAnimation {
-  0%, 33% {
+  0%,
+  33% {
     opacity: 1;
     transform: translateY(0);
   }
-  33.33%, 66% {
+  33.33%,
+  66% {
     opacity: 0;
     transform: translateY(-100%);
   }
-  66.66%, 100% {
+  66.66%,
+  100% {
     opacity: 0;
     transform: translateY(-200%);
   }
