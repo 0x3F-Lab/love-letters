@@ -131,7 +131,6 @@ def browse(page=1):
     else:
         notification_count = 0
 
-
     return render_template(
         "browse.html",
         posts=posts.items,
