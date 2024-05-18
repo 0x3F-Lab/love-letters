@@ -13,9 +13,9 @@
                 <option value="oldest" {% if request.args.get('sort') == 'oldest' %}selected{% endif %}>Oldest</option>
                 <option value="most_liked" {% if request.args.get('sort') == 'most_liked' %}selected{% endif %}>Most Liked</option>
                 <option value="least_liked" {% if request.args.get('sort') == 'least_liked' %}selected{% endif %}>Least Liked</option>
-                <option value="type_Love Letter" {% if request.args.get('sort') == 'type_Love Letter' %}selected{% endif %}>Love Letter's</option>
-                <option value="type_Friend Request" {% if request.args.get('sort') == 'type_Friend Request' %}selected{% endif %}>Friend Request's</option>
-                <option value="type_General Broadcast" {% if request.args.get('sort') == 'type_General Broadcast' %}selected{% endif %}>General Broadcast's</option>
+                <option value="type_Love Letter" {% if request.args.get('sort') == 'type_Love Letter' %}selected{% endif %}>Love Letters</option>
+                <option value="type_Friend Request" {% if request.args.get('sort') == 'type_Friend Request' %}selected{% endif %}>Friend Requests</option>
+                <option value="type_General Broadcast" {% if request.args.get('sort') == 'type_General Broadcast' %}selected{% endif %}>General Broadcasts</option>
             </select>
         </form>
     </div>
