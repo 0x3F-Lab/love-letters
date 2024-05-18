@@ -1,0 +1,95 @@
+<!-- profile_modal.html -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border: none; box-shadow: none; background: transparent; max-width: 600px; margin: auto;">
+        <div class="position-relative">
+          <div class="container">
+            <div class="row d-flex justify-content-center align-items-center">
+              <div class="col mb-4 mb-lg-0">
+                <div class="card mb-3" style="border-radius: .5rem; width:120%;">
+                  <div class="row g-0">
+                    <div class="col-md-4 gradient-custom text-center text-black"
+                      style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                      <img src="https://austinpeopleworks.com/wp-content/uploads/2020/12/blank-profile-picture-973460_1280.png"
+                        alt="Avatar" class="img-fluid my-5" style="width: 80px;" id="profile-avatar" />
+                      <h5 id="user-name">John Doe</h5>
+                      <p id="user-gender">Not provided</p>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body p-4">
+                        <h6>Personal Information</h6>
+                        <hr class="mt-0 mb-4">
+                        <div class="row pt-1">
+                          <div class="col-6 mb-3">
+                            <h6>Email</h6>
+                            <p class="text-muted" id="user-email">example@example.com</p>
+                          </div>
+                          <div class="col-6 mb-3">
+                            <h6>Phone</h6>
+                            <p class="text-muted" id="user-phone">N/A</p>
+                          </div>
+                        </div>
+                        <h6>Socials</h6>
+                        <hr class="mt-0 mb-4">
+                        <div class="row pt-1">
+                          <div class="col-6 mb-4">
+                            <h6>Instagram</h6>
+                            <p class="text-muted" id="user-instagram">N/A</p>
+                          </div>
+                          <div class="col-6 mb-4">
+                            <h6>Facebook</h6>
+                            <p class="text-muted" id="user-facebook">N/A</p>
+                          </div>
+                          <div class="col-6 mb-4">
+                            <h6>Snapchat</h6>
+                            <p class="text-muted" id="user-snapchat">N/A</p>
+                          </div>
+                          <div class="col-6 mb-4" style="margin-top: 10px;">
+                            <a href="#" target="_blank" id="user-facebook-link"><i class="fab fa-facebook-f fa-2x me-3"></i></a>
+                            <a href="#" target="_blank" id="user-snapchat-link"><i class="fab fa-snapchat fa-2x me-3"></i></a>
+                            <a href="#" target="_blank" id="user-instagram-link"><i class="fab fa-instagram fa-2x"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Include Bootstrap JS for modal functionality -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+  
+  <!-- Add CSS to handle the scrollbar issue -->
+  <style>
+    /* Ensure the scrollbar is always present */
+    body {
+      overflow-y: scroll;
+    }
+  </style>
+  
+  <!-- Add JavaScript to handle scrollbar width adjustment -->
+  <script>
+    const adjustModalScrollbar = () => {
+      const modal = document.getElementById('profileModal');
+      const body = document.body;
+  
+      modal.addEventListener('show.bs.modal', () => {
+        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+        body.style.paddingRight = `${scrollbarWidth}px`;
+      });
+  
+      modal.addEventListener('hidden.bs.modal', () => {
+        body.style.paddingRight = '';
+      });
+    };
+  
+    adjustModalScrollbar();
+  </script>
+  
