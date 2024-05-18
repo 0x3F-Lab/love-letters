@@ -31,7 +31,7 @@ class Test_selenium:
     def setup_method(self, method):
         chrome_options = Options()
         chrome_options.add_argument("--headless")  # Enable headless mode
-        #chrome_options.add_argument("--disable-gpu")
+        # chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--window-size=1920,1200")
         self.driver = webdriver.Chrome(options=chrome_options)
         self.vars = {}
@@ -54,46 +54,45 @@ class Test_selenium:
 
         self.driver.find_element(By.CSS_SELECTOR, ".alert-success").click()
 
-
     def test_createPost(self):
-            self.driver.get("http://127.0.0.1:5000")
-            self.driver.set_window_size(1245, 1040)
-            self.driver.find_element(By.LINK_TEXT, "Log In").click()
-            self.driver.find_element(By.ID, "login-email").click()
-            self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
-            self.driver.find_element(By.ID, "login-password").click()
-            self.driver.find_element(By.ID, "login-password").send_keys("password123")
-            self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
+        self.driver.get("http://127.0.0.1:5000")
+        self.driver.set_window_size(1245, 1040)
+        self.driver.find_element(By.LINK_TEXT, "Log In").click()
+        self.driver.find_element(By.ID, "login-email").click()
+        self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
+        self.driver.find_element(By.ID, "login-password").click()
+        self.driver.find_element(By.ID, "login-password").send_keys("password123")
+        self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
 
-            time.sleep(0.1)
+        time.sleep(0.1)
 
-            assert (
-                self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
-                == "Successfully logged in\n×"
-            )
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
+            == "Successfully logged in\n×"
+        )
+        self.driver.find_element(
+            By.CSS_SELECTOR, ".col-md-3:nth-child(2) .card-title"
+        ).click()
+        self.driver.find_element(By.NAME, "title").click()
+        self.driver.find_element(By.NAME, "title").send_keys("Selenium Test")
+        self.driver.find_element(By.NAME, "content").click()
+        self.driver.find_element(By.NAME, "content").send_keys("Testing 123")
+        self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(7)").click()
+
+        time.sleep(0.1)
+        assert (
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
+            == "Post created successfully!\n×"
+        )
+
+        self.driver.implicitly_wait(10)
+
+        assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".col-md-3:nth-child(2) .card-title"
-            ).click()
-            self.driver.find_element(By.NAME, "title").click()
-            self.driver.find_element(By.NAME, "title").send_keys("Selenium Test")
-            self.driver.find_element(By.NAME, "content").click()
-            self.driver.find_element(By.NAME, "content").send_keys("Testing 123")
-            self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(7)").click()
-
-            time.sleep(0.1)
-            assert (
-                self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
-                == "Post created successfully!\n×"
-            )
-
-            self.driver.implicitly_wait(10)
-
-            assert (
-                self.driver.find_element(
-                    By.CSS_SELECTOR, ".card:nth-child(4) .card-title"
-                ).text
-                == "Selenium Test"
-            )
+                By.CSS_SELECTOR, ".card:nth-child(4) .card-title"
+            ).text
+            == "Selenium Test"
+        )
 
     def test_checkReplies(self):
         self.driver.get("http://127.0.0.1:5000")
@@ -122,7 +121,6 @@ class Test_selenium:
         self.driver.find_element(
             By.CSS_SELECTOR, ".card:nth-child(8) .btn-info"
         ).click()
-
 
         time.sleep(0.1)
 
@@ -491,7 +489,7 @@ class Test_selenium:
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
 
         time.sleep(0.1)
-    
+
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
             == "Successfully logged in\n×"
@@ -530,7 +528,7 @@ class Test_selenium:
         self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
         self.driver.find_element(By.ID, "login-password").send_keys("password123")
         self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
-        
+
         time.sleep(0.1)
 
         assert (
@@ -593,7 +591,7 @@ class Test_selenium:
             == "Successfully logged in\n×"
         )
         self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
-        
+
         time.sleep(0.1)
 
         assert (
