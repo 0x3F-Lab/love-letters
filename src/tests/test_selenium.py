@@ -50,6 +50,7 @@ class Test_login:
 
         self.driver.find_element(By.CSS_SELECTOR, ".alert-success").click()
 
+
 class Test_createPost:
     def setup_method(self, method):
         self.driver = webdriver.Chrome()
@@ -101,6 +102,7 @@ class Test_createPost:
             == "Selenium Test"
         )
 
+
 class Test_checkReplies:
     def setup_method(self, method):
         self.driver = webdriver.Chrome()
@@ -135,6 +137,7 @@ class Test_checkReplies:
             self.driver.find_element(By.CSS_SELECTOR, "#replies-3 .card-subtitle").text
             == "Reply by Anonymous"
         )
+
 
 class Test_passwordChange:
     def setup_method(self, method):
@@ -236,6 +239,7 @@ class Test_passwordChange:
             == "Successfully logged in\n×"
         )
 
+
 class Test_notificationcheck:
     def setup_method(self, method):
         self.driver = webdriver.Chrome()
@@ -266,15 +270,15 @@ class Test_notificationcheck:
             == "Successfully logged in\n×"
         )
         assert (
-            (self.driver.find_element(
+            self.driver.find_element(
                 By.CSS_SELECTOR, ".col-md-3:nth-child(3) .card-title"
             ).text
-            == "Responses1") or
-            (self.driver.find_element(
+            == "Responses1"
+        ) or (
+            self.driver.find_element(
                 By.CSS_SELECTOR, ".col-md-3:nth-child(3) .card-title"
             ).text
-            == "Responses2")
-
+            == "Responses2"
         )
 
         time.sleep(0.5)
@@ -318,6 +322,7 @@ class Test_notificationcheck:
             ).text
             == "Responses0"
         )
+
 
 class Test_checkBrowse:
     def setup_method(self, method):
@@ -389,6 +394,7 @@ class Test_checkBrowse:
             == "Carol's Post #3"
         )
 
+
 class Test_makeReplies:
     def setup_method(self, method):
         self.driver = webdriver.Chrome()
@@ -441,6 +447,7 @@ class Test_makeReplies:
             ).text
             == "Sent from Selenium"
         )
+
 
 class Test_profileEdit:
     def setup_method(self, method):
@@ -509,6 +516,7 @@ class Test_profileEdit:
             == "Snapchat: Selenium"
         )
 
+
 class Test_notificationMake:
     def setup_method(self, method):
         self.driver = webdriver.Chrome()
@@ -555,7 +563,7 @@ class Test_notificationMake:
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
 
         time.sleep(0.5)
-    
+
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
             == "Successfully logged in\n×"
@@ -594,7 +602,7 @@ class Test_notificationMake:
         self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
         self.driver.find_element(By.ID, "login-password").send_keys("password123")
         self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
-        
+
         time.sleep(0.5)
 
         assert (
@@ -643,6 +651,7 @@ class Test_notificationMake:
             == "Selenium Test"
         )
 
+
 class Test_likeButton:
     def setup_method(self, method):
         self.driver = webdriver.Chrome()
@@ -667,7 +676,7 @@ class Test_likeButton:
             == "Successfully logged in\n×"
         )
         self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
-        
+
         time.sleep(0.5)
 
         assert (
@@ -740,6 +749,7 @@ class Test_likeButton:
             == "Unlike (2)"
         )
 
+
 class Test_notLoggedIn:
     def setup_method(self, method):
         self.driver = webdriver.Chrome()
@@ -780,6 +790,7 @@ class Test_notLoggedIn:
             self.driver.find_element(By.CSS_SELECTOR, ".alert-dismissible").text
             == "You need to login to connect.\n×"
         )
+
 
 class Test_accountValidation:
     def setup_method(self, method):
