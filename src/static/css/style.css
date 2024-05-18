@@ -366,6 +366,13 @@ select:focus {
   z-index: 2; /* Ensure the navbar is above other elements */
 }
 
+#nav_home {
+  background: linear-gradient(to right, lightblue, rgb(255, 210, 217));
+  border-radius: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
 /* Sidebar Styling */
 .sidebar {
   position: fixed;
