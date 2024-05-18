@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block title %}Post Letters{% endblock %} {% block content %}
 <div class="centered-content">
-  <div class="form-container">
+  <div class="form-container" style="margin-top: 62vh;">
     <form method="POST" action="{{ url_for('post.create_post') }}">
       <!-- Hidden field that inclues the CSRF token -->
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>

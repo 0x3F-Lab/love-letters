@@ -546,9 +546,12 @@ select:focus {
 }
 
 /* Media Query to hide sidebar on smaller screens */
-@media (max-width: 1000px) {
+@media (max-width: 768px) {
   .sidebar {
     display: none;
+  }
+  #account_modal {
+    margin-top: 0vh !important
   }
 }
 
