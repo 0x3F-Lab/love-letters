@@ -255,7 +255,9 @@ def account():
         ).count()
 
     # Initial page load or GET request
-    return render_template("account.html", user=user, notification_count=notification_count)
+    return render_template(
+        "account.html", user=user, notification_count=notification_count
+    )
 
 
 # Update account password
@@ -359,7 +361,11 @@ def notifications():
             recipient_id=current_user.user_id
         ).count()
 
-    return render_template("notifications.html", notifications=user_notifications, notification_count=notification_count)
+    return render_template(
+        "notifications.html",
+        notifications=user_notifications,
+        notification_count=notification_count,
+    )
 
 
 @auth.route("/dismiss_notification/<int:notification_id>", methods=["POST"])
@@ -373,5 +379,4 @@ def dismiss_notification(notification_id):
     db.session.commit()
     flash("Notification dismissed.", "success")
 
-    
     return redirect(url_for("auth.notifications"))

@@ -127,7 +127,12 @@ def browse(page=1):
             recipient_id=current_user.user_id
         ).count()
 
-    return render_template("browse.html", posts=posts.items, user=user, notification_count=notification_count)
+    return render_template(
+        "browse.html",
+        posts=posts.items,
+        user=user,
+        notification_count=notification_count,
+    )
 
 
 @post.route("/like_post", methods=["POST"])
