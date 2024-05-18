@@ -66,7 +66,11 @@ def create_post():
 @post.route("/create")
 @login_required
 def create():
-    return render_template("post.html")
+    if current_user.is_authenticated:
+        notification_count = Notification.query.filter_by(
+            recipient_id=current_user.user_id
+        ).count()
+    return render_template("post.html", notification_count=notification_count)
 
 
 from sqlalchemy import case
@@ -119,7 +123,17 @@ def browse(page=1):
         posts_html = render_template("posts_list.html", posts=posts.items, user=user)
         return jsonify({"posts": posts_html, "has_next": posts.has_next})
 
-    return render_template("browse.html", posts=posts.items, user=user)
+    if current_user.is_authenticated:
+        notification_count = Notification.query.filter_by(
+            recipient_id=current_user.user_id
+        ).count()
+
+    return render_template(
+        "browse.html",
+        posts=posts.items,
+        user=user,
+        notification_count=notification_count,
+    )
 
 
 
