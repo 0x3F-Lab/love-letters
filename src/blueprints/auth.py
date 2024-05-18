@@ -249,8 +249,13 @@ def account():
         user.facebook = socials.get("facebook", "")
         user.snapchat = socials.get("snapchat", "")
 
+    if current_user.is_authenticated:
+        notification_count = Notification.query.filter_by(
+            recipient_id=current_user.user_id
+        ).count()
+
     # Initial page load or GET request
-    return render_template("account.html", user=user)
+    return render_template("account.html", user=user, notification_count=notification_count)
 
 
 # Update account password
@@ -348,7 +353,13 @@ def notifications():
     user_notifications = Notification.query.filter_by(
         recipient_id=current_user.get_id()
     ).all()
-    return render_template("notifications.html", notifications=user_notifications)
+
+    if current_user.is_authenticated:
+        notification_count = Notification.query.filter_by(
+            recipient_id=current_user.user_id
+        ).count()
+
+    return render_template("notifications.html", notifications=user_notifications, notification_count=notification_count)
 
 
 @auth.route("/dismiss_notification/<int:notification_id>", methods=["POST"])
@@ -361,4 +372,6 @@ def dismiss_notification(notification_id):
     db.session.delete(notification)
     db.session.commit()
     flash("Notification dismissed.", "success")
+
+    
     return redirect(url_for("auth.notifications"))
