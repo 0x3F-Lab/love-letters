@@ -94,7 +94,7 @@ def add_notifications():
     notifications_sent = set()
 
     for user in users:
-        sampled_posts = random.sample(posts, min(3, len(posts)))
+        sampled_posts = random.sample(posts, 9)
         for post in sampled_posts:
             if (
                 user.user_id,
