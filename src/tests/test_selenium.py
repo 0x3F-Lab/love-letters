@@ -50,7 +50,7 @@ class Test_selenium:
         self.driver.find_element(By.ID, "login-password").send_keys("password123")
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         self.driver.find_element(By.CSS_SELECTOR, ".alert-success").click()
 
@@ -64,7 +64,7 @@ class Test_selenium:
         self.driver.find_element(By.ID, "login-password").send_keys("password123")
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
@@ -79,7 +79,7 @@ class Test_selenium:
         self.driver.find_element(By.NAME, "content").send_keys("Testing 123")
         self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(7)").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
             == "Post created successfully!\n×"
@@ -102,7 +102,7 @@ class Test_selenium:
             By.CSS_SELECTOR, ".card:nth-child(4) .btn-info"
         ).click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, "#replies-1 .card-subtitle").text
@@ -112,7 +112,7 @@ class Test_selenium:
             By.CSS_SELECTOR, ".card:nth-child(6) .btn-info"
         ).click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, "#replies-2 .card-subtitle").text
@@ -122,7 +122,7 @@ class Test_selenium:
             By.CSS_SELECTOR, ".card:nth-child(8) .btn-info"
         ).click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, "#replies-3 .card-subtitle").text
@@ -228,11 +228,11 @@ class Test_selenium:
         self.driver.find_element(By.ID, "login-password").send_keys("password123")
         self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         self.driver.find_element(By.CSS_SELECTOR, ".centered-content").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
@@ -250,11 +250,11 @@ class Test_selenium:
             == "Responses2"
         )
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         self.driver.find_element(By.LINK_TEXT, "Notifications").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert self.driver.find_element(By.LINK_TEXT, "Bob Smith").text == "Bob Smith"
         assert (
@@ -263,7 +263,7 @@ class Test_selenium:
         )
         self.driver.find_element(By.CSS_SELECTOR, ".alert:nth-child(2) span").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
@@ -271,14 +271,14 @@ class Test_selenium:
         )
         self.driver.find_element(By.CSS_SELECTOR, "form span").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
             == "Notification dismissed.\n×"
         )
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, "p").text
@@ -362,7 +362,7 @@ class Test_selenium:
         self.driver.find_element(By.ID, "login-password").send_keys("password123")
         self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
@@ -375,13 +375,13 @@ class Test_selenium:
         self.driver.find_element(By.NAME, "content").click()
         self.driver.find_element(By.NAME, "content").send_keys("Sent from Selenium")
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         self.driver.find_element(
             By.CSS_SELECTOR, ".modal-footer > .btn-primary"
         ).click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(
@@ -405,7 +405,7 @@ class Test_selenium:
         self.driver.find_element(By.ID, "login-password").send_keys("password123")
         self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         self.driver.find_element(By.LINK_TEXT, "Alice Johnson").click()
         assert (
@@ -421,11 +421,11 @@ class Test_selenium:
             == "Snapchat: Not provided"
         )
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         self.driver.find_element(By.ID, "editButton").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         self.driver.find_element(By.ID, "edit_instagram").clear()
         self.driver.find_element(By.ID, "edit_instagram").click()
@@ -434,11 +434,11 @@ class Test_selenium:
         self.driver.find_element(By.ID, "edit_snapchat").click()
         self.driver.find_element(By.ID, "edit_snapchat").send_keys("Selenium")
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(9)").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
@@ -470,7 +470,7 @@ class Test_selenium:
         self.driver.find_element(By.ID, "instagram").send_keys("selenium")
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(13)").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
@@ -488,7 +488,7 @@ class Test_selenium:
         self.driver.find_element(By.ID, "login-password").send_keys("Password123!")
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
@@ -499,7 +499,7 @@ class Test_selenium:
             By.CSS_SELECTOR, ".card:nth-child(4) form > .btn"
         ).click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
@@ -509,7 +509,7 @@ class Test_selenium:
             By.CSS_SELECTOR, ".card:nth-child(10) form > .btn"
         ).click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
@@ -517,7 +517,7 @@ class Test_selenium:
         )
         self.driver.find_element(By.LINK_TEXT, "Log Out").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
@@ -529,14 +529,14 @@ class Test_selenium:
         self.driver.find_element(By.ID, "login-password").send_keys("password123")
         self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
             == "Successfully logged in\n×"
         )
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(
@@ -546,7 +546,7 @@ class Test_selenium:
         )
         self.driver.find_element(By.LINK_TEXT, "Notifications").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.LINK_TEXT, "Selenium Test").text
@@ -554,7 +554,7 @@ class Test_selenium:
         )
         self.driver.find_element(By.LINK_TEXT, "Log Out").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
@@ -566,11 +566,11 @@ class Test_selenium:
         self.driver.find_element(By.ID, "login-password").send_keys("password123")
         self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         self.driver.find_element(By.LINK_TEXT, "Notifications").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.LINK_TEXT, "Selenium Test").text
@@ -585,14 +585,14 @@ class Test_selenium:
         self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
         self.driver.find_element(By.ID, "login-password").send_keys("password123")
         self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
-        time.sleep(0.1)
+        time.sleep(0.5)
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
             == "Successfully logged in\n×"
         )
         self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(
@@ -601,13 +601,13 @@ class Test_selenium:
             == "Like (0)"
         )
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         self.driver.find_element(
             By.CSS_SELECTOR, ".card:nth-child(4) .d-flex > .btn-outline-primary"
         ).click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(
@@ -617,7 +617,7 @@ class Test_selenium:
         )
         self.driver.find_element(By.LINK_TEXT, "Log Out").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
@@ -635,7 +635,7 @@ class Test_selenium:
         self.driver.find_element(By.ID, "login-password").send_keys("password123")
         self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
@@ -643,7 +643,7 @@ class Test_selenium:
         )
         self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(
@@ -655,7 +655,7 @@ class Test_selenium:
             By.CSS_SELECTOR, ".card:nth-child(4) .d-flex > .btn-outline-primary"
         ).click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(
@@ -669,7 +669,7 @@ class Test_selenium:
         self.driver.set_window_size(1227, 1020)
         self.driver.find_element(By.LINK_TEXT, "Create Post").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-warning").text
@@ -677,7 +677,7 @@ class Test_selenium:
         )
         self.driver.find_element(By.LINK_TEXT, "Notifications").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-warning").text
@@ -688,7 +688,7 @@ class Test_selenium:
             By.CSS_SELECTOR, ".card:nth-child(4) form > .btn"
         ).click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-dismissible").text
@@ -714,7 +714,7 @@ class Test_selenium:
         self.driver.find_element(By.ID, "email").send_keys("test@test")
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(13)").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(
@@ -762,7 +762,7 @@ class Test_selenium:
         self.driver.find_element(By.ID, "instagram").send_keys("a")
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(14)").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".error-message").text
@@ -777,7 +777,7 @@ class Test_selenium:
         self.driver.find_element(By.ID, "password").send_keys("1aaaaaaA!")
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(13)").click()
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
