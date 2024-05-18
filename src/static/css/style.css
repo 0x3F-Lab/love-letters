@@ -883,6 +883,7 @@ select:focus {
   padding: 20px !important; /* Added padding for more vertical space */
   background-color: #fff !important; /* Ensure background color matches the theme */
   margin-bottom: 20px !important; /* Add margin between cards */
+  width: 60%;
 }
 
 .swipe-card:hover {

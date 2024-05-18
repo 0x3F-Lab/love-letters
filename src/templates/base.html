@@ -54,8 +54,8 @@
     </div>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-3">
-          <div class="sidebar">
+        <div class="col-md-4">
+          <div class="sidebar" style="width: 30%;">
             <div class="card love" onclick="location.href='{{ url_for('post.browse') }}';">
               <button type="button" class="buttons">Browse Letters</button>
               <div id="heart1" class="hearts"></div>
@@ -111,7 +111,7 @@
         </div>
 
         <!-- Block content in between navbar and footer -->
-        <div class="col-md-9">
+        <div class="col-md-8">
           {% block content %} {% endblock %}
         </div>
       </div>

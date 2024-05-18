@@ -10,7 +10,7 @@
         </h6>
         <p class="card-text my-5">{{ post.content }}</p>
         <div class="d-flex justify-content-between align-items-center post-meta">
-            <small class="text-muted post-type">Post type: {{ post.post_type }}</small>
+            <small class="text-muted">{{ post.post_type }}</small>
             <small class="text-muted">
                 {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
             </small>
