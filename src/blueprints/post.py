@@ -62,6 +62,7 @@ def create_post():
         return redirect(url_for("post.browse"))
 
 
+
 @post.route("/create")
 @login_required
 def create():
@@ -119,6 +120,8 @@ def browse(page=1):
         return jsonify({"posts": posts_html, "has_next": posts.has_next})
 
     return render_template("browse.html", posts=posts.items, user=user)
+
+
 
 
 @post.route("/like_post", methods=["POST"])

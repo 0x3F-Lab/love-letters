@@ -1,5 +1,4 @@
-{% extends "base.html" %} {% block title %}Post Letters{% endblock %} {% block
-content %}
+{% extends "base.html" %} {% block title %}Post Letters{% endblock %} {% block content %}
 <div class="centered-content">
   <div class="form-container">
     <form method="POST" action="{{ url_for('post.create_post') }}">
@@ -12,9 +11,9 @@ content %}
         required
       ></textarea>
       <select name="post_type">
-        <option value="general">Love Letter</option>
-        <option value="question">Friend Request</option>
-        <option value="question">General Broadcast</option>
+        <option value="Love Letter">Love Letter</option>
+        <option value="Friend Request">Friend Request</option>
+        <option value="General Broadcast">General Broadcast</option>
       </select>
       <input type="checkbox" name="is_anonymous" /> Post Anonymously<br />
       <input type="submit" value="Submit Post" />

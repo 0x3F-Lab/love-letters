@@ -19,19 +19,20 @@
         </form>
     </div>
 
-    {% for post in posts %}
-        {% include 'components/postcard.html' %}
-    {% endfor %}
-    <!-- Skeleton Loader Template -->
-<template id="skeleton-template">
-    <div class="post-skeleton">
-        <div class="skeleton-header"></div>
-        <div class="skeleton-body"></div>
-        <div class="skeleton-footer"></div>
+    <div class="posts-container">
+        {% for post in posts %}
+            {% include 'components/postcard.html' %}
+        {% endfor %}
+        <!-- Skeleton Loader Template -->
+        <template id="skeleton-template">
+            <div class="post-skeleton">
+                <div class="skeleton-header"></div>
+                <div class="skeleton-body"></div>
+                <div class="skeleton-footer"></div>
+            </div>
+        </template>
     </div>
-</template>
-
-{% include 'components/reply.html' %}
     
-    
+    {% include 'components/reply.html' %}
+</div>
 {% endblock %}

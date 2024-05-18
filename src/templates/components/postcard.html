@@ -2,7 +2,16 @@
 <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
 <div class="card card-animation my-3" style="max-width: 800px; margin: 0 auto;">
     <div class="card-body">
-        <h5 class="card-title">{{ post.title }}</h5>
+        <h5 class="card-title">
+            {% if post.post_type == 'Friend Request' %}
+                <i class="fas fa-user-friends"></i>
+            {% elif post.post_type == 'Love Letter' %}
+                <i class="fas fa-heart"></i>
+            {% elif post.post_type == 'General Broadcast' %}
+                <i class="fas fa-bullhorn"></i>
+            {% endif %}
+            {{ post.title }}
+        </h5>
         <h6 class="card-subtitle text-muted">
             by {% if post.is_anonymous %}Anonymous{% else %}<a href="#" data-toggle="modal" data-target="#profileModal" onclick="loadUserProfile({{ post.user_id }})" class="author-link"> 
                 {{ post.author.first_name }} {{ post.author.last_name }}
@@ -10,7 +19,7 @@
         </h6>
         <p class="card-text my-5">{{ post.content }}</p>
         <div class="d-flex justify-content-between align-items-center post-meta">
-            <small class="text-muted">{{ post.post_type }}</small>
+            <small class="text-muted post-type">Post type: {{ post.post_type }}</small>
             <small class="text-muted">
                 {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
             </small>

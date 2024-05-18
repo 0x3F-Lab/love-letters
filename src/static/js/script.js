@@ -350,8 +350,14 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((response) => response.json())
         .then((data) => {
           if (data.posts.length > 0) {
-            const container = document.querySelector(".container");
+            const container = document.querySelector(".posts-container");
             container.insertAdjacentHTML("beforeend", data.posts);
+            
+            // Ensure new posts are visible
+            document.querySelectorAll(".card-animation").forEach(card => {
+              card.style.opacity = "1";
+            });
+
             page += 1;
           } else {
             allPostsLoaded = true;
@@ -368,18 +374,15 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function displaySkeletons(count) {
-    const container = document.querySelector(".container");
-    const skeletonTemplate =
-      document.getElementById("skeleton-template").content;
+    const container = document.querySelector(".posts-container");
+    const skeletonTemplate = document.getElementById("skeleton-template").content;
     for (let i = 0; i < count; i++) {
       container.appendChild(document.importNode(skeletonTemplate, true));
     }
   }
 
   function removeSkeletons() {
-    document
-      .querySelectorAll(".post-skeleton")
-      .forEach((skeleton) => skeleton.remove());
+    document.querySelectorAll(".post-skeleton").forEach((skeleton) => skeleton.remove());
   }
 
   function handleScroll() {
@@ -402,6 +405,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   window.addEventListener("scroll", handleScroll);
 });
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const cards = document.querySelectorAll(".card-animation");
