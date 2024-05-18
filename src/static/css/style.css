@@ -175,6 +175,10 @@ select:focus {
   color: #343a40; /* Darker shade on hover for better interaction feedback */
 }
 
+.card:hover {
+  background-color: white !important;
+}
+
 /* User Info Styling */
 .user-info {
   font-family: "Arial", sans-serif; /* Ensuring a clean, readable font */
@@ -290,20 +294,20 @@ select:focus {
 
 .gradient-custom {
   /* fallback for old browsers */
-  background: #f6d365;
+  background: lightblue;
 
   /* Chrome 10-25, Safari 5.1-6 */
   background: -webkit-linear-gradient(
     to right bottom,
-    rgba(246, 211, 101, 1),
-    rgba(253, 160, 133, 1)
+    lightblue,
+    #ffc3cc
   );
 
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background: linear-gradient(
     to right bottom,
-    rgba(246, 211, 101, 1),
-    rgba(253, 160, 133, 1)
+    lightblue,
+    #ffc3cc
   );
 }
 
@@ -845,7 +849,12 @@ select:focus {
 
 .main-title {
   font-size: 2em;
-  margin-bottom: 20px;
+}
+
+@media (max-width: 1260px) {
+  .main-title {
+    font-size: 1.5em;
+  }
 }
 
 .animated-text {
