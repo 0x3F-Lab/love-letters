@@ -182,32 +182,44 @@ function loadUserProfile(userId) {
     .then((response) => response.json())
     .then((data) => {
       // Clear previous data
-      document.getElementById("user-name").textContent = `${data.first_name} ${data.last_name}`;
+      document.getElementById("user-name").textContent =
+        `${data.first_name} ${data.last_name}`;
       document.getElementById("user-email").textContent = data.email;
-      document.getElementById("user-phone").textContent = data.phone_number || "N/A";
-      document.getElementById("user-gender").textContent = data.gender || "Not provided";
+      document.getElementById("user-phone").textContent =
+        data.phone_number || "N/A";
+      document.getElementById("user-gender").textContent =
+        data.gender || "Not provided";
 
       // Checking if the social media information exists
-      document.getElementById("user-instagram").textContent = data.socials.instagram || "N/A";
-      document.getElementById("user-facebook").textContent = data.socials.facebook || "N/A";
-      document.getElementById("user-snapchat").textContent = data.socials.snapchat || "N/A";
-      
+      document.getElementById("user-instagram").textContent =
+        data.socials.instagram || "N/A";
+      document.getElementById("user-facebook").textContent =
+        data.socials.facebook || "N/A";
+      document.getElementById("user-snapchat").textContent =
+        data.socials.snapchat || "N/A";
+
       // Updating social media links
-      document.getElementById("user-instagram-link").href = data.socials.instagram ? `https://instagram.com/${data.socials.instagram}` : "#";
-      document.getElementById("user-facebook-link").href = data.socials.facebook ? `https://facebook.com/${data.socials.facebook}` : "#";
-      document.getElementById("user-snapchat-link").href = data.socials.snapchat ? `https://snapchat.com/add/${data.socials.snapchat}` : "#";
+      document.getElementById("user-instagram-link").href = data.socials
+        .instagram
+        ? `https://instagram.com/${data.socials.instagram}`
+        : "#";
+      document.getElementById("user-facebook-link").href = data.socials.facebook
+        ? `https://facebook.com/${data.socials.facebook}`
+        : "#";
+      document.getElementById("user-snapchat-link").href = data.socials.snapchat
+        ? `https://snapchat.com/add/${data.socials.snapchat}`
+        : "#";
 
       // Display the modal
-      $('#profileModal').modal('show');
+      $("#profileModal").modal("show");
     })
     .catch((error) => {
       console.error("Error loading the user profile:", error);
       const modalBody = document.querySelector("#profileModal .modal-body");
       modalBody.innerHTML = `<p>Error loading profile. Please try again.</p>`; // Handle loading errors
-      $('#profileModal').modal('show');
+      $("#profileModal").modal("show");
     });
 }
-
 
 // ----- Replies -----
 
