@@ -14,7 +14,7 @@
 
   <!-- Swipe Cards Section -->
   <div class="container mt-5">
-    <h5 class="text-center">Bored? Swipe through some of our latest posts</h5>
+    <h5 id="swipe-text" class="text-center">Bored? Swipe through some of our latest posts</h5>
     <div id="cards-container">
         {% for post in posts %}
             <div class="swipe-card py-3" data-post-id="{{ post.id }}">

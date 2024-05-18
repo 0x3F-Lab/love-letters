@@ -74,7 +74,7 @@
             </div>
             {% if current_user.is_authenticated %}
               <div class="card love" onclick="location.href='{{ url_for('auth.notifications') }}';">
-                <button type="button" class="buttons">Responses<span class="badge badge-info">{{ notification_count|default(0) }}</span></button>
+                <button type="button" class="buttons">Responses <span class="badge" style="background-color: rgb(19, 150, 194);">{{ notification_count|default(0) }}</span></button>
                 <div id="heart1" class="hearts"></div>
                 <div id="heart2" class="hearts"></div>
                 <div id="heart3" class="hearts"></div>

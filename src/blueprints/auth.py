@@ -253,6 +253,8 @@ def account():
         notification_count = Notification.query.filter_by(
             recipient_id=current_user.user_id
         ).count()
+    else:
+        notification_count = 0
 
     # Initial page load or GET request
     return render_template(

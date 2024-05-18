@@ -65,6 +65,8 @@ def create_app(config_class=DevelopmentConfig):
             notification_count = Notification.query.filter_by(
                 recipient_id=current_user.user_id
             ).count()
+        else:
+            notification_count = 0
 
         posts = Post.query.all()  # Query to get all posts
 

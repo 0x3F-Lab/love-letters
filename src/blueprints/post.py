@@ -69,6 +69,8 @@ def create():
         notification_count = Notification.query.filter_by(
             recipient_id=current_user.user_id
         ).count()
+    else:
+        notification_count = 0
     return render_template("post.html", notification_count=notification_count)
 
 
@@ -126,6 +128,9 @@ def browse(page=1):
         notification_count = Notification.query.filter_by(
             recipient_id=current_user.user_id
         ).count()
+    else:
+        notification_count = 0
+
 
     return render_template(
         "browse.html",

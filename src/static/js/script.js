@@ -484,8 +484,8 @@ $(document).ready(function () {
 
             // Check if there are no more cards
             if ($(".swipe-card").length === 0) {
-              $("#cards-container").html(
-                "<p class='text-center'>No more posts to swipe through.</p>",
+              $("#swipe-text").html(
+                "<p class='text-center'>No more posts to swipe through</p>",
               );
             }
           },
