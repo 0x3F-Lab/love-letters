@@ -13,7 +13,7 @@
             {{ post.title }}
         </h5>
         <h6 class="card-subtitle text-muted">
-            by {% if post.is_anonymous %}Anonymous{% else %}<a href="#" data-toggle="modal" data-target="#profileModal" onclick="loadUserProfile({{ post.user_id }})" class="author-link"> 
+            by {% if post.is_anonymous %}Anonymous{% else %}<a href="#" data-toggle="modal" data-target="#account_modal" onclick="loadUserProfile({{ post.user_id }})" class="author-link"> 
                 {{ post.author.first_name }} {{ post.author.last_name }}
             </a>{% endif %}
         </h6>
@@ -55,7 +55,7 @@
                             {% if reply.is_anonymous %}
                                 Anonymous
                             {% else %}
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="loadUserProfile({{ reply.user_id }})" class="author-link"> 
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#account_modal" onclick="loadUserProfile({{ reply.user_id }})" class="author-link"> 
                                     {{ reply.replier.first_name }} {{ reply.replier.last_name }}
                                 </a>
                             {% endif %}
