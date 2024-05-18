@@ -484,9 +484,11 @@ $(document).ready(function () {
 
             // Check if there are no more cards
             if ($(".swipe-card").length === 0) {
-              $("#cards-container").html("<p class='text-center'>No more posts to swipe through.</p>");
+              $("#cards-container").html(
+                "<p class='text-center'>No more posts to swipe through.</p>",
+              );
             }
-          }
+          },
         );
       } else {
         // Reset to the original position with transform
