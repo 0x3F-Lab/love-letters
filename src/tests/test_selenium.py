@@ -241,15 +241,15 @@ class Test_selenium:
             == "Successfully logged in\n×"
         )
         assert (
-            (self.driver.find_element(
+            self.driver.find_element(
                 By.CSS_SELECTOR, ".col-md-3:nth-child(3) .card-title"
             ).text
-            == "Responses1") or
-            (self.driver.find_element(
+            == "Responses1"
+        ) or (
+            self.driver.find_element(
                 By.CSS_SELECTOR, ".col-md-3:nth-child(3) .card-title"
             ).text
-            == "Responses2")
-
+            == "Responses2"
         )
 
         time.sleep(0.1)
