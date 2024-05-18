@@ -222,11 +222,13 @@ select:focus {
 }
 
 .post-skeleton {
-  max-width: 400px;
-  margin: 10px 0;
-  padding: 20px;
-  background-color: #f0f0f0;
-  border-radius: 5px;
+  max-width: 800px; /* Same as the post card */
+  margin: 0 auto 20px; /* Same margin as the post card */
+  padding: 20px; /* Same padding as the post card */
+  background-color: #f0f0f0; /* Light background color */
+  border-radius: 10px; /* Same border-radius as the post card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Same box shadow as the post card */
+  text-align: center; /* Center-align text */
 }
 
 .skeleton-header,
@@ -244,16 +246,18 @@ select:focus {
 }
 
 .skeleton-header {
-  width: 70%;
+  width: 70%; /* Adjusted width */
+  height: 30px; /* Adjusted height to match title */
 }
 
 .skeleton-body {
-  width: 90%;
-  height: 10px;
+  width: 90%; /* Adjusted width */
+  height: 100px; /* Adjusted height to match content */
 }
 
 .skeleton-footer {
-  width: 50%;
+  width: 50%; /* Adjusted width */
+  height: 20px; /* Adjusted height to match metadata */
 }
 
 @keyframes shimmer {

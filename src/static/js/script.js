@@ -352,9 +352,9 @@ document.addEventListener("DOMContentLoaded", function () {
           if (data.posts.length > 0) {
             const container = document.querySelector(".posts-container");
             container.insertAdjacentHTML("beforeend", data.posts);
-            
+
             // Ensure new posts are visible
-            document.querySelectorAll(".card-animation").forEach(card => {
+            document.querySelectorAll(".card-animation").forEach((card) => {
               card.style.opacity = "1";
             });
 
@@ -375,14 +375,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function displaySkeletons(count) {
     const container = document.querySelector(".posts-container");
-    const skeletonTemplate = document.getElementById("skeleton-template").content;
+    const skeletonTemplate =
+      document.getElementById("skeleton-template").content;
     for (let i = 0; i < count; i++) {
       container.appendChild(document.importNode(skeletonTemplate, true));
     }
   }
 
   function removeSkeletons() {
-    document.querySelectorAll(".post-skeleton").forEach((skeleton) => skeleton.remove());
+    document
+      .querySelectorAll(".post-skeleton")
+      .forEach((skeleton) => skeleton.remove());
   }
 
   function handleScroll() {
@@ -405,7 +408,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   window.addEventListener("scroll", handleScroll);
 });
-
 
 document.addEventListener("DOMContentLoaded", function () {
   const cards = document.querySelectorAll(".card-animation");
@@ -478,16 +480,14 @@ $(document).ready(function () {
           },
           300,
           function () {
-            card
-              .css({
-                transform: "translateX(-50%) translateY(0)",
-                opacity: 1,
-                transition: "none", // Disable transition temporarily
-              })
-              .prependTo("#cards-container"); // Move the card back to the top of the container
-            setTimeout(function () {
-              card.css({ transition: "transform 0.2s, opacity 0.2s" }); // Re-enable transition
-            }, 0);
+            card.remove(); // Remove the card from the DOM
+
+            // Check if there are no more cards
+            if ($(".swipe-card").length === 0) {
+              $("#cards-container").html(
+                "<p class='text-center'>No more posts to swipe through.</p>",
+              );
+            }
           },
         );
       } else {
