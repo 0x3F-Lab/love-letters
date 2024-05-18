@@ -1,6 +1,6 @@
 {% extends "base.html" %} 
 
-{% block title %}Love Letters | Account{% endblock %} 
+{% block title %} User Profile {% endblock %} 
 
 {% block content %}
 
@@ -9,9 +9,9 @@
     <div class="col col-lg-8 mb-4 mb-lg-0">
       <div class="card mb-3" style="border-radius: .5rem;">
         <div class="row g-0">
-          <div class="col-md-4 gradient-custom text-center text-black"
+          <div class="col-md-4 gradient-custom text-center text-white"
             style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-            <img src="https://austinpeopleworks.com/wp-content/uploads/2020/12/blank-profile-picture-973460_1280.png"
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
               alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
             <h5>{{ user.first_name }} {{ user.last_name }}</h5>
             <p>{{ user.gender or 'Not provided' }}</p>
@@ -33,26 +33,24 @@
               <h6>Socials</h6>
               <hr class="mt-0 mb-4">
               <div class="row pt-1">
-                <div class="col-6 mb-4">
+                <div class="col-6 mb-3">
                   <h6>Instagram</h6>
                   <p class="text-muted">{{ user.instagram or 'Not provided' }}</p>
                 </div>
-                <div class="col-6 mb-4">
+                <div class="col-6 mb-3">
                   <h6>Facebook</h6>
                   <p class="text-muted">{{ user.facebook or 'Not provided' }}</p>
                 </div>
-                <div class="col-6 mb-4">
+                <div class="col-6 mb-3">
                   <h6>Snapchat</h6>
                   <p class="text-muted">{{ user.snapchat or 'Not provided' }}</p>
                 </div>
-                <div class="col-6 mb-4" style="margin-top: 10px;">
-                  <a href="https://www.facebook.com/{{user.facebook}}" target="_blank"><i class="fab fa-facebook-f fa-2x me-3"></i></a>
-                  <a href="https://www.snapchat.com/add/{{user.snapchat}}" target="_blank"><i class="fab fa-snapchat fa-2x me-3"></i></a>
-                  <a href="https://www.instagram.com/{{user.instagram}}" target="_blank"><i class="fab fa-instagram fa-2x"></i></a>
-                </div>
-
               </div>
-
+              <div class="d-flex justify-content-start">
+                <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                <a href="#!"><i class="fab fa-snapchat fa-lg me-3"></i></a>
+                <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+              </div>
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
                 Edit
               </button>
@@ -113,7 +111,7 @@
           </div>
           <div class="form-group">
             <label for="facebook">Facebook (optional)</label>
-            <input type="text" class="form-control" id="edit_facebook" name="facebook" value="{{ user.facebook }}" placeholder="Facebook username" maxlength="60" />
+            <input type="text" class="form-control" id="edit_facebook" name="facebook" value="{{ user.facebook }}" placeholder="Facebook profile link" maxlength="60" />
           </div>
           <div class="form-group">
             <label for="snapchat">Snapchat (optional)</label>

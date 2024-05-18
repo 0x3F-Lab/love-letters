@@ -919,3 +919,11 @@ select:focus {
     display: none !important; /* Hide post type on mobile */
   }
 }
+
+
+
+@media (max-width: 1000px) {
+  #profContent {
+    width: 100% !important; /* Hide post type on mobile */
+  }
+}
