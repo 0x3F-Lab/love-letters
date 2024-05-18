@@ -81,8 +81,8 @@ def validate_socials(value, social_handle):
         return None
 
     if social_handle == "facebook":
-        if not re.match(r"https?://www\.facebook\.com/.+", value):
-            return "Please enter a valid Facebook URL"
+        if not re.match(r"^[a-zA-Z0-9._]{5,50}$", value):
+            return "Please enter a valid Facebook username"
 
     if social_handle == "instagram":
         if not re.match(r"^[a-zA-Z0-9._]{1,30}$", value):
