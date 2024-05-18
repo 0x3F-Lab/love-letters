@@ -31,7 +31,6 @@
     {% include 'components/login.html' %}    
     <div id="particles-js" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;"></div>
 
-
     <!-- Flash messages container -->
     <div class="flash-messages">
       {% with messages = get_flashed_messages(with_categories=true) %}
@@ -53,64 +52,69 @@
       </div>
       {% endfor %} {% endif %} {% endwith %}
     </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="sidebar">
+            <div class="card love" onclick="location.href='{{ url_for('post.browse') }}';">
+              <button type="button" class="buttons">Browse Letters</button>
+              <div id="heart1" class="hearts"></div>
+              <div id="heart2" class="hearts"></div>
+              <div id="heart3" class="hearts"></div>
+              <div id="heart4" class="hearts"></div>
+              <div id="heart5" class="hearts"></div>
+            </div>
+            <div class="card love" onclick="location.href='{{ url_for('post.create') }}';">
+              <button type="button" class="buttons">Post Letters</button>
+              <div id="heart1" class="hearts"></div>
+              <div id="heart2" class="hearts"></div>
+              <div id="heart3" class="hearts"></div>
+              <div id="heart4" class="hearts"></div>
+              <div id="heart5" class="hearts"></div>
+            </div>
+            {% if current_user.is_authenticated %}
+              <div class="card love" onclick="location.href='{{ url_for('auth.notifications') }}';">
+                <button type="button" class="buttons">Responses<span class="badge badge-info">{{ notification_count|default(0) }}</span></button>
+                <div id="heart1" class="hearts"></div>
+                <div id="heart2" class="hearts"></div>
+                <div id="heart3" class="hearts"></div>
+                <div id="heart4" class="hearts"></div>
+                <div id="heart5" class="hearts"></div>
+              </div>
+              <div class="card love" onclick="location.href='{{ url_for('auth.account') }}';">
+                <button type="button" class="buttons">My Account</button>
+                <div id="heart1" class="hearts"></div>
+                <div id="heart2" class="hearts"></div>
+                <div id="heart3" class="hearts"></div>
+                <div id="heart4" class="hearts"></div>
+                <div id="heart5" class="hearts"></div>
+              </div>
+            {% else %}
+              <div class="card love" data-toggle="modal" data-target="#loginModal">
+                <button type="button" class="buttons">Login</button>
+                <div id="heart1" class="hearts"></div>
+                <div id="heart2" class="hearts"></div>
+                <div id="heart3" class="hearts"></div>
+                <div id="heart4" class="hearts"></div>
+                <div id="heart5" class="hearts"></div>
+              </div>
+            {% endif %}
+            <div class="card love">
+              <button type="button" class="buttons">Love Calculator</button>
+              <div id="heart1" class="hearts"></div>
+              <div id="heart2" class="hearts"></div>
+              <div id="heart3" class="hearts"></div>
+              <div id="heart4" class="hearts"></div>
+              <div id="heart5" class="hearts"></div>
+            </div>
+          </div>
+        </div>
 
-    <div class="sidebar">
-      <div class="card love" onclick="location.href='{{ url_for('post.browse') }}';">
-        <button type="button" class="buttons">Browse Letters</button>
-        <div id="heart1" class="hearts"></div>
-        <div id="heart2" class="hearts"></div>
-        <div id="heart3" class="hearts"></div>
-        <div id="heart4" class="hearts"></div>
-        <div id="heart5" class="hearts"></div>
-      </div>
-      <div class="card love" onclick="location.href='{{ url_for('post.create') }}';">
-        <button type="button" class="buttons">Post Letters</button>
-        <div id="heart1" class="hearts"></div>
-        <div id="heart2" class="hearts"></div>
-        <div id="heart3" class="hearts"></div>
-        <div id="heart4" class="hearts"></div>
-        <div id="heart5" class="hearts"></div>
-      </div>
-      {% if current_user.is_authenticated %}
-        <div class="card love" onclick="location.href='{{ url_for('auth.notifications') }}';">
-          <button type="button" class="buttons">Responses<span class="badge badge-info">{{ notification_count|default(0) }}</span></button>
-          <div id="heart1" class="hearts"></div>
-          <div id="heart2" class="hearts"></div>
-          <div id="heart3" class="hearts"></div>
-          <div id="heart4" class="hearts"></div>
-          <div id="heart5" class="hearts"></div>
+        <!-- Block content in between navbar and footer -->
+        <div class="col-md-9">
+          {% block content %} {% endblock %}
         </div>
-        <div class="card love" onclick="location.href='{{ url_for('auth.account') }}';">
-          <button type="button" class="buttons">My Account</button>
-          <div id="heart1" class="hearts"></div>
-          <div id="heart2" class="hearts"></div>
-          <div id="heart3" class="hearts"></div>
-          <div id="heart4" class="hearts"></div>
-          <div id="heart5" class="hearts"></div>
-        </div>
-      {% else %}
-        <div class="card love" data-toggle="modal" data-target="#loginModal">
-          <button type="button" class="buttons">Login</button>
-          <div id="heart1" class="hearts"></div>
-          <div id="heart2" class="hearts"></div>
-          <div id="heart3" class="hearts"></div>
-          <div id="heart4" class="hearts"></div>
-          <div id="heart5" class="hearts"></div>
-        </div>
-      {% endif %}
-      <div class="card love">
-        <button type="button" class="buttons">Love Calculator</button>
-        <div id="heart1" class="hearts"></div>
-        <div id="heart2" class="hearts"></div>
-        <div id="heart3" class="hearts"></div>
-        <div id="heart4" class="hearts"></div>
-        <div id="heart5" class="hearts"></div>
       </div>
-    </div>
-
-    <!-- Block content in between navbar and footer -->
-    <div class="flex-grow-1">
-      {% block content %} {% endblock %}
     </div>
 
     {% include 'components/user.html' %}

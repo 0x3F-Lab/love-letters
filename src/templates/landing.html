@@ -3,32 +3,42 @@
 {% block content %}
 
 <div class="main-content">
-  <div class="centered-content m-4">
+  <div class="centered-content m-2">
     <div class="centered-text">
-      <div>Love Letters</div>
-      <div><span>Find love or friendship!</span></div>
+      <h3 class="main-title">Welcome to Love Letters</h3>
+    </div>
+    <div class="mt-4 animated-text">
+      <span id="animatedText"></span>
     </div>
   </div>
 
   <!-- Swipe Cards Section -->
   <div class="container mt-5">
-    <h1 class="text-center">Swipe on Posts</h1>
+    <h5 class="text-center">Bored? Swipe through some of our latest posts</h5>
     <div id="cards-container">
         {% for post in posts %}
             <div class="swipe-card" data-post-id="{{ post.id }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ post.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        by {% if post.is_anonymous %}Anonymous{% else %}<a href="#" data-toggle="modal" data-target="#profileModal" onclick="loadUserProfile({{ post.user_id }})" class="author-link"> 
+                            {{ post.author.first_name }} {{ post.author.last_name }}
+                        </a>{% endif %}
+                    </h6>
                     <p class="card-text">{{ post.content }}</p>
-                    <form action="{{ url_for('post.connect', post_id=post.post_id) }}" method="POST" class="connect-form">
-                      <input type="hidden" name="post_id" value="{{ post.id }}">
-                    </form>
+                    <div class="d-flex justify-content-between align-items-center post-meta">
+                        <small class="text-muted post-type">Post type: {{ post.post_type }}</small>
+                        <small class="text-muted">
+                            Posted {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
+                        </small>
+                    </div>
                 </div>
             </div>
         {% endfor %}
     </div>
+    
   </div>
+  
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 {% endblock %}

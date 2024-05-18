@@ -414,10 +414,23 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 $(document).ready(function () {
+
+  let phrases = ["Find love or friendship!", "Connect with others!", "Share your story!"];
+  let currentIndex = 0;
+
+  function updateText() {
+    $("#animatedText").fadeOut(function () {
+      $(this).text(phrases[currentIndex]).fadeIn();
+    });
+
+    currentIndex = (currentIndex + 1) % phrases.length;
+  }
+
+  setInterval(updateText, 3000); // Change text every 3 seconds
   let isDragging = false;
   let startX, startY;
 
-  $(".swipe-card").on("mousedown touchstart", function (e) {
+  $(document).on("mousedown touchstart", ".swipe-card", function (e) {
     e.preventDefault();
     isDragging = true;
     let card = $(this);
@@ -458,13 +471,20 @@ $(document).ready(function () {
           },
           300,
           function () {
-            card.remove();
+            card.css({
+              transform: "translateX(-50%) translateY(0)",
+              opacity: 1,
+              transition: "none", // Disable transition temporarily
+            }).prependTo("#cards-container"); // Move the card back to the top of the container
+            setTimeout(function() {
+              card.css({ transition: "transform 0.2s, opacity 0.2s" }); // Re-enable transition
+            }, 0);
           },
         );
       } else {
         // Reset to the original position with transform
         card.css({
-          transform: "translateX(-50%)",
+          transform: "translateX(-50%) translateY(0)",
           cursor: "grab",
         });
       }

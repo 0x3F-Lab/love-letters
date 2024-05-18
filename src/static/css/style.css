@@ -222,6 +222,7 @@ select:focus {
 }
 
 .post-skeleton {
+  max-width: 400px;
   margin: 10px 0;
   padding: 20px;
   background-color: #f0f0f0;
@@ -352,7 +353,6 @@ select:focus {
   -webkit-user-select: none;
   -ms-user-select: none;
   cursor: grab;
-  transition: transform 0.1s ease-out; /* Smooth transition for transform */
   margin: 10px auto;
 }
 
@@ -745,5 +745,163 @@ select:focus {
     height: 45px; /* Adjusted for larger hearts on smaller screens */
     top: 0;
     left: 22.5px; /* Adjusted for larger hearts on smaller screens */
+  }
+}
+/* Custom styles for the post cards */
+.card.card-animation {
+  border-radius: 10px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  transition: transform 0.2s, box-shadow 0.2s !important;
+  padding: 20px !important; /* Added padding for more vertical space */
+}
+
+.card.card-animation:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Button styles */
+.btn-sm {
+  font-size: 0.8em !important;
+  padding: 0.4em 0.6em !important;
+}
+
+.btn-primary {
+  background-color: #ffb6c1 !important; /* Light pink */
+  border-color: #ffb6c1 !important; /* Light pink */
+  color: #fff !important;
+}
+
+.btn-outline-primary {
+  border-color: #ffb6c1 !important; /* Light pink */
+  color: #ffb6c1 !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: #ffb6c1 !important;
+  color: #fff !important;
+}
+
+.btn-info {
+  background-color: #add8e6 !important; /* Light blue */
+  border-color: #add8e6 !important;
+  color: #fff !important;
+}
+
+.btn-info:hover {
+  background-color: #87ceeb !important; /* Slightly darker blue */
+  border-color: #87ceeb !important;
+}
+
+/* Custom styles for replies */
+.replies-container .card {
+  border-radius: 8px !important;
+  background-color: #f9f9f9 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Footer styles */
+.footer {
+  font-size: 0.8em !important; /* Smaller font size */
+  color: #666 !important;
+  text-align: center !important;
+  padding: 10px 0 !important;
+  background-color: #f5f5f5 !important; /* Light grey */
+}
+
+/* Adjust button group margins */
+.btn-group .btn {
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+}
+
+/* Hyperlink color */
+.author-link {
+  color: #ff69b4 !important; /* Hot pink color */
+}
+
+/* Mobile view adjustments */
+@media (max-width: 768px) {
+  .btn-group .btn .btn-text {
+      display: none !important; /* Hide button text on mobile */
+  }
+  .post-meta .post-type {
+      display: none !important; /* Hide post type on mobile */
+  }
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.main-title {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.animated-text {
+  position: relative;
+  height: 40px; /* Adjust based on your text height */
+  overflow: hidden;
+  font-weight: lighter;
+}
+
+.animated-text .text-item {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: 40px; /* Same as the height */
+  text-align: center;
+  animation: textAnimation 9s linear infinite 0s;
+}
+
+@keyframes textAnimation {
+  0%, 33% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  33.33%, 66% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  66.66%, 100% {
+    opacity: 0;
+    transform: translateY(-200%);
+  }
+}
+
+/* Ensure the swipe cards have consistent styling */
+.swipe-card {
+  border-radius: 10px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  transition: transform 0.2s !important;
+  padding: 20px !important; /* Added padding for more vertical space */
+  background-color: #fff !important; /* Ensure background color matches the theme */
+  margin-bottom: 20px !important; /* Add margin between cards */
+}
+
+.swipe-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Hyperlink color */
+.author-link {
+  color: #ff69b4 !important; /* Hot pink color */
+}
+
+/* Custom styles for post meta */
+.post-meta .post-type {
+  display: block !important;
+  margin-bottom: 10px !important; /* Add space between post type and date */
+}
+
+.post-meta small {
+  font-size: 0.9em !important; /* Slightly smaller text for post meta */
+}
+
+/* Mobile view adjustments */
+@media (max-width: 768px) {
+  .post-meta .post-type {
+    display: none !important; /* Hide post type on mobile */
   }
 }
