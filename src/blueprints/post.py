@@ -62,7 +62,6 @@ def create_post():
         return redirect(url_for("post.browse"))
 
 
-
 @post.route("/create")
 @login_required
 def create():
@@ -134,8 +133,6 @@ def browse(page=1):
         user=user,
         notification_count=notification_count,
     )
-
-
 
 
 @post.route("/like_post", methods=["POST"])
