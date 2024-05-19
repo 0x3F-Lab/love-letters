@@ -5,22 +5,29 @@ Taskboard: [https://github.com/users/Alex-Hawking/projects/2](https://github.com
 
 # Set up
 ```
-git clone https://github.com/Alex-Hawking/CITS3403-Project.git
+Clone the Repository:
 
-start virtual env (all within src):
+  git clone https://github.com/Alex-Hawking/CITS3403-Project.git
 
-python3 -m venv env
 
-source env/bin/activate
+Start and Initialise Virtual Environment:
 
-(when done: deactivate)
+  cd src
 
-pip install -r requirements.txt (from src/)
+  python3 -m venv env
 
-python3 app.py
+  source env/bin/activate
+
+  pip install -r requirements.txt
+
+
+Run the app:
+
+  python3 app.py
+
+
+Can connect via localhost:5000
 ```
-
-Will be on localhost (idk which port)
 
 ## Workflow
 
