@@ -7,12 +7,11 @@
 <div id="account_modal" class="container py-5 h-100 ">
   <div class="row d-flex justify-content-center align-items-center h-100 ">
     <div class="col col-lg-8 mb-4 mb-lg-0 profile">
-      <div class="card mb-3" style="border-radius: .5rem;">
+      <div id="account_modal_border" class="card mb-3">
         <div class="row g-0">
-          <div class="col-md-4 gradient-custom text-center text-black"
-            style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+          <div id="account_modal_background" class="col-md-4 gradient-custom text-center text-black">
             <img src="https://austinpeopleworks.com/wp-content/uploads/2020/12/blank-profile-picture-973460_1280.png"
-              alt="Avatar" id="profile-avatar" class="img-fluid my-5" style="width: 80px;" />
+              alt="Avatar" id="profile-avatar" class="img-fluid my-5"/>
             <h5>{{ user.first_name }} {{ user.last_name }}</h5>
             <p>{{ user.gender or 'Not provided' }}</p>
           </div>
@@ -45,7 +44,7 @@
                   <h6>Snapchat</h6>
                   <p class="text-muted">{{ user.snapchat or 'Not provided' }}</p>
                 </div>
-                <div class="col-6 mb-4" style="margin-top: 10px;">
+                <div id="social_buttons" class="col-6 mb-4">
                   <a href="https://www.facebook.com/{{user.facebook}}" target="_blank"><i class="fab fa-facebook-f fa-2x me-3"></i></a>
                   <a href="https://www.snapchat.com/add/{{user.snapchat}}" target="_blank"><i class="fab fa-snapchat fa-2x me-3"></i></a>
                   <a href="https://www.instagram.com/{{user.instagram}}" target="_blank"><i class="fab fa-instagram fa-2x"></i></a>
@@ -119,7 +118,7 @@
             <label for="snapchat">Snapchat (optional)</label>
             <input type="text" class="form-control" id="edit_snapchat" name="snapchat" value="{{ user.snapchat }}" placeholder="Snapchat username" maxlength="30" />
           </div>
-          <div id="missingSocialError" class="alert alert-danger" style="display:none;"></div>
+          <div id="missingSocialError" class="alert alert-danger"></div>
         </form>
       </div>
       <div class="modal-footer">
@@ -155,7 +154,7 @@
             <label for="confirm-password">Confirm New Password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required maxlength="30">
           </div>
-          <div id="passwordError" class="alert alert-danger" style="display:none;"></div>
+          <div id="passwordError" class="alert alert-danger"></div>
         </form>
       </div>
       <div class="modal-footer">
