@@ -566,6 +566,9 @@ select:focus {
 
 /* Media Query to hide sidebar on smaller screens */
 @media (max-width: 768px) {
+  .swipe-card {
+    width: 90% !important;
+  }
   .sidebar {
     display: none;
   }
@@ -983,6 +986,10 @@ select:focus {
   color: #666;
 }
 
+.navigation-links {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .notification-card {
     flex-direction: column;
@@ -991,6 +998,10 @@ select:focus {
 
   .notification-time {
     align-self: flex-end;
+  }
+
+  .navigation-links {
+    display: block;
   }
 }
 
