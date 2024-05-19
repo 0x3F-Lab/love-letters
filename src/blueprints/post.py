@@ -53,11 +53,6 @@ def create_post():
             flash(str(e), "danger")
 
         posts = Post.query.all()
-        for post in posts:
-            # some debugging stuff
-            print(
-                f"ID: {post.post_id}, Title: {post.title}, Content: {post.content}, Type: {post.post_type}, Poster: {post.user_id}, Anonymous: {post.is_anonymous}, Time: {post.created_at}"
-            )
 
         return redirect(url_for("post.browse"))
 
@@ -207,7 +202,7 @@ def submit_reply():
 
     new_reply = Reply(
         post_id=post_id,
-        user_id=current_user.user_id,  # Now safe to access, as we've checked authentication
+        user_id=current_user.user_id,  
         content=content,
         is_anonymous=is_anonymous,
     )
@@ -226,7 +221,7 @@ def submit_reply():
     except Exception as e:
         # Log the exception to the console
         print("Error submitting reply:", e)
-        db.session.rollback()  # Rollback any changes made before the error occurred
+        db.session.rollback()  
         return jsonify({"error": "An error occurred while submitting the reply"}), 500
 
 

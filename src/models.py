@@ -25,7 +25,7 @@ class User(db.Model):
 
     @property
     def is_active(self):
-        return True  # You can later modify this based on your application's logic
+        return True  
 
     @property
     def is_anonymous(self):
