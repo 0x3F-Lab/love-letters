@@ -94,7 +94,7 @@ def add_notifications():
     notifications_sent = set()
 
     for user in users:
-        sampled_posts = random.sample(posts, min(3, len(posts)))
+        sampled_posts = random.sample(posts, 9)
         for post in sampled_posts:
             if (
                 user.user_id,
@@ -132,7 +132,7 @@ def add_replies():
             post_id=post.post_id,
             user_id=replier.user_id,
             content=random.choice(sample_replies),
-            is_anonymous=random.choice([True, False]),
+            is_anonymous=True,
         )
         db.session.add(new_reply)
 
