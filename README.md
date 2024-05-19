@@ -20,21 +20,28 @@ Clone the Repository:
 
 Start and Initialise Virtual Environment:
 
-  cd src
-
   python3 -m venv env
 
-  source env/bin/activate
+  source src/env/bin/activate
 
-  pip install -r requirements.txt
+  pip install -r src/requirements.txt
 
+Initialize test database:
 
-Run the app:
+  python3 generate_example_db.py
 
-  python3 app.py
+```
 
+# Running
 
-Can connect via localhost:5000
+```
+Set up steps are completed as above (db is created and are in venv).
+
+From main directory:
+
+  python3 ./src/app.py
+
+Can now access site on localhost:5000
 ```
 
 # Testing
