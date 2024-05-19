@@ -29,6 +29,25 @@ Run the app:
 Can connect via localhost:5000
 ```
 
+# Testing
+```
+Start and Initialise Virtual Environment:
+
+  cd src
+
+  python3 -m venv env
+
+  source env/bin/activate
+
+  pip install -r requirements.txt
+
+
+Run the testing:
+
+  pytest src/tests/test_selenium.py
+```
+
+
 ## Workflow
 
 - New task in project (click on name of issue will open edit panel, make sure to add description)
