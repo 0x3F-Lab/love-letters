@@ -502,17 +502,13 @@ $(document).ready(function () {
           },
           300,
           function () {
-            card
-              .css({
-                transform: "translateX(-50%) translateY(0)",
-                opacity: 1,
-                transition: "none", // Disable transition temporarily
-              })
-              .prependTo("#cards-container"); // Move the card back to the top of the container
-            setTimeout(function () {
-              card.css({ transition: "transform 0.2s, opacity 0.2s" }); // Re-enable transition
-            }, 0);
-          },
+            card.remove(); // Remove the card from the DOM
+
+            // Check if there are no more cards
+            if ($(".swipe-card").length === 0) {
+              $("#swipe-text").html("<p class='text-center'>No more posts to swipe through</p>");
+            }
+          }
         );
       } else {
         // Reset to the original position with transform
@@ -524,3 +520,4 @@ $(document).ready(function () {
     });
   });
 });
+
