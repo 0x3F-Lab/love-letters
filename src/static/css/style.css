@@ -103,13 +103,13 @@ body {
 }
 
 .modal-body {
-  padding: 0; 
+  padding: 0;
 }
 
 .modal-body img {
   width: 100%;
   height: auto;
-  display: block; 
+  display: block;
 }
 
 #loginError {
@@ -157,32 +157,27 @@ body {
 
 /* Form Container */
 .form-container {
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.8
-  ); 
+  background-color: rgba(255, 255, 255, 0.8);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 90%; 
-  max-width: 500px; 
-  margin: 20px; 
+  width: 90%;
+  max-width: 500px;
+  margin: 20px;
 }
 
 /* Form Elements */
 input[type="text"],
 textarea,
 select {
-  width: 100%; 
+  width: 100%;
   padding: 10px;
   margin-top: 8px;
   margin-bottom: 16px;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 input[type="checkbox"] {
@@ -191,7 +186,7 @@ input[type="checkbox"] {
 
 /* Submit Button */
 input[type="submit"] {
-  background-color: #4caf50; 
+  background-color: #4caf50;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -208,7 +203,7 @@ input[type="submit"]:hover {
 input[type="text"]:hover,
 textarea:hover,
 select:hover {
-  border-color: #888; 
+  border-color: #888;
 }
 
 /* Focus Effects styling */
@@ -221,54 +216,54 @@ select:focus {
 
 /* Modal Content Styling */
 .modal-content {
-  background-color: #ffffff; 
-  padding: 20px; 
-  border-radius: 8px; 
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); 
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
 .modal-header {
-  background-color: #f8f9fa; 
-  border-bottom: 1px solid #e9ecef; 
-  color: #495057; 
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  color: #495057;
 }
 
 .close {
-  color: #6c757d; 
+  color: #6c757d;
 }
 
 .close:hover {
-  color: #343a40; 
+  color: #343a40;
 }
 
 /* User Info Styling */
 .user-info {
-  font-family: "Arial", sans-serif; 
-  color: #333333; 
-  margin-top: 15px; 
+  font-family: "Arial", sans-serif;
+  color: #333333;
+  margin-top: 15px;
 }
 
 .user-detail {
-  margin: 10px 0; 
-  display: flex; 
-  align-items: center; 
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
 }
 
 .user-detail strong {
-  width: 200px; 
-  color: #007bff; 
-  font-weight: normal; 
+  width: 200px;
+  color: #007bff;
+  font-weight: normal;
 }
 
 .user-detail span {
-  font-weight: bold; 
-  color: #212529; 
+  font-weight: bold;
+  color: #212529;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 576px) {
   .user-detail strong {
-    width: auto; 
+    width: auto;
   }
 }
 
@@ -299,13 +294,13 @@ select:focus {
 }
 
 .modal-dialog {
-  max-width: 650px; 
+  max-width: 650px;
 }
 
 .card-style {
   border-radius: 0.75rem;
   width: 100%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .avatar-section {
@@ -330,13 +325,13 @@ select:focus {
 
 /* Skeleton loading effect styling */
 .post-skeleton {
-  max-width: 800px; 
-  margin: 0 auto 20px; 
-  padding: 20px; 
-  background-color: #f0f0f0; 
-  border-radius: 10px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  text-align: center; 
+  max-width: 800px;
+  margin: 0 auto 20px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .skeleton-header,
@@ -365,7 +360,7 @@ select:focus {
 
 .skeleton-footer {
   width: 50%;
-  height: 20px; 
+  height: 20px;
 }
 
 @keyframes shimmer {
@@ -379,7 +374,7 @@ select:focus {
 
 /* Card slide-in styling */
 .card-animation {
-  opacity: 0; 
+  opacity: 0;
 }
 
 @keyframes slideIn {
@@ -425,7 +420,7 @@ select:focus {
 
 #cards-container {
   position: relative;
-  flex: 1; 
+  flex: 1;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -434,7 +429,7 @@ select:focus {
 
 /* Navbar Styling */
 .navbar {
-  background-color: white !important; 
+  background-color: white !important;
   z-index: 2;
 }
 
@@ -477,8 +472,8 @@ select:focus {
 .sidebar .buttons {
   transition-duration: 0.5s;
   width: 100%;
-  height: 60px; 
-  font-size: 24px; 
+  height: 60px;
+  font-size: 24px;
   border: 2px solid #f2c2c8;
   border-radius: 10px;
   background: white;
@@ -492,7 +487,7 @@ select:focus {
 /* Heart Animation Styling */
 .hearts {
   position: absolute;
-  background-color: #ffb3ba; 
+  background-color: #ffb3ba;
   height: 50px;
   width: 50px;
   opacity: 0;
@@ -538,7 +533,7 @@ select:focus {
 .hearts:after {
   content: "";
   position: absolute;
-  background-color: #ffb3ba; 
+  background-color: #ffb3ba;
   border-radius: 50%;
 }
 
@@ -651,16 +646,16 @@ select:focus {
   top: 60px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10; 
+  z-index: 10;
   width: calc(100% - 20px);
   max-width: 600px;
-  pointer-events: none; 
+  pointer-events: none;
   text-align: center;
 }
 
 .flash-messages .alert {
-  pointer-events: all; 
-  display: inline-block; 
+  pointer-events: all;
+  display: inline-block;
 }
 
 /* Center Content */
@@ -769,15 +764,15 @@ select:focus {
 
 /* Footer */
 .footer {
-  margin-top: auto; 
-  width: 100%; 
-  background-color: white; 
+  margin-top: auto;
+  width: 100%;
+  background-color: white;
   color: black;
   text-align: center;
   padding: 10px 0;
   font-size: 10px;
-  flex-shrink: 0; 
-  position: relative; 
+  flex-shrink: 0;
+  position: relative;
   z-index: 2;
 }
 
@@ -802,9 +797,9 @@ select:focus {
 
   .sidebar .buttons {
     width: 90%;
-    height: 70px; 
-    margin: 40px 0; 
-    font-size: 28px; 
+    height: 70px;
+    margin: 40px 0;
+    font-size: 28px;
     border-radius: 10px;
   }
 
@@ -834,7 +829,7 @@ select:focus {
   transition:
     transform 0.2s,
     box-shadow 0.2s !important;
-  padding: 20px !important; 
+  padding: 20px !important;
   max-width: 800px;
   margin: 0 auto;
 }
@@ -851,13 +846,13 @@ select:focus {
 }
 
 .btn-primary {
-  background-color: #ffb6c1 !important; 
-  border-color: #ffb6c1 !important; 
+  background-color: #ffb6c1 !important;
+  border-color: #ffb6c1 !important;
   color: #fff !important;
 }
 
 .btn-outline-primary {
-  border-color: #ffb6c1 !important; 
+  border-color: #ffb6c1 !important;
   color: #ffb6c1 !important;
 }
 
@@ -867,13 +862,13 @@ select:focus {
 }
 
 .btn-info {
-  background-color: #add8e6 !important; 
+  background-color: #add8e6 !important;
   border-color: #add8e6 !important;
   color: #fff !important;
 }
 
 .btn-info:hover {
-  background-color: #87ceeb !important; 
+  background-color: #87ceeb !important;
   border-color: #87ceeb !important;
 }
 
@@ -959,10 +954,10 @@ select:focus {
   -webkit-user-select: none;
   -ms-user-select: none;
   margin: 10px auto;
-  margin-bottom: 20px !important; 
+  margin-bottom: 20px !important;
   transition: transform 0.2s !important;
-  padding: 20px !important; 
-  background-color: #fff !important; 
+  padding: 20px !important;
+  background-color: #fff !important;
   width: 60%;
 }
 
@@ -993,7 +988,7 @@ select:focus {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px var(--shadow-color);
-  background-color: white !important; 
+  background-color: white !important;
   color: var(--text-color);
   margin-bottom: 10px;
   transition:
@@ -1008,7 +1003,7 @@ select:focus {
 
 .notification-user {
   font-weight: bold;
-  color: var(--secondary-color) !important; 
+  color: var(--secondary-color) !important;
 }
 
 .notification-time {
@@ -1056,20 +1051,20 @@ select:focus {
 /* Custom styles for post meta */
 .post-meta .post-type {
   display: block !important;
-  margin-bottom: 10px !important; 
+  margin-bottom: 10px !important;
 }
 
 .post-meta small {
-  font-size: 0.9em !important; 
+  font-size: 0.9em !important;
 }
 
 /* Mobile view adjustments */
 @media (max-width: 768px) {
   .btn-group .btn .btn-text {
-    display: none !important; 
+    display: none !important;
   }
   .post-meta .post-type {
-    display: none !important; 
+    display: none !important;
   }
 }
 
