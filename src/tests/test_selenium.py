@@ -433,11 +433,12 @@ class Test_selenium:
             ).text
             == "alice_j"
         )
+
         assert (
             self.driver.find_element(
                 By.CSS_SELECTOR, ".col-6:nth-child(3) > .text-muted"
             ).text
-            == "Not provided"
+            == "alice_j"
         )
 
         time.sleep(0.5)
