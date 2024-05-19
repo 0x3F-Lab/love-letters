@@ -103,13 +103,13 @@ body {
 }
 
 .modal-body {
-  padding: 0; /* Remove padding to eliminate white spaces */
+  padding: 0; 
 }
 
 .modal-body img {
   width: 100%;
   height: auto;
-  display: block; /* Remove any extra space beneath the image */
+  display: block; 
 }
 
 #loginError {
@@ -162,27 +162,27 @@ body {
     255,
     255,
     0.8
-  ); /* Semi-transparent white background */
+  ); 
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 90%; /* Responsive width */
-  max-width: 500px; /* Maximum width */
-  margin: 20px; /* Margin to separate from other content */
+  width: 90%; 
+  max-width: 500px; 
+  margin: 20px; 
 }
 
 /* Form Elements */
 input[type="text"],
 textarea,
 select {
-  width: 100%; /* Full width of the form container */
+  width: 100%; 
   padding: 10px;
   margin-top: 8px;
   margin-bottom: 16px;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box; /* Include padding and border in the width */
+  box-sizing: border-box; 
 }
 
 input[type="checkbox"] {
@@ -191,7 +191,7 @@ input[type="checkbox"] {
 
 /* Submit Button */
 input[type="submit"] {
-  background-color: #4caf50; /* Green background */
+  background-color: #4caf50; 
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -208,7 +208,7 @@ input[type="submit"]:hover {
 input[type="text"]:hover,
 textarea:hover,
 select:hover {
-  border-color: #888; /* Darken the border color on hover */
+  border-color: #888; 
 }
 
 /* Focus Effects styling */
@@ -221,54 +221,54 @@ select:focus {
 
 /* Modal Content Styling */
 .modal-content {
-  background-color: #ffffff; /* White background for clarity */
-  padding: 20px; /* Padding around the content */
-  border-radius: 8px; /* Soften the edges */
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  background-color: #ffffff; 
+  padding: 20px; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); 
 }
 
 .modal-header {
-  background-color: #f8f9fa; /* Light grey background for the header */
-  border-bottom: 1px solid #e9ecef; /* Subtle line to separate header from body */
-  color: #495057; /* Dark color for text for better readability */
+  background-color: #f8f9fa; 
+  border-bottom: 1px solid #e9ecef; 
+  color: #495057; 
 }
 
 .close {
-  color: #6c757d; /* Muted color for the close button */
+  color: #6c757d; 
 }
 
 .close:hover {
-  color: #343a40; /* Darker shade on hover for better interaction feedback */
+  color: #343a40; 
 }
 
 /* User Info Styling */
 .user-info {
-  font-family: "Arial", sans-serif; /* Ensuring a clean, readable font */
-  color: #333333; /* Dark grey for readability */
-  margin-top: 15px; /* Space above the user info */
+  font-family: "Arial", sans-serif; 
+  color: #333333; 
+  margin-top: 15px; 
 }
 
 .user-detail {
-  margin: 10px 0; /* Vertical spacing between each detail */
-  display: flex; /* Flex layout to align label and value nicely */
-  align-items: center; /* Align items in the middle vertically */
+  margin: 10px 0; 
+  display: flex; 
+  align-items: center; 
 }
 
 .user-detail strong {
-  width: 200px; /* Fixed width for labels to align values vertically */
-  color: #007bff; /* Bootstrap primary color for emphasis */
-  font-weight: normal; /* Normal weight looks more modern */
+  width: 200px; 
+  color: #007bff; 
+  font-weight: normal; 
 }
 
 .user-detail span {
-  font-weight: bold; /* Bold text for user details */
-  color: #212529; /* Slightly darker text for emphasis */
+  font-weight: bold; 
+  color: #212529; 
 }
 
 /* Responsive Adjustments */
 @media (max-width: 576px) {
   .user-detail strong {
-    width: auto; /* Allow label width to adjust on smaller screens */
+    width: auto; 
   }
 }
 
@@ -299,13 +299,13 @@ select:focus {
 }
 
 .modal-dialog {
-  max-width: 650px; /* Adjust the max-width to match the original size */
+  max-width: 650px; 
 }
 
 .card-style {
   border-radius: 0.75rem;
   width: 100%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adjust shadow for better visibility */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
 }
 
 .avatar-section {
@@ -330,13 +330,13 @@ select:focus {
 
 /* Skeleton loading effect styling */
 .post-skeleton {
-  max-width: 800px; /* Same as the post card */
-  margin: 0 auto 20px; /* Same margin as the post card */
-  padding: 20px; /* Same padding as the post card */
-  background-color: #f0f0f0; /* Light background color */
-  border-radius: 10px; /* Same border-radius as the post card */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Same box shadow as the post card */
-  text-align: center; /* Center-align text */
+  max-width: 800px; 
+  margin: 0 auto 20px; 
+  padding: 20px; 
+  background-color: #f0f0f0; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  text-align: center; 
 }
 
 .skeleton-header,
@@ -365,7 +365,7 @@ select:focus {
 
 .skeleton-footer {
   width: 50%;
-  height: 20px; /* Adjusted height to match metadata */
+  height: 20px; 
 }
 
 @keyframes shimmer {
@@ -379,7 +379,7 @@ select:focus {
 
 /* Card slide-in styling */
 .card-animation {
-  opacity: 0; /* Start fully transparent */
+  opacity: 0; 
 }
 
 @keyframes slideIn {
@@ -425,7 +425,7 @@ select:focus {
 
 #cards-container {
   position: relative;
-  flex: 1; /* Allow it to grow and fill available space */
+  flex: 1; 
   width: 100%;
   display: flex;
   justify-content: center;
@@ -434,7 +434,7 @@ select:focus {
 
 /* Navbar Styling */
 .navbar {
-  background-color: white !important; /* Light pink color */
+  background-color: white !important; 
   z-index: 2;
 }
 
@@ -477,8 +477,8 @@ select:focus {
 .sidebar .buttons {
   transition-duration: 0.5s;
   width: 100%;
-  height: 60px; /* Decreased height for skinnier buttons */
-  font-size: 24px; /* Adjusted font size */
+  height: 60px; 
+  font-size: 24px; 
   border: 2px solid #f2c2c8;
   border-radius: 10px;
   background: white;
@@ -492,7 +492,7 @@ select:focus {
 /* Heart Animation Styling */
 .hearts {
   position: absolute;
-  background-color: #ffb3ba; /* Darker shade of pink */
+  background-color: #ffb3ba; 
   height: 50px;
   width: 50px;
   opacity: 0;
@@ -538,7 +538,7 @@ select:focus {
 .hearts:after {
   content: "";
   position: absolute;
-  background-color: #ffb3ba; /* Darker shade of pink */
+  background-color: #ffb3ba; 
   border-radius: 50%;
 }
 
@@ -651,16 +651,16 @@ select:focus {
   top: 60px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10; /* Ensure flash messages are above the sidebar */
+  z-index: 10; 
   width: calc(100% - 20px);
   max-width: 600px;
-  pointer-events: none; /* Allow interactions to pass through */
+  pointer-events: none; 
   text-align: center;
 }
 
 .flash-messages .alert {
-  pointer-events: all; /* Allow interactions with the alert itself */
-  display: inline-block; /* Ensure the alert is inline-block for proper centering */
+  pointer-events: all; 
+  display: inline-block; 
 }
 
 /* Center Content */
@@ -769,15 +769,15 @@ select:focus {
 
 /* Footer */
 .footer {
-  margin-top: auto; /* Automatically adjusts margin to push footer at the bottom */
-  width: 100%; /* Full width */
-  background-color: white; /* Adjust the color as needed */
+  margin-top: auto; 
+  width: 100%; 
+  background-color: white; 
   color: black;
   text-align: center;
   padding: 10px 0;
   font-size: 10px;
-  flex-shrink: 0; /* Prevent the footer from shrinking */
-  position: relative; /* Ensure the footer stays in place */
+  flex-shrink: 0; 
+  position: relative; 
   z-index: 2;
 }
 
@@ -802,9 +802,9 @@ select:focus {
 
   .sidebar .buttons {
     width: 90%;
-    height: 70px; /* Adjusted height for buttons on smaller screens */
-    margin: 40px 0; /* Increased margin for more spacing on smaller screens */
-    font-size: 28px; /* Increased font size for readability on smaller screens */
+    height: 70px; 
+    margin: 40px 0; 
+    font-size: 28px; 
     border-radius: 10px;
   }
 
@@ -834,7 +834,7 @@ select:focus {
   transition:
     transform 0.2s,
     box-shadow 0.2s !important;
-  padding: 20px !important; /* Added padding for more vertical space */
+  padding: 20px !important; 
   max-width: 800px;
   margin: 0 auto;
 }
@@ -851,13 +851,13 @@ select:focus {
 }
 
 .btn-primary {
-  background-color: #ffb6c1 !important; /* Light pink */
-  border-color: #ffb6c1 !important; /* Light pink */
+  background-color: #ffb6c1 !important; 
+  border-color: #ffb6c1 !important; 
   color: #fff !important;
 }
 
 .btn-outline-primary {
-  border-color: #ffb6c1 !important; /* Light pink */
+  border-color: #ffb6c1 !important; 
   color: #ffb6c1 !important;
 }
 
@@ -867,13 +867,13 @@ select:focus {
 }
 
 .btn-info {
-  background-color: #add8e6 !important; /* Light blue */
+  background-color: #add8e6 !important; 
   border-color: #add8e6 !important;
   color: #fff !important;
 }
 
 .btn-info:hover {
-  background-color: #87ceeb !important; /* Slightly darker blue */
+  background-color: #87ceeb !important; 
   border-color: #87ceeb !important;
 }
 
@@ -959,10 +959,10 @@ select:focus {
   -webkit-user-select: none;
   -ms-user-select: none;
   margin: 10px auto;
-  margin-bottom: 20px !important; /* Add margin between cards */
+  margin-bottom: 20px !important; 
   transition: transform 0.2s !important;
-  padding: 20px !important; /* Added padding for more vertical space */
-  background-color: #fff !important; /* Ensure background color matches the theme */
+  padding: 20px !important; 
+  background-color: #fff !important; 
   width: 60%;
 }
 
@@ -993,7 +993,7 @@ select:focus {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px var(--shadow-color);
-  background-color: white !important; /* Light pink */
+  background-color: white !important; 
   color: var(--text-color);
   margin-bottom: 10px;
   transition:
@@ -1008,7 +1008,7 @@ select:focus {
 
 .notification-user {
   font-weight: bold;
-  color: var(--secondary-color) !important; /* Light blue */
+  color: var(--secondary-color) !important; 
 }
 
 .notification-time {
@@ -1056,20 +1056,20 @@ select:focus {
 /* Custom styles for post meta */
 .post-meta .post-type {
   display: block !important;
-  margin-bottom: 10px !important; /* Add space between post type and date */
+  margin-bottom: 10px !important; 
 }
 
 .post-meta small {
-  font-size: 0.9em !important; /* Slightly smaller text for post meta */
+  font-size: 0.9em !important; 
 }
 
 /* Mobile view adjustments */
 @media (max-width: 768px) {
   .btn-group .btn .btn-text {
-    display: none !important; /* Hide button text on mobile */
+    display: none !important; 
   }
   .post-meta .post-type {
-    display: none !important; /* Hide post type on mobile */
+    display: none !important; 
   }
 }
 
