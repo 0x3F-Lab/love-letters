@@ -81,7 +81,8 @@ class Test_selenium:
         self.driver.find_element(By.NAME, "title").send_keys("Selenium Test")
         self.driver.find_element(By.NAME, "content").click()
         self.driver.find_element(By.NAME, "content").send_keys("Testing 123")
-        self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(7)").click()
+
+        self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(6)").click()
 
         time.sleep(2)
         assert (
@@ -249,6 +250,8 @@ class Test_selenium:
         self.driver.find_element(By.ID, "login-password").send_keys("password123")
         self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
 
+        outcomes = ["Connect request sent.\n×", "You have already sent a connection request to this user.\n×"]
+
         time.sleep(0.5)
 
         self.driver.find_element(By.CSS_SELECTOR, ".centered-content").click()
@@ -276,7 +279,7 @@ class Test_selenium:
 
         for i in range(int(numresp) - 1):
             self.driver.find_element(
-                By.CSS_SELECTOR, ".alert:nth-child(2) span"
+                By.CSS_SELECTOR, ".notification-card:nth-child(2) .close > span"
             ).click()
 
             time.sleep(0.5)
