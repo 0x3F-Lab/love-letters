@@ -81,16 +81,16 @@ def validate_socials(value, social_handle):
         return None
 
     if social_handle == "facebook":
-        if not re.match(r"https?://www\.facebook\.com/.+", value):
-            return "Please enter a valid Facebook URL"
+        if not re.match(r"^[a-zA-Z0-9._]{5,50}$", value):
+            return "Please enter a valid Facebook username"
 
     if social_handle == "instagram":
         if not re.match(r"^[a-zA-Z0-9._]{1,30}$", value):
             return "Please enter a valid Instagram username"
 
     if social_handle == "snapchat":
-        if not re.match(r"^[a-zA-Z0-9]{3,15}$", value):
-            return "Please eneter a valid snapchat username"
+        if not re.match(r"^[a-zA-Z0-9._]{3,15}$", value):
+            return "Please enter a valid snapchat username"
 
     return None
 
@@ -180,7 +180,7 @@ def account():
 
     if not current_user.is_authenticated:
         flash("User not found.", "danger")
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("home"))
 
     if request.method == "POST":
         # print(request.form) debugging
@@ -219,8 +219,6 @@ def account():
         # Filter out None values
         errors = {k: v for k, v in errors.items() if v is not None}
 
-        # print(errors) debugging
-
         if errors:
             return jsonify({"status": "error", "message": errors}), 400
 
@@ -249,8 +247,17 @@ def account():
         user.facebook = socials.get("facebook", "")
         user.snapchat = socials.get("snapchat", "")
 
+    if current_user.is_authenticated:
+        notification_count = Notification.query.filter_by(
+            recipient_id=current_user.user_id
+        ).count()
+    else:
+        notification_count = 0
+
     # Initial page load or GET request
-    return render_template("account.html", user=user)
+    return render_template(
+        "account.html", user=user, notification_count=notification_count
+    )
 
 
 # Update account password
@@ -264,7 +271,7 @@ def change_password():
 
     if not user:
         flash("User not found.", "danger")
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("home"))
 
     current_password = request.form.get("current_password")
     new_password = request.form.get("new_password")
@@ -336,7 +343,7 @@ def login():
 def logout():
     logout_user()
     flash("You have been logged out.", "success")
-    return redirect(url_for("auth.login"))
+    return redirect(url_for("home"))
 
 
 # Notifications
@@ -348,7 +355,17 @@ def notifications():
     user_notifications = Notification.query.filter_by(
         recipient_id=current_user.get_id()
     ).all()
-    return render_template("notifications.html", notifications=user_notifications)
+
+    if current_user.is_authenticated:
+        notification_count = Notification.query.filter_by(
+            recipient_id=current_user.user_id
+        ).count()
+
+    return render_template(
+        "notifications.html",
+        notifications=user_notifications,
+        notification_count=notification_count,
+    )
 
 
 @auth.route("/dismiss_notification/<int:notification_id>", methods=["POST"])
@@ -361,4 +378,5 @@ def dismiss_notification(notification_id):
     db.session.delete(notification)
     db.session.commit()
     flash("Notification dismissed.", "success")
+
     return redirect(url_for("auth.notifications"))

@@ -1,24 +1,33 @@
-{% extends "base.html" %} {% block title %}Post Letters{% endblock %} {% block
-content %}
-<div class="centered-content">
-  <div class="form-container">
-    <form method="POST" action="{{ url_for('post.create_post') }}">
-      <!-- Hidden field that inclues the CSRF token -->
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-      <input type="text" name="title" placeholder="Enter Title" required />
-      <textarea
-        name="content"
-        placeholder="Enter your content here"
-        required
-      ></textarea>
-      <select name="post_type">
-        <option value="general">Love Letter</option>
-        <option value="question">Friend Request</option>
-        <option value="question">General Broadcast</option>
-      </select>
-      <input type="checkbox" name="is_anonymous" /> Post Anonymously<br />
-      <input type="submit" value="Submit Post" />
-    </form>
+{% extends "base.html" %} 
+{% block title %}Love Letters | Post{% endblock %} 
+{% block content %}
+<div id="post_container" class="centered-content">
+  <div id="post_animation" class="card card-animation my-3">
+    <div class="card-body">
+      <h5 class="card-title"><i class="fas fa-pencil-alt"></i> Create Post</h5>
+      <form method="POST" action="{{ url_for('post.create_post') }}">
+        <!-- Hidden field that includes the CSRF token -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="form-group">
+          <input type="text" name="title" placeholder="Enter Title" required class="form-control" />
+        </div>
+        <div class="form-group">
+          <textarea name="content" placeholder="Enter your content here" required class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+          <select name="post_type" class="form-control">
+            <option value="Love Letter">Love Letter</option>
+            <option value="Friend Request">Friend Request</option>
+            <option value="General Broadcast">General Broadcast</option>
+          </select>
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" name="is_anonymous" class="form-check-input" id="anonymousCheck" />
+          <label class="form-check-label" for="anonymousCheck"> Post Anonymously</label>
+        </div>
+        <input type="submit" value="Submit Post" class="btn btn-primary" />
+      </form>
+    </div>
   </div>
 </div>
 {% endblock %}

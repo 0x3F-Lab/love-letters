@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <div id="errorMessages" style="color: red;"></div>
+        <div id="errorMessages"></div>
         <form id="signUpForm" method="post" action="{{ url_for('auth.signup') }}" data-redirect-url="{{ url_for('home') }}">
           <!-- Hidden field that inclues the CSRF token -->
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -51,7 +51,7 @@
           </div>
           <div class="form-group">
             <label for="facebook">Facebook (optional)</label>
-            <input type="text" class="form-control" id="facebook" name="facebook" placeholder="Facebook profile link" maxlength="60" />
+            <input type="text" class="form-control" id="facebook" name="facebook" placeholder="Facebook username" maxlength="60" />
           </div>
           <div class="form-group">
             <label for="snapchat">Snapchat (optional)</label>

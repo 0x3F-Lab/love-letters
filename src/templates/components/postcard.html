@@ -1,35 +1,52 @@
 <!-- postcard.html -->
 <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
-<div class="card" style="width: 80%; margin-left: auto; margin-right: auto;">
+<div class="card card-animation my-3">
     <div class="card-body">
-        <h5 class="card-title">{{ post.title }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">
-            by {% if post.is_anonymous %}Anonymous{% else %}<a href="#" data-toggle="modal" data-target="#profileModal" onclick="loadUserProfile({{ post.user_id }})"> 
+        <h5 class="card-title">
+            {% if post.post_type == 'Friend Request' %}
+                <i class="fas fa-user-friends"></i>
+            {% elif post.post_type == 'Love Letter' %}
+                <i class="fas fa-heart"></i>
+            {% elif post.post_type == 'General Broadcast' %}
+                <i class="fas fa-bullhorn"></i>
+            {% endif %}
+            &nbsp;&nbsp;{{ post.title }}&nbsp;
+            <small class="text-muted">
+                {{ post.created_at.strftime('%d/%m') }}
+            </small>
+        </h5>
+        <h6 class="card-subtitle text-muted">
+            by {% if post.is_anonymous %}Anonymous{% else %}<a href="#" data-toggle="modal" data-target="#account_modal" onclick="loadUserProfile({{ post.user_id }})" class="author-link"> 
                 {{ post.author.first_name }} {{ post.author.last_name }}
             </a>{% endif %}
         </h6>
-        <p class="card-text">{{ post.content }}</p>
-        <div class="d-flex justify-content-between">
-            <small class="text-muted">Post type: {{ post.post_type }}</small>
-            <small class="text-muted">
-                Posted {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
-            </small>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" onclick="setPostId({{ post.post_id }})">Reply</button>
-            {% if current_user.is_authenticated %}
-                <button type="button" class="btn btn-outline-primary like-btn" data-post-id="{{ post.post_id }}" onclick="toggleLikePost({{ post.post_id }}, {{ current_user.user_id }})">
-                    {{ 'Unlike' if post.likes.filter_by(user_id=current_user.user_id).first() else 'Like' }} (<span id="like-count-{{ post.post_id }}">{{ post.likes.count() }}</span>)
+        <p class="card-text my-5">{{ post.content }}</p>
+        <div class="d-flex justify-content-center align-items-center post-meta">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#replyModal" onclick="setPostId({{ post.post_id }})">
+                    <i class="fas fa-reply"></i> <span class="btn-text">Reply</span>
                 </button>
-            {% else %}
-                <button type="button" class="btn btn-outline-primary" onclick="$('#loginModal').modal('show')">Like (<span id="like-count-{{ post.post_id }}">{{ post.likes.count() }}</span>)</button>
-            {% endif %}
-            <button type="button" class="btn btn-info" onclick="toggleReplies({{ post.post_id }})">View Replies</button>
-            <form action="{{ url_for('post.connect', post_id=post.post_id) }}" method="POST">
-                <!-- Hidden field that inclues the CSRF token -->
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                <button type="submit" class="btn btn-primary">Connect</button>
-            </form>
+                {% if current_user.is_authenticated %}
+                    <button type="button" class="btn btn-outline-primary btn-sm like-btn" data-post-id="{{ post.post_id }}" onclick="toggleLikePost({{ post.post_id }}, {{ current_user.user_id }})">
+                        <i class="fas fa-thumbs-up"></i> <span class="btn-text">{{ 'Unlike' if post.likes.filter_by(user_id=current_user.user_id).first() else 'Like' }}</span> (<span id="like-count-{{ post.post_id }}">{{ post.likes.count() }}</span>)
+                    </button>
+                {% else %}
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="$('#loginModal').modal('show')">
+                        <i class="fas fa-thumbs-up"></i> <span class="btn-text">Like</span> (<span id="like-count-{{ post.post_id }}">{{ post.likes.count() }}</span>)
+                    </button>
+                {% endif %}
+                <button type="button" class="btn btn-info btn-sm" onclick="toggleReplies({{ post.post_id }})">
+                    <i class="fas fa-comments"></i> <span class="btn-text">View Replies</span>
+                </button>
+                <form action="{{ url_for('post.connect', post_id=post.post_id) }}" method="POST" class="d-inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fas fa-heart"></i> <span class="btn-text">Connect</span>
+                    </button>
+                </form>
+            </div>
         </div>
-        <div id="replies-{{ post.post_id }}" class="replies-container" style="display: none;">
+        <div id="replies-{{ post.post_id }}" class="replies-container mt-3">
             {% for reply in post.replies %}
                 <div class="card mt-2">
                     <div class="card-body">
@@ -37,23 +54,26 @@
                             {% if reply.is_anonymous %}
                                 Anonymous
                             {% else %}
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="loadUserProfile({{ reply.user_id }})"> 
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#account_modal" onclick="loadUserProfile({{ reply.user_id }})" class="author-link"> 
                                     {{ reply.replier.first_name }} {{ reply.replier.last_name }}
                                 </a>
                             {% endif %}
                         </h6>
                         <p class="card-text">{{ reply.content }}</p>
                         {% if current_user.is_authenticated %}
-                            <button type="button" class="btn btn-outline-primary like-btn" data-reply-id="{{ reply.reply_id }}" onclick="toggleLikeReply({{ reply.reply_id }}, {{ current_user.user_id }})">
-                                {{ 'Unlike' if reply.likes.filter_by(user_id=current_user.user_id).first() else 'Like' }} (<span id="like-count-reply-{{ reply.reply_id }}">{{ reply.likes.count() }}</span>)
+                            <button type="button" class="btn btn-outline-primary btn-sm like-btn" data-reply-id="{{ reply.reply_id }}" onclick="toggleLikeReply({{ reply.reply_id }}, {{ current_user.user_id }})">
+                                <i class="fas fa-thumbs-up"></i> <span class="btn-text">{{ 'Unlike' if reply.likes.filter_by(user_id=current_user.user_id).first() else 'Like' }}</span> (<span id="like-count-reply-{{ reply.reply_id }}">{{ reply.likes.count() }}</span>)
                             </button>
                         {% else %}
-                            <button type="button" class="btn btn-outline-primary" onclick="$('#loginModal').modal('show')">Like (<span id="like-count-reply-{{ reply.reply_id }}">{{ reply.likes.count() }}</span>)</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm" onclick="$('#loginModal').modal('show')">
+                                <i class="fas fa-thumbs-up"></i> <span class="btn-text">Like (<span id="like-count-reply-{{ reply.reply_id }}">{{ reply.likes.count() }}</span>)</span> 
+                            </button>
                         {% endif %}
                     </div>
                 </div>
             {% endfor %}
         </div>
-        
     </div>
 </div>
+
+{% include 'components/profile.html' %}

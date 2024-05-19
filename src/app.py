@@ -33,7 +33,7 @@ def create_app(config_class=DevelopmentConfig):
     login_manager.init_app(app)
     login_manager.login_message = "You must log in to access this page."
     login_manager.login_message_category = "warning"
-    login_manager.login_view = "auth.login"
+    login_manager.login_view = "home"
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -54,20 +54,26 @@ def create_app(config_class=DevelopmentConfig):
                 "email": user.email,
                 "phone_number": user.phone_number,
                 "socials": socials,
+                "gender": user.gender,
             }
         )
 
     @app.route("/")
     def home():
-
         notification_count = 0
 
         if current_user.is_authenticated:
             notification_count = Notification.query.filter_by(
                 recipient_id=current_user.user_id
             ).count()
+        else:
+            notification_count = 0
 
-        return render_template("landing.html", notification_count=notification_count)
+        posts = Post.query.all()
+
+        return render_template(
+            "landing.html", notification_count=notification_count, posts=posts
+        )
 
     return app
 

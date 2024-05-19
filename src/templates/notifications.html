@@ -1,18 +1,20 @@
 {% extends "base.html" %}
-{% block title %}Your Notifications{% endblock %}
+{% block title %}Love Letters | Notifications{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
-    <h1>Your Notifications</h1>
+    <h1 class="notifications-title">Your Notifications</h1>
     {% for notification in notifications %}
-    <div class="alert alert-info" role="alert">
-        <a href="#" data-toggle="modal" data-target="#profileModal" onclick="loadUserProfile({{ notification.user_id }})">
-            {{ notification.user.first_name }} {{ notification.user.last_name }}
-        </a> wants to connect.
-        <small class="float-right">{{ notification.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+    <div class="notification-card alert alert-info" role="alert">
+        <span class="notification-user">
+            <a href="#" data-toggle="modal" data-target="#profileModal" onclick="loadUserProfile({{ notification.user_id }})" >
+                {{ notification.user.first_name }} {{ notification.user.last_name }}
+            </a> wants to connect. Add them on social media to get chatting!
+        </span>
+        <small class="notification-time float-right">{{ notification.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
         <!-- Dismiss button -->
-        <form action="{{ url_for('auth.dismiss_notification', notification_id=notification.notification_id) }}" method="post" style="display:inline;">
-            <!-- Hidden field that inclues the CSRF token -->
+        <form id="notif_form" action="{{ url_for('auth.dismiss_notification', notification_id=notification.notification_id) }}" method="post">
+            <!-- Hidden field that includes the CSRF token -->
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <button type="submit" class="close" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -20,9 +22,9 @@
         </form>
     </div>
     {% else %}
-    <p>No notifications to show.</p>
+    <p class="no-notifications">No notifications to show.</p>
     {% endfor %}
 </div>
 
-{% include 'components/user.html' %}
+{% include 'components/profile.html' %}
 {% endblock %}

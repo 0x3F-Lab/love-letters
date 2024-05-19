@@ -29,7 +29,7 @@ def create_post():
 
         if not current_user.is_authenticated:
             flash("You need to login to post.", "danger")
-            return redirect(url_for("auth.login"))
+            return redirect(url_for("home"))
 
         title = request.form.get("title")
         content = request.form.get("content")
@@ -53,11 +53,6 @@ def create_post():
             flash(str(e), "danger")
 
         posts = Post.query.all()
-        for post in posts:
-            # some debugging stuff
-            print(
-                f"ID: {post.post_id}, Title: {post.title}, Content: {post.content}, Type: {post.post_type}, Poster: {post.user_id}, Anonymous: {post.is_anonymous}, Time: {post.created_at}"
-            )
 
         return redirect(url_for("post.browse"))
 
@@ -65,7 +60,13 @@ def create_post():
 @post.route("/create")
 @login_required
 def create():
-    return render_template("post.html")
+    if current_user.is_authenticated:
+        notification_count = Notification.query.filter_by(
+            recipient_id=current_user.user_id
+        ).count()
+    else:
+        notification_count = 0
+    return render_template("post.html", notification_count=notification_count)
 
 
 from sqlalchemy import case
@@ -99,15 +100,13 @@ def browse(page=1):
     elif sort_option == "least_liked":
         sort_criteria = likes_count_subq.c.like_count
     elif sort_option.startswith("type_"):
-        post_type = sort_option.split("_")[1]  # Extract post type from the sort_option
-        # Adjust the use of case to correctly pass arguments
+        post_type = sort_option.split("_")[1]
         type_sort = case((Post.post_type == post_type, 0), else_=1)
         base_query = base_query.order_by(type_sort, Post.created_at.desc())
-    else:  # Default to newest
+    else:
         sort_criteria = Post.created_at.desc()
 
     if not sort_option.startswith("type_"):
-        # Only apply sort_criteria directly if it's not 'type_' option to avoid confusion in handling multiple criteria
         base_query = base_query.order_by(sort_criteria)
 
     posts = base_query.paginate(page=page, per_page=per_page, error_out=False)
@@ -120,7 +119,19 @@ def browse(page=1):
         posts_html = render_template("posts_list.html", posts=posts.items, user=user)
         return jsonify({"posts": posts_html, "has_next": posts.has_next})
 
-    return render_template("browse.html", posts=posts.items, user=user)
+    if current_user.is_authenticated:
+        notification_count = Notification.query.filter_by(
+            recipient_id=current_user.user_id
+        ).count()
+    else:
+        notification_count = 0
+
+    return render_template(
+        "browse.html",
+        posts=posts.items,
+        user=user,
+        notification_count=notification_count,
+    )
 
 
 @post.route("/like_post", methods=["POST"])
@@ -191,7 +202,7 @@ def submit_reply():
 
     new_reply = Reply(
         post_id=post_id,
-        user_id=current_user.user_id,  # Now safe to access, as we've checked authentication
+        user_id=current_user.user_id,
         content=content,
         is_anonymous=is_anonymous,
     )
@@ -210,7 +221,7 @@ def submit_reply():
     except Exception as e:
         # Log the exception to the console
         print("Error submitting reply:", e)
-        db.session.rollback()  # Rollback any changes made before the error occurred
+        db.session.rollback()
         return jsonify({"error": "An error occurred while submitting the reply"}), 500
 
 

@@ -1,93 +1,168 @@
 {% extends "base.html" %} 
 
-{% block title %} User Profile {% endblock %} 
+{% block title %}Love Letters | Account{% endblock %} 
 
 {% block content %}
-<div class="container mt-4">
-  <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-  <p><strong>First Name:</strong> {{ user.first_name }}</p>
-  <p><strong>Last Name:</strong> {{ user.last_name }}</p>
-  <p><strong>Email:</strong> {{ user.email }}</p>
-  <p><strong>Gender:</strong> {{ user.gender or 'Not provided' }}</p>
-  <p><strong>Phone Number:</strong> {{ user.phone_number or 'Not provided' }}</p>
-  <p><strong>Instagram:</strong> {{ user.instagram or 'Not provided' }}</p>
-  <p><strong>Facebook:</strong> {{ user.facebook or 'Not provided' }}</p>
-  <p><strong>Snapchat:</strong> {{ user.snapchat or 'Not provided' }}</p>
 
-  <button class="btn btn-primary" id="editButton">Edit</button>
-  <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Logout</a>
-  <button class="btn btn-secondary" id="changePasswordButton">Change Password</button>
+<div id="account_modal" class="container py-5 h-100 ">
+  <div class="row d-flex justify-content-center align-items-center h-100 ">
+    <div class="col col-lg-8 mb-4 mb-lg-0 profile">
+      <div id="account_modal_border" class="card mb-3">
+        <div class="row g-0">
+          <div id="account_modal_background" class="col-md-4 gradient-custom text-center text-black">
+            <img src="https://austinpeopleworks.com/wp-content/uploads/2020/12/blank-profile-picture-973460_1280.png"
+              alt="Avatar" id="profile-avatar" class="img-fluid my-5"/>
+            <h5>{{ user.first_name }} {{ user.last_name }}</h5>
+            <p>{{ user.gender or 'Not provided' }}</p>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body p-4">
+              <h6>Personal Information</h6>
+              <hr class="mt-0 mb-4">
+              <div class="row pt-1">
+                <div class="col-6 mb-3">
+                  <h6>Email</h6>
+                  <p class="text-muted">{{ user.email }}</p>
+                </div>
+                <div class="col-6 mb-3">
+                  <h6>Phone</h6>
+                  <p class="text-muted">{{ user.phone_number or 'Not provided' }}</p>
+                </div>
+              </div>
+              <h6>Socials</h6>
+              <hr class="mt-0 mb-4">
+              <div class="row pt-1">
+                <div class="col-6 mb-4">
+                  <h6>Instagram</h6>
+                  <p class="text-muted">{{ user.instagram or 'Not provided' }}</p>
+                </div>
+                <div class="col-6 mb-4">
+                  <h6>Facebook</h6>
+                  <p class="text-muted">{{ user.facebook or 'Not provided' }}</p>
+                </div>
+                <div class="col-6 mb-4">
+                  <h6>Snapchat</h6>
+                  <p class="text-muted">{{ user.snapchat or 'Not provided' }}</p>
+                </div>
+                <div id="social_buttons" class="col-6 mb-4">
+                  <a href="https://www.facebook.com/{{user.facebook}}" target="_blank"><i class="fab fa-facebook-f fa-2x me-3"></i></a>
+                  <a href="https://www.snapchat.com/add/{{user.snapchat}}" target="_blank"><i class="fab fa-snapchat fa-2x me-3"></i></a>
+                  <a href="https://www.instagram.com/{{user.instagram}}" target="_blank"><i class="fab fa-instagram fa-2x"></i></a>
+                </div>
+
+              </div>
+
+              <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#editModal">
+                Edit
+              </button>
+              <a href="{{ url_for('auth.logout') }}" class="btn btn-danger m-1">Logout</a>
+              <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                Change Password
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- User information form initially hidden -->
-<div id="editFormDiv" style="display: none" class="container mt-4">
-  <form id="editForm" method="post" action="{{ url_for('auth.account') }}">
-    <!-- Hidden field that inclues the CSRF token -->
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input  type="email"  class="form-control"  id="edit_email"  name="email"  value="{{ user.email }}"  required  maxlength="50" />
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Profile</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Place your form here from the existing HTML -->
+        <form id="editForm" method="post" action="{{ url_for('auth.account') }}">
+          <!-- Hidden field that inclues the CSRF token -->
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input  type="email"  class="form-control"  id="edit_email"  name="email"  value="{{ user.email }}"  required  maxlength="50" />
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select class="form-control" id="gender" name="gender">
+              <option value="{{ user.gender }}">Select...</option>
+              <option value="Male" {% if user.gender == "male" %} selected {% endif %} >
+                Male
+              </option>
+              <option value="Female" {% if user.gender == "female" %} selected {% endif %} >
+                Female
+              </option>
+              <option value="Non-binary" {% if user.gender == "non-binary" %} selected {% endif %} >
+                Non-binary
+              </option>
+              <option value="Prefer not to say" {% if user.gender == "prefer-not-to-say" %} selected {% endif %} >
+                Prefer not to say
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="phone_number">Phone Number (optional)</label>
+            <input type="tel" class="form-control" id="edit_phone_number" name="phone_number" value="{{ user.phone_number }}" maxlength="20"/>
+          </div>
+          <div class="form-group">
+            <label for="instagram">Instagram (optional)</label>
+            <input type="text" class="form-control" id="edit_instagram" name="instagram" value="{{ user.instagram }}" placeholder="Instagram username" maxlength="30" />
+          </div>
+          <div class="form-group">
+            <label for="facebook">Facebook (optional)</label>
+            <input type="text" class="form-control" id="edit_facebook" name="facebook" value="{{ user.facebook }}" placeholder="Facebook profile link" maxlength="60" />
+          </div>
+          <div class="form-group">
+            <label for="snapchat">Snapchat (optional)</label>
+            <input type="text" class="form-control" id="edit_snapchat" name="snapchat" value="{{ user.snapchat }}" placeholder="Snapchat username" maxlength="30" />
+          </div>
+          <div id="missingSocialError" class="alert alert-danger"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" form="editForm" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="gender">Gender</label>
-      <select class="form-control" id="gender" name="gender">
-        <option value="{{ user.gender }}">Select...</option>
-        <option value="Male" {% if user.gender == "male" %} selected {% endif %} >
-          Male
-        </option>
-        <option value="Female" {% if user.gender == "female" %} selected {% endif %} >
-          Female
-        </option>
-        <option value="Non-binary" {% if user.gender == "non-binary" %} selected {% endif %} >
-          Non-binary
-        </option>
-        <option value="Prefer not to say" {% if user.gender == "prefer-not-to-say" %} selected {% endif %} >
-          Prefer not to say
-        </option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="phone_number">Phone Number (optional)</label>
-      <input type="tel" class="form-control" id="edit_phone_number" name="phone_number" value="{{ user.phone_number }}" maxlength="20"/>
-    </div>
-    <div class="form-group">
-      <label for="instagram">Instagram (optional)</label>
-      <input type="text" class="form-control" id="edit_instagram" name="instagram" value="{{ user.instagram }}" placeholder="Instagram username" maxlength="30" />
-    </div>
-    <div class="form-group">
-      <label for="facebook">Facebook (optional)</label>
-      <input type="text" class="form-control" id="edit_facebook" name="facebook" value="{{ user.facebook }}" placeholder="Facebook profile link" maxlength="60" />
-    </div>
-    <div class="form-group">
-      <label for="snapchat">Snapchat (optional)</label>
-      <input type="text" class="form-control" id="edit_snapchat" name="snapchat" value="{{ user.snapchat }}" placeholder="Snapchat username" maxlength="30" />
-    </div>
-    <div id="missingSocialError" class="alert alert-danger" style="display:none;"></div>
-    <button type="submit" class="btn btn-primary">Update</button>
-  </form>
+  </div>
 </div>
 
-<!-- Password update form initially hidden -->
-<div id="passwordFormDiv" style="display:none;" class="container mt-4">
-  <form id="passwordForm" method="post" action="{{ url_for('auth.change_password') }}">
-    <!-- Hidden field that inclues the CSRF token -->
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <div class="form-group">
-      <label for="current-password">Current Password</label>
-      <input type="password" class="form-control" id="current_password" name="current_password" required maxlength="30">
+<!-- Change Password Modal -->
+<div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="passwordModalLabel">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Place your form here from the existing HTML -->
+        <form id="passwordForm" method="post" action="{{ url_for('auth.change_password') }}">
+          <!-- Hidden field that inclues the CSRF token -->
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <div class="form-group">
+            <label for="current-password">Current Password</label>
+            <input type="password" class="form-control" id="current_password" name="current_password" required maxlength="30">
+          </div>
+          <div class="form-group">
+            <label for="new-password">New Password</label>
+            <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Uppercase, lowercase, number, special (!@#$%^&*)" required maxlength="30">
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm New Password</label>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required maxlength="30">
+          </div>
+          <div id="passwordError" class="alert alert-danger"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" form="passwordForm" class="btn btn-primary">Update Password</button>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="new-password">New Password</label>
-      <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Uppercase, lowercase, number, special (!@#$%^&*)" required maxlength="30">
-    </div>
-    <div class="form-group">
-      <label for="confirm-password">Confirm New Password</label>
-      <input type="password" class="form-control" id="confirm_password" name="confirm_password" required maxlength="30">
-    </div>
-    <div id="passwordError" class="alert alert-danger" style="display:none;"></div>
-    <button type="submit" class="btn btn-primary">Update Password</button>
-  </form>
+  </div>
 </div>
-
 
 {% endblock %}
