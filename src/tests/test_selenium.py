@@ -250,7 +250,10 @@ class Test_selenium:
         self.driver.find_element(By.ID, "login-password").send_keys("password123")
         self.driver.find_element(By.ID, "login-password").send_keys(Keys.ENTER)
 
-        outcomes = ["Connect request sent.\n×", "You have already sent a connection request to this user.\n×"]
+        outcomes = [
+            "Connect request sent.\n×",
+            "You have already sent a connection request to this user.\n×",
+        ]
 
         time.sleep(0.5)
 
