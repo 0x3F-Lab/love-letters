@@ -89,8 +89,8 @@ def validate_socials(value, social_handle):
             return "Please enter a valid Instagram username"
 
     if social_handle == "snapchat":
-        if not re.match(r"^[a-zA-Z0-9]{3,15}$", value):
-            return "Please eneter a valid snapchat username"
+        if not re.match(r"^[a-zA-Z0-9._]{3,15}$", value):
+            return "Please enter a valid snapchat username"
 
     return None
 
