@@ -29,11 +29,12 @@ reset_database()
 
 class Test_selenium:
     def setup_method(self, method):
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")  # Enable headless mode
+        #chrome_options = Options()
+        #chrome_options.add_argument("--headless")  # Enable headless mode
         # chrome_options.add_argument("--disable-gpu")
-        chrome_options.add_argument("--window-size=1920,1200")
-        self.driver = webdriver.Chrome(options=chrome_options)
+        #chrome_options.add_argument("--window-size=1920,1200")
+        #self.driver = webdriver.Chrome(options=chrome_options)
+        self.driver = webdriver.Chrome()
         self.vars = {}
         reset_database()
 
@@ -70,9 +71,12 @@ class Test_selenium:
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
             == "Successfully logged in\n×"
         )
-        self.driver.find_element(
-            By.CSS_SELECTOR, ".col-md-3:nth-child(2) .card-title"
-        ).click()
+
+
+
+        self.driver.find_element(By.LINK_TEXT, "Create Post").click()
+
+
         self.driver.find_element(By.NAME, "title").click()
         self.driver.find_element(By.NAME, "title").send_keys("Selenium Test")
         self.driver.find_element(By.NAME, "content").click()
@@ -89,7 +93,7 @@ class Test_selenium:
 
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(4) .card-title"
+                By.CSS_SELECTOR, ".card:nth-child(2) .card-title"
             ).text
             == "Selenium Test"
         )
@@ -98,8 +102,11 @@ class Test_selenium:
         self.driver.get("http://127.0.0.1:5000")
         self.driver.set_window_size(1245, 1040)
         self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
+
+        time.sleep(2)
+        
         self.driver.find_element(
-            By.CSS_SELECTOR, ".card:nth-child(4) .btn-info"
+            By.CSS_SELECTOR, ".card:nth-child(2) .d-flex .btn:nth-child(3)"
         ).click()
 
         time.sleep(0.5)
@@ -108,8 +115,10 @@ class Test_selenium:
             self.driver.find_element(By.CSS_SELECTOR, "#replies-1 .card-subtitle").text
             == "Reply by Anonymous"
         )
+
+
         self.driver.find_element(
-            By.CSS_SELECTOR, ".card:nth-child(6) .btn-info"
+            By.CSS_SELECTOR, ".card:nth-child(5) .d-flex .btn:nth-child(3)"
         ).click()
 
         time.sleep(0.5)
@@ -119,7 +128,7 @@ class Test_selenium:
             == "Reply by Anonymous"
         )
         self.driver.find_element(
-            By.CSS_SELECTOR, ".card:nth-child(8) .btn-info"
+            By.CSS_SELECTOR, ".card:nth-child(8) .d-flex .btn:nth-child(3)"
         ).click()
 
         time.sleep(0.5)
@@ -130,9 +139,8 @@ class Test_selenium:
         )
 
     def test_passwordChange(self):
-        self.driver.get("http://127.0.0.1:5000")
-        self.driver.set_window_size(1285, 1039)
-        self.driver.find_element(By.CSS_SELECTOR, "body").click()
+        self.driver.get("http://localhost:5000/")
+        self.driver.set_window_size(2202, 1407)
         self.driver.find_element(By.LINK_TEXT, "Log In").click()
         element = self.driver.find_element(By.LINK_TEXT, "Log In")
         actions = ActionChains(self.driver)
@@ -140,7 +148,6 @@ class Test_selenium:
         element = self.driver.find_element(By.CSS_SELECTOR, "body")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
-        self.driver.find_element(By.CSS_SELECTOR, "#loginModal .modal-header").click()
         self.driver.find_element(By.ID, "login-email").click()
         self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
         self.driver.find_element(By.ID, "login-password").click()
@@ -149,75 +156,71 @@ class Test_selenium:
 
         time.sleep(0.5)
 
-        assert (
-            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
-            == "Successfully logged in\n×"
-        )
+        assert self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text == "Successfully logged in\n×"
+
         self.driver.find_element(By.LINK_TEXT, "Alice Johnson").click()
-        self.driver.find_element(By.ID, "changePasswordButton").click()
+        self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(9)").click()
         self.driver.find_element(By.ID, "current_password").click()
         self.driver.find_element(By.ID, "current_password").send_keys("password123")
         self.driver.find_element(By.ID, "new_password").click()
         self.driver.find_element(By.ID, "new_password").send_keys("password1234")
         self.driver.find_element(By.ID, "confirm_password").click()
         self.driver.find_element(By.ID, "confirm_password").send_keys("password1234")
-        self.driver.find_element(By.CSS_SELECTOR, "#passwordForm > .btn").click()
+        self.driver.find_element(By.CSS_SELECTOR, "#passwordModal .btn-primary").click()
 
         time.sleep(0.5)
 
-        assert (
-            self.driver.find_element(By.ID, "passwordError").text
-            == "Password must contain at least one uppercase letter."
-        )
-        self.driver.find_element(By.ID, "new_password").clear()
-        self.driver.find_element(By.ID, "confirm_password").clear()
+        assert self.driver.find_element(By.ID, "passwordError").text == "Password must contain at least one uppercase letter."
+
         self.driver.find_element(By.ID, "new_password").click()
+        self.driver.find_element(By.ID, "new_password").clear()
         self.driver.find_element(By.ID, "new_password").send_keys("Password1234")
         self.driver.find_element(By.ID, "confirm_password").click()
+        self.driver.find_element(By.ID, "confirm_password").clear()
         self.driver.find_element(By.ID, "confirm_password").send_keys("Password1234")
-        self.driver.find_element(By.CSS_SELECTOR, "#passwordForm > .btn").click()
+        self.driver.find_element(By.CSS_SELECTOR, "#passwordModal .btn-primary").click()
 
         time.sleep(0.5)
 
-        assert (
-            self.driver.find_element(By.ID, "passwordError").text
-            == "Password must contain at least one special character."
-        )
-        self.driver.find_element(By.ID, "new_password").clear()
-        self.driver.find_element(By.ID, "confirm_password").clear()
+        assert self.driver.find_element(By.ID, "passwordError").text == "Password must contain at least one special character."
+
         self.driver.find_element(By.ID, "new_password").click()
+        self.driver.find_element(By.ID, "new_password").clear()
         self.driver.find_element(By.ID, "new_password").send_keys("Password1234!")
         self.driver.find_element(By.ID, "confirm_password").click()
+        self.driver.find_element(By.ID, "confirm_password").clear()
         self.driver.find_element(By.ID, "confirm_password").send_keys("Password1234!")
-        self.driver.find_element(By.CSS_SELECTOR, "#passwordForm > .btn").click()
+        self.driver.find_element(By.CSS_SELECTOR, "#passwordModal .btn-primary").click()
 
-        time.sleep(0.3)
+        time.sleep(0.5)
 
-        assert (
-            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
-            == "Password successfully updated\n×"
-        )
+        assert self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text == "Password successfully updated\n×"
+
         self.driver.find_element(By.LINK_TEXT, "Log Out").click()
 
         time.sleep(0.5)
 
-        assert (
-            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
-            == "You have been logged out.\n×"
-        )
+        assert self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text == "You have been logged out.\n×"
+
         self.driver.find_element(By.LINK_TEXT, "Log In").click()
         self.driver.find_element(By.ID, "login-email").click()
         self.driver.find_element(By.ID, "login-email").send_keys("alice@example.com")
         self.driver.find_element(By.ID, "login-password").click()
+        self.driver.find_element(By.ID, "login-password").send_keys("password123")
+        self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
+        
+        time.sleep(0.5)
+
+        assert self.driver.find_element(By.ID, "loginError").text == "Invalid email or password."
+        
+        self.driver.find_element(By.ID, "login-password").click()
+        self.driver.find_element(By.ID, "login-password").clear()
         self.driver.find_element(By.ID, "login-password").send_keys("Password1234!")
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(6)").click()
 
         time.sleep(0.5)
 
-        assert (
-            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
-            == "Successfully logged in\n×"
-        )
+        assert self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text == "Successfully logged in\n×"
 
     def test_notificationcheck(self):
         self.driver.get("http://127.0.0.1:5000")
@@ -238,16 +241,14 @@ class Test_selenium:
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
             == "Successfully logged in\n×"
         )
+
+
+
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".col-md-3:nth-child(3) .card-title"
+                By.CSS_SELECTOR, ".card:nth-child(3) > .buttons"
             ).text
-            == "Responses1"
-        ) or (
-            self.driver.find_element(
-                By.CSS_SELECTOR, ".col-md-3:nth-child(3) .card-title"
-            ).text
-            == "Responses2"
+            == "Responses 2"
         )
 
         time.sleep(0.5)
@@ -281,15 +282,15 @@ class Test_selenium:
         time.sleep(0.5)
 
         assert (
-            self.driver.find_element(By.CSS_SELECTOR, "p").text
+            self.driver.find_element(By.CSS_SELECTOR, ".container > p").text
             == "No notifications to show."
         )
         self.driver.find_element(By.LINK_TEXT, "Love Letters").click()
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".col-md-3:nth-child(3) .card-title"
+                By.CSS_SELECTOR, ".card:nth-child(3) > .buttons"
             ).text
-            == "Responses0"
+            == "Responses 0"
         )
 
     def test_checkBrowse(self):
@@ -297,15 +298,18 @@ class Test_selenium:
         self.driver.set_window_size(1245, 1040)
         self.driver.find_element(By.CSS_SELECTOR, ".centered-content").click()
         self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
+
+        time.sleep(2)
+
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(4) .card-title"
+                By.CSS_SELECTOR, ".card:nth-child(2) .card-title"
             ).text
             == "Alice's Post #1"
         )
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(6) .card-title"
+                By.CSS_SELECTOR, ".card:nth-child(5) .card-title"
             ).text
             == "Alice's Post #2"
         )
@@ -318,37 +322,37 @@ class Test_selenium:
         )
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(10) .card-title"
+                By.CSS_SELECTOR, ".card:nth-child(11) .card-title"
             ).text
             == "Bob's Post #1"
         )
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(12) .card-title"
+                By.CSS_SELECTOR, ".card:nth-child(14) .card-title"
             ).text
             == "Bob's Post #2"
         )
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(14) .card-title"
+                By.CSS_SELECTOR, ".card:nth-child(17) .card-title"
             ).text
             == "Bob's Post #3"
         )
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(16) .card-title"
+                By.CSS_SELECTOR, ".card:nth-child(20) .card-title"
             ).text
             == "Carol's Post #1"
         )
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(18) .card-title"
+                By.CSS_SELECTOR, ".card:nth-child(23) .card-title"
             ).text
             == "Carol's Post #2"
         )
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(20) .card-title"
+                By.CSS_SELECTOR, ".card:nth-child(26) .card-title"
             ).text
             == "Carol's Post #3"
         )
@@ -369,8 +373,11 @@ class Test_selenium:
             == "Successfully logged in\n×"
         )
         self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
+
+        time.sleep(2)
+        
         self.driver.find_element(
-            By.CSS_SELECTOR, ".card:nth-child(4) .d-flex > .btn-primary"
+            By.CSS_SELECTOR, ".card:nth-child(2) .btn:nth-child(1)"
         ).click()
         self.driver.find_element(By.NAME, "content").click()
         self.driver.find_element(By.NAME, "content").send_keys("Sent from Selenium")
@@ -408,22 +415,25 @@ class Test_selenium:
         time.sleep(0.5)
 
         self.driver.find_element(By.LINK_TEXT, "Alice Johnson").click()
+
+
+
         assert (
-            self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(5)").text
-            == "Gender: Female"
+            self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(3)").text
+            == "Female"
         )
         assert (
-            self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(7)").text
-            == "Instagram: alice_j"
+            self.driver.find_element(By.CSS_SELECTOR, ".mb-4:nth-child(1) > .text-muted").text
+            == "alice_j"
         )
         assert (
-            self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(9)").text
-            == "Snapchat: Not provided"
+            self.driver.find_element(By.CSS_SELECTOR, ".col-6:nth-child(3) > .text-muted").text
+            == "Not provided"
         )
 
         time.sleep(0.5)
 
-        self.driver.find_element(By.ID, "editButton").click()
+        self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(7)").click()
 
         time.sleep(0.5)
 
@@ -436,7 +446,7 @@ class Test_selenium:
 
         time.sleep(0.5)
 
-        self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(9)").click()
+        self.driver.find_element(By.CSS_SELECTOR, "#editModal .btn-primary").click()
 
         time.sleep(0.5)
 
@@ -445,12 +455,12 @@ class Test_selenium:
             == "Account details successfully updated\n×"
         )
         assert (
-            self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(7)").text
-            == "Instagram: alice_james"
+            self.driver.find_element(By.CSS_SELECTOR, ".mb-4:nth-child(1) > .text-muted").text
+            == "alice_james"
         )
         assert (
-            self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(9)").text
-            == "Snapchat: Selenium"
+            self.driver.find_element(By.CSS_SELECTOR, ".col-6:nth-child(3) > .text-muted").text
+            == "Selenium"
         )
 
     def test_notificationMake(self):
@@ -495,8 +505,11 @@ class Test_selenium:
             == "Successfully logged in\n×"
         )
         self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
+
+        time.sleep(2)
+
         self.driver.find_element(
-            By.CSS_SELECTOR, ".card:nth-child(4) form > .btn"
+            By.CSS_SELECTOR, ".card:nth-child(2) .d-inline > .btn"
         ).click()
 
         time.sleep(0.5)
@@ -505,8 +518,13 @@ class Test_selenium:
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
             == "Connect request sent.\n×"
         )
+
+        self.driver.find_element(By.CSS_SELECTOR, ".close:nth-child(1)").click()
+
+        time.sleep(0.5)
+
         self.driver.find_element(
-            By.CSS_SELECTOR, ".card:nth-child(10) form > .btn"
+            By.CSS_SELECTOR, ".card:nth-child(11) .d-inline > .btn"
         ).click()
 
         time.sleep(0.5)
@@ -540,10 +558,11 @@ class Test_selenium:
 
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".col-md-3:nth-child(3) .card-title"
+                By.CSS_SELECTOR, ".card:nth-child(3) > .buttons"
             ).text
-            == "Responses3"
+            == "Responses 3"
         )
+
         self.driver.find_element(By.LINK_TEXT, "Notifications").click()
 
         time.sleep(0.5)
@@ -592,11 +611,11 @@ class Test_selenium:
         )
         self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
 
-        time.sleep(0.5)
+        time.sleep(2)
 
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(4) .d-flex > .btn-outline-primary"
+                By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
             ).text
             == "Like (0)"
         )
@@ -604,14 +623,14 @@ class Test_selenium:
         time.sleep(0.5)
 
         self.driver.find_element(
-            By.CSS_SELECTOR, ".card:nth-child(4) .d-flex > .btn-outline-primary"
+            By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
         ).click()
 
         time.sleep(0.5)
 
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(4) .d-flex > .btn-outline-primary"
+                By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
             ).text
             == "Unlike (1)"
         )
@@ -643,23 +662,23 @@ class Test_selenium:
         )
         self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
 
-        time.sleep(0.5)
+        time.sleep(2)
 
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(4) .d-flex > .btn-outline-primary"
+                By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
             ).text
             == "Like (1)"
         )
         self.driver.find_element(
-            By.CSS_SELECTOR, ".card:nth-child(4) .d-flex > .btn-outline-primary"
+            By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
         ).click()
 
         time.sleep(0.5)
 
         assert (
             self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(4) .d-flex > .btn-outline-primary"
+                By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
             ).text
             == "Unlike (2)"
         )
@@ -684,8 +703,11 @@ class Test_selenium:
             == "You must log in to access this page.\n×"
         )
         self.driver.find_element(By.LINK_TEXT, "Browse Posts").click()
+
+        time.sleep(2)
+
         self.driver.find_element(
-            By.CSS_SELECTOR, ".card:nth-child(4) form > .btn"
+            By.CSS_SELECTOR, ".card:nth-child(2) .d-inline .btn-text"
         ).click()
 
         time.sleep(0.5)
