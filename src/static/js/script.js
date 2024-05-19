@@ -20,12 +20,18 @@ $(document).ready(function () {
       $(".error-message").remove(); // Clear previous error messages
 
       if (xhr.status === 500) {
-        alert("We're experiencing technical difficulties. Please try again later.");
+        alert(
+          "We're experiencing technical difficulties. Please try again later.",
+        );
       } else if (xhr.status === 400) {
         const response = xhr.responseJSON;
         if (response.status === "error") {
           $.each(response.message, function (fieldName, message) {
-            $("#" + fieldName).after('<div class="error-message" style="color:red;">' + message + "</div>");
+            $("#" + fieldName).after(
+              '<div class="error-message" style="color:red;">' +
+                message +
+                "</div>",
+            );
           });
         }
       } else {
@@ -48,7 +54,9 @@ $(document).ready(function () {
       if (xhr.status === 401) {
         $("#loginError").text(xhr.responseJSON.message).show();
       } else {
-        $("#loginError").text("An unexpected error occurred. Please try again.").show();
+        $("#loginError")
+          .text("An unexpected error occurred. Please try again.")
+          .show();
       }
     });
   });
@@ -65,16 +73,24 @@ $(document).ready(function () {
     }).fail(function (xhr) {
       $(".error-message").remove();
       if (xhr.status === 500) {
-        alert("We're experiencing technical difficulties. Please try again later.");
+        alert(
+          "We're experiencing technical difficulties. Please try again later.",
+        );
       } else if (xhr.status === 400) {
         const response = xhr.responseJSON;
         if (response.status === "error") {
           $("#missingSocialError").hide();
           $.each(response.message, function (fieldName, message) {
             if (fieldName == "missingSocialError") {
-              $("#missingSocialError").text("At least one social handle is required").show();
+              $("#missingSocialError")
+                .text("At least one social handle is required")
+                .show();
             }
-            $("#edit_" + fieldName).after('<div class="error-message" style="color:red;">' + message + "</div>");
+            $("#edit_" + fieldName).after(
+              '<div class="error-message" style="color:red;">' +
+                message +
+                "</div>",
+            );
           });
         }
       } else {
@@ -95,7 +111,11 @@ $(document).ready(function () {
     }).fail(function (xhr) {
       $(".error-message").remove();
       if (xhr.status === 500) {
-        $("#passwordError").text("We're experiencing technical difficulties. Please try again later.").show();
+        $("#passwordError")
+          .text(
+            "We're experiencing technical difficulties. Please try again later.",
+          )
+          .show();
       } else if (xhr.status === 400) {
         $("#passwordError").text(xhr.responseJSON.message).show();
       } else {
@@ -107,8 +127,8 @@ $(document).ready(function () {
   // Load user profile
   window.loadUserProfile = function (userId) {
     fetch(`/profile/${userId}`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         $("#user-name").text(`${data.first_name} ${data.last_name}`);
         $("#user-email").text(data.email);
         $("#user-phone").text(data.phone_number || "N/A");
@@ -117,15 +137,32 @@ $(document).ready(function () {
         $("#user-facebook").text(data.socials.facebook || "N/A");
         $("#user-snapchat").text(data.socials.snapchat || "N/A");
 
-        $("#user-instagram-link").attr("href", data.socials.instagram ? `https://instagram.com/${data.socials.instagram}` : "#");
-        $("#user-facebook-link").attr("href", data.socials.facebook ? `https://facebook.com/${data.socials.facebook}` : "#");
-        $("#user-snapchat-link").attr("href", data.socials.snapchat ? `https://snapchat.com/add/${data.socials.snapchat}` : "#");
+        $("#user-instagram-link").attr(
+          "href",
+          data.socials.instagram
+            ? `https://instagram.com/${data.socials.instagram}`
+            : "#",
+        );
+        $("#user-facebook-link").attr(
+          "href",
+          data.socials.facebook
+            ? `https://facebook.com/${data.socials.facebook}`
+            : "#",
+        );
+        $("#user-snapchat-link").attr(
+          "href",
+          data.socials.snapchat
+            ? `https://snapchat.com/add/${data.socials.snapchat}`
+            : "#",
+        );
 
         $("#profileModal").modal("show");
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error loading the user profile:", error);
-        $("#profileModal .modal-body").html("<p>Error loading profile. Please try again.</p>");
+        $("#profileModal .modal-body").html(
+          "<p>Error loading profile. Please try again.</p>",
+        );
         $("#profileModal").modal("show");
       });
   };
@@ -159,51 +196,71 @@ $(document).ready(function () {
           $('#replyForm textarea[name="content"]').val("");
 
           let replyHtml = `<div class="card mt-2"><div class="card-body"><h6 class="card-subtitle mb-2 text-muted">Reply by You</h6><p class="card-text">${data.content}</p></div></div>`;
-          $("#replies-" + data.post_id).prepend(replyHtml).show();
+          $("#replies-" + data.post_id)
+            .prepend(replyHtml)
+            .show();
         }
       },
       error: function (xhr) {
         console.error("Error:", xhr.responseText);
         if (xhr.status == 403) {
           $("#replyError").text("You need to be logged in to reply.").show();
-          $("#replyModal").modal("hide").on("hidden.bs.modal", function () {
-            $("#loginModal").modal("show");
-            $(this).off("hidden.bs.modal");
-          });
+          $("#replyModal")
+            .modal("hide")
+            .on("hidden.bs.modal", function () {
+              $("#loginModal").modal("show");
+              $(this).off("hidden.bs.modal");
+            });
         } else {
           $("#replyError").text("An error occurred. Please try again.").show();
         }
-      }
+      },
     });
   });
 
   // Like post
   window.toggleLikePost = function (postId) {
     var csrfToken = $("#csrf_token").val();
-    $.post("/post/like_post", { post_id: postId, csrf_token: csrfToken }, function (response) {
-      var likeButton = $(`.like-btn[data-post-id="${postId}"]`);
-      if (response.status === "unlike") {
-        likeButton.html(`Unlike (<span id="like-count-${postId}">${response.count}</span>)`);
-      } else {
-        likeButton.html(`Like (<span id="like-count-${postId}">${response.count}</span>)`);
-      }
-    }).fail(function (xhr) {
-      console.log(xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : "An error occurred");
+    $.post(
+      "/post/like_post",
+      { post_id: postId, csrf_token: csrfToken },
+      function (response) {
+        var likeButton = $(`.like-btn[data-post-id="${postId}"]`);
+        if (response.status === "unlike") {
+          likeButton.html(
+            `Unlike (<span id="like-count-${postId}">${response.count}</span>)`,
+          );
+        } else {
+          likeButton.html(
+            `Like (<span id="like-count-${postId}">${response.count}</span>)`,
+          );
+        }
+      },
+    ).fail(function (xhr) {
+      console.log(
+        xhr.responseJSON && xhr.responseJSON.error
+          ? xhr.responseJSON.error
+          : "An error occurred",
+      );
     });
   };
 
   // Like reply
   window.toggleLikeReply = function (replyId) {
     var csrfToken = $("#csrf_token").val();
-    $.post("/post/like_reply", { reply_id: replyId, csrf_token: csrfToken }, function (response) {
-      var likeButton = $(`.like-btn[data-reply-id="${replyId}"]`);
-      var likeCount = $(`#like-count-reply-${replyId}`);
-      if (response.status === "unlike") {
-        likeButton.html(`Unlike (${response.count})`);
-      } else {
-        likeButton.html(`Like (${response.count})`);
-      }
-    }).fail(function (xhr) {
+    $.post(
+      "/post/like_reply",
+      { reply_id: replyId, csrf_token: csrfToken },
+      function (response) {
+        var likeButton = $(`.like-btn[data-reply-id="${replyId}"]`);
+        var likeCount = $(`#like-count-reply-${replyId}`);
+        if (response.status === "unlike") {
+          likeButton.html(`Unlike (${response.count})`);
+        } else {
+          likeButton.html(`Like (${response.count})`);
+        }
+      },
+    ).fail(function (xhr) {
       console.error("An error occurred:", xhr.responseText);
       alert("Failed to like the reply. Please try again.");
     });
@@ -232,12 +289,14 @@ $(document).ready(function () {
         } else {
           allPostsLoaded = true;
         }
-      }).fail(function (error) {
-        console.error("Error loading posts:", error);
-      }).always(function () {
-        removeSkeletons();
-        loading = false;
-      });
+      })
+        .fail(function (error) {
+          console.error("Error loading posts:", error);
+        })
+        .always(function () {
+          removeSkeletons();
+          loading = false;
+        });
     }, 600);
   }
 
@@ -281,7 +340,11 @@ $(document).ready(function () {
   });
 
   // Animated text
-  let phrases = ["Find love or friendship!", "Connect with others!", "Share your story!"];
+  let phrases = [
+    "Find love or friendship!",
+    "Connect with others!",
+    "Share your story!",
+  ];
   let currentIndex = 0;
 
   function updateText() {
@@ -333,15 +396,21 @@ $(document).ready(function () {
       let diffY = endY - startY;
 
       if (Math.sqrt(diffX * diffX + diffY * diffY) > 200) {
-        card.animate({
-          transform: `translateX(${diffX > 0 ? "1000px" : "-1000px"})`,
-          opacity: 0,
-        }, 300, function () {
-          card.remove();
-          if ($(".swipe-card").length === 0) {
-            $("#swipe-text").html("<p class='text-center'>No more posts to swipe through</p>");
-          }
-        });
+        card.animate(
+          {
+            transform: `translateX(${diffX > 0 ? "1000px" : "-1000px"})`,
+            opacity: 0,
+          },
+          300,
+          function () {
+            card.remove();
+            if ($(".swipe-card").length === 0) {
+              $("#swipe-text").html(
+                "<p class='text-center'>No more posts to swipe through</p>",
+              );
+            }
+          },
+        );
       } else {
         card.css({
           transform: "translateX(-50%) translateY(0)",

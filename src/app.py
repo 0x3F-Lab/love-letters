@@ -69,7 +69,7 @@ def create_app(config_class=DevelopmentConfig):
         else:
             notification_count = 0
 
-        posts = Post.query.all() 
+        posts = Post.query.all()
 
         return render_template(
             "landing.html", notification_count=notification_count, posts=posts
