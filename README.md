@@ -51,7 +51,9 @@ Start and Initialise Virtual Environment:
   pip install -r requirements.txt
 
 
-Run the testing:
+Reset database and run the testing:
+
+  python3 generate_example_db.py
 
   pytest src/tests/test_selenium.py
 ```
