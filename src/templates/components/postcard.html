@@ -1,6 +1,6 @@
 <!-- postcard.html -->
 <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
-<div class="card card-animation my-3" style="max-width: 800px; margin: 0 auto;">
+<div class="card card-animation my-3">
     <div class="card-body">
         <h5 class="card-title">
             {% if post.post_type == 'Friend Request' %}
@@ -46,7 +46,7 @@
                 </form>
             </div>
         </div>
-        <div id="replies-{{ post.post_id }}" class="replies-container mt-3" style="display: none;">
+        <div id="replies-{{ post.post_id }}" class="replies-container mt-3">
             {% for reply in post.replies %}
                 <div class="card mt-2">
                     <div class="card-body">
