@@ -5,6 +5,13 @@ from sqlalchemy.exc import IntegrityError
 from flask import jsonify
 import re
 import json
+from flask_login import (
+    LoginManager,
+    login_user,
+    current_user,
+    logout_user,
+    login_required,
+)
 
 auth = Blueprint("auth", __name__)
 
@@ -74,16 +81,16 @@ def validate_socials(value, social_handle):
         return None
 
     if social_handle == "facebook":
-        if not re.match(r"https?://www\.facebook\.com/.+", value):
-            return "Please enter a valid Facebook URL"
+        if not re.match(r"^[a-zA-Z0-9._]{5,50}$", value):
+            return "Please enter a valid Facebook username"
 
     if social_handle == "instagram":
         if not re.match(r"^[a-zA-Z0-9._]{1,30}$", value):
             return "Please enter a valid Instagram username"
 
     if social_handle == "snapchat":
-        if not re.match(r"^[a-zA-Z0-9]{3,15}$", value):
-            return "Please eneter a valid snapchat username"
+        if not re.match(r"^[a-zA-Z0-9._]{3,15}$", value):
+            return "Please enter a valid snapchat username"
 
     return None
 
@@ -166,16 +173,14 @@ def signup():
 
 
 @auth.route("/account", methods=["GET", "POST"])
+@login_required
 def account():
-    if "user_id" not in session:
-        flash("You must be logged in to access this page.", "danger")
-        return redirect(url_for("auth.login"))
 
-    user = User.query.get(session["user_id"])
+    user = current_user
 
-    if not user:
+    if not current_user.is_authenticated:
         flash("User not found.", "danger")
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("home"))
 
     if request.method == "POST":
         # print(request.form) debugging
@@ -214,8 +219,6 @@ def account():
         # Filter out None values
         errors = {k: v for k, v in errors.items() if v is not None}
 
-        # print(errors) debugging
-
         if errors:
             return jsonify({"status": "error", "message": errors}), 400
 
@@ -244,24 +247,31 @@ def account():
         user.facebook = socials.get("facebook", "")
         user.snapchat = socials.get("snapchat", "")
 
+    if current_user.is_authenticated:
+        notification_count = Notification.query.filter_by(
+            recipient_id=current_user.user_id
+        ).count()
+    else:
+        notification_count = 0
+
     # Initial page load or GET request
-    return render_template("account.html", user=user)
+    return render_template(
+        "account.html", user=user, notification_count=notification_count
+    )
 
 
 # Update account password
 
 
 @auth.route("/change_password", methods=["POST"])
+@login_required
 def change_password():
-    if "user_id" not in session:
-        flash("You must be logged in to access this page.", "danger")
-        return redirect(url_for("auth.login"))
 
-    user = User.query.get(session["user_id"])
+    user = current_user
 
     if not user:
         flash("User not found.", "danger")
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("home"))
 
     current_password = request.form.get("current_password")
     new_password = request.form.get("new_password")
@@ -305,14 +315,16 @@ def change_password():
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
+    # if current_user.is_authenticated:
+    #     return redirect(url_for('auth.'))  # Redirect if already logged in
+
     if request.method == "POST":
         email = request.form["email"].lower()
         password = request.form["password"]
         user = User.query.filter_by(email=email).first()
 
         if user and check_password_hash(user.password_hash, password):
-            session["user_id"] = user.user_id
-            session["user_name"] = f"{user.first_name} {user.last_name}"
+            login_user(user)
             flash("Successfully logged in", "success")
             return jsonify({"status": "success", "message": "Login successful!"}), 200
         else:
@@ -329,33 +341,42 @@ def login():
 
 @auth.route("/logout")
 def logout():
-    session.pop("user_id", None)
+    logout_user()
     flash("You have been logged out.", "success")
-    return redirect(url_for("auth.login"))
+    return redirect(url_for("home"))
 
 
 # Notifications
 
 
 @auth.route("/notifications")
+@login_required
 def notifications():
-    if "user_id" not in session:
-        flash("You must be logged in to view notifications.", "warning")
-        return redirect(url_for("auth.login"))
+    user_notifications = Notification.query.filter_by(
+        recipient_id=current_user.get_id()
+    ).all()
 
-    user_id = session["user_id"]
-    user_notifications = Notification.query.filter_by(recipient_id=user_id).all()
-    return render_template("notifications.html", notifications=user_notifications)
+    if current_user.is_authenticated:
+        notification_count = Notification.query.filter_by(
+            recipient_id=current_user.user_id
+        ).count()
+
+    return render_template(
+        "notifications.html",
+        notifications=user_notifications,
+        notification_count=notification_count,
+    )
 
 
 @auth.route("/dismiss_notification/<int:notification_id>", methods=["POST"])
 def dismiss_notification(notification_id):
     notification = Notification.query.get_or_404(notification_id)
-    if notification.recipient_id != session.get("user_id"):
+    if str(notification.recipient_id) != current_user.get_id():
         flash("You do not have permission to delete this notification.", "danger")
         return redirect(url_for("auth.notifications"))
 
     db.session.delete(notification)
     db.session.commit()
     flash("Notification dismissed.", "success")
+
     return redirect(url_for("auth.notifications"))

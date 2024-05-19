@@ -1,13 +1,38 @@
 {% extends "base.html" %} 
-{% block title %} Browse Letters {% endblock %} 
+{% block title %}Love Letters | Browse{% endblock %} 
 
 {% block content %}
 <div class="container mt-5">
-    <h1 class="text-center">All Posts</h1>
-    {% for post in posts %}
-        {% include 'components/postcard.html' %}
-    {% endfor %}
-</div>
+    <div class="d-flex justify-content-center mb-5">
+        <form action="" method="get" class="form-inline">
+            <label for="sort" class="mr-2">Sort by:</label>
+            <select name="sort" id="sort" class="form-control mr-2" onchange="this.form.submit()">
+                <option value="" disabled selected>Choose</option>
+                <option value="newest" {% if request.args.get('sort', 'newest') == 'newest' %}selected{% endif %}>Newest</option>
+                <option value="oldest" {% if request.args.get('sort') == 'oldest' %}selected{% endif %}>Oldest</option>
+                <option value="most_liked" {% if request.args.get('sort') == 'most_liked' %}selected{% endif %}>Most Liked</option>
+                <option value="least_liked" {% if request.args.get('sort') == 'least_liked' %}selected{% endif %}>Least Liked</option>
+                <option value="type_Love Letter" {% if request.args.get('sort') == 'type_Love Letter' %}selected{% endif %}>Love Letters</option>
+                <option value="type_Friend Request" {% if request.args.get('sort') == 'type_Friend Request' %}selected{% endif %}>Friend Requests</option>
+                <option value="type_General Broadcast" {% if request.args.get('sort') == 'type_General Broadcast' %}selected{% endif %}>General Broadcasts</option>
+            </select>
+        </form>
+    </div>
 
-{% include 'components/reply.html' %}
+    <div class="posts-container">
+        {% for post in posts %}
+            {% include 'components/postcard.html' %}
+        {% endfor %}
+        <!-- Skeleton Loader Template -->
+        <template id="skeleton-template">
+            <div class="post-skeleton">
+                <div class="skeleton-header"></div>
+                <div class="skeleton-body"></div>
+                <div class="skeleton-footer"></div>
+            </div>
+        </template>
+    </div>
+    
+    {% include 'components/reply.html' %}
+</div>
 {% endblock %}

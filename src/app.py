@@ -2,9 +2,16 @@ from flask import Flask, render_template, session, jsonify
 from models import db
 from config import DevelopmentConfig
 import json
+from flask_login import (
+    LoginManager,
+    login_user,
+    current_user,
+    logout_user,
+    login_required,
+)
 
-# from flask_migrate import Migrate
-
+from flask_migrate import Migrate
+from flask_wtf.csrf import CSRFProtect
 from models import Post, Notification, User, db, Reply
 
 import random
@@ -19,8 +26,18 @@ def create_app(config_class=DevelopmentConfig):
     app.config.from_object(config_class)
 
     db.init_app(app)
-    # migrate = Migrate(app, db)
-    # migrate = Migrate(app, db)  # Initialize Flask-Migrate
+    migrate = Migrate(app, db)  # Initialize Flask-Migrate
+    csrf = CSRFProtect(app)  # Initialize CSRFProtect
+
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_message = "You must log in to access this page."
+    login_manager.login_message_category = "warning"
+    login_manager.login_view = "home"
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
     # Register Blueprints with their URL prefixes
     app.register_blueprint(auth, url_prefix="/auth")
@@ -37,21 +54,26 @@ def create_app(config_class=DevelopmentConfig):
                 "email": user.email,
                 "phone_number": user.phone_number,
                 "socials": socials,
+                "gender": user.gender,
             }
         )
 
     @app.route("/")
     def home():
-
         notification_count = 0
 
-        if "user_id" in session:
-            user_id = session["user_id"]
+        if current_user.is_authenticated:
             notification_count = Notification.query.filter_by(
-                recipient_id=user_id
+                recipient_id=current_user.user_id
             ).count()
+        else:
+            notification_count = 0
 
-        return render_template("landing.html", notification_count=notification_count)
+        posts = Post.query.all()
+
+        return render_template(
+            "landing.html", notification_count=notification_count, posts=posts
+        )
 
     return app
 

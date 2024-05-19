@@ -1,62 +1,47 @@
 {% extends "base.html" %}
-{% block title %}Connect Hearts at UWA{% endblock %}
+{% block title %}Love Letters{% endblock %}
 {% block content %}
-<div class="centered-content m-4">
-  <div class="centered-text" style="background: white; border-radius: 20px;">Love Letters</div>
-  <div class="subtext" style="background: white; border-radius: 20px;">Find love or friendship! We don't care!</div>
-</div>
 
-<!-- Navigation Cards -->
-<div class="container my-5">
-  <div class="row row justify-content-center">
-    <div class="col-md-3 mb-4">
-      <div class="card" onclick="location.href='{{ url_for('post.browse') }}';">
-        <div class="card-body">
-          <h5 class="card-title">Browse Letters</h5>
-          <p class="card-text">Description</p>
-        </div>
-      </div>
+<div class="main-content">
+  <div class="centered-content m-2 mt-5">
+    <div class="centered-text">
+      <h3 class="main-title">Welcome to Love Letters</h3>
     </div>
-    <div class="col-md-3 mb-4">
-      <div class="card" onclick="location.href='{{ url_for('post.create') }}';">
-        <div class="card-body">
-          <h5 class="card-title">Post Letters</h5>
-          <p class="card-text">Description</p>
-        </div>
-      </div>
+    <div class="my-4 animated-text">
+      <span id="animatedText"></span>
     </div>
-    {% if 'user_id' in session %}
-      <div class="col-md-3 mb-4">
-        <div class="card" onclick="location.href='{{ url_for('auth.notifications') }}';">
-          <div class="card-body">
-            <h5 class="card-title">Responses<span class="badge badge-info">{{ notification_count|default(0) }}</span></h5>
-            <p class="card-text">Check your notifications</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 mb-4">
-        <div class="card" onclick="location.href='{{ url_for('auth.account') }}';">
-          <div class="card-body">
-            <h5 class="card-title">My Account</h5>
-            <p class="card-text">Description</p>
-          </div>
-        </div>
-      </div>
-    {% else %}
-      <div class="col-md-3 mb-4">
-        <div class="card"
-        data-toggle="modal"
-        data-target="#loginModal">
-          <div class="card-body">
-            <h5 class="card-title">Login</h5>
-            <p class="card-text">Access your account</p>
-          </div>
-        </div>
-      </div>
-    {% endif %}
+    <h5 class="header-text mx-5">Welcome to Love Letters, a heartfelt platform where you can share your stories, connect with others, and find love or friendship. To get started, simply create an account, browse through the posts, and don't forget to share your own love letter or friendship request!</h5>
   </div>
-</div>
-</div>
 
+  <!-- Swipe Cards Section -->
+  <div class="container mt-5">
+    <h5 id="swipe-text" class="text-center">Bored? Swipe through some of our latest posts</h5>
+    <div id="cards-container">
+        {% for post in posts %}
+            <div class="swipe-card py-3" data-post-id="{{ post.id }}">
+                <div class="card-body m-3">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        by {% if post.is_anonymous %}Anonymous{% else %}<a href="#" data-toggle="modal" data-target="#profileModal" onclick="loadUserProfile({{ post.user_id }})" class="author-link"> 
+                            {{ post.author.first_name }} {{ post.author.last_name }}
+                        </a>{% endif %}
+                    </h6>
+                    <p class="card-text my-4">{{ post.content }}</p>
+                    <div class="d-flex justify-content-between align-items-center post-meta">
+                        <small class="text-muted post-type">Post type: {{ post.post_type }}</small>
+                        <small class="text-muted">
+                            {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+  </div>
+  
+</div>
 
 {% endblock %}
+
+{% include 'components/profile.html' %}
