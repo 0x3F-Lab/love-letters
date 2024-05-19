@@ -76,20 +76,21 @@ class Test_selenium:
 
         self.driver.find_element(By.LINK_TEXT, "Create Post").click()
 
+        time.sleep(2)
 
         self.driver.find_element(By.NAME, "title").click()
         self.driver.find_element(By.NAME, "title").send_keys("Selenium Test")
         self.driver.find_element(By.NAME, "content").click()
         self.driver.find_element(By.NAME, "content").send_keys("Testing 123")
-        self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(7)").click()
+        self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(6)").click()
 
-        time.sleep(0.5)
+        time.sleep(2)
         assert (
             self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
             == "Post created successfully!\n×"
         )
 
-        self.driver.implicitly_wait(10)
+        time.sleep(0.5)
 
         assert (
             self.driver.find_element(
