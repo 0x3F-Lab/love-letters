@@ -91,8 +91,9 @@ class Test_selenium:
 
         time.sleep(0.5)
 
-        assert ("Selenium Test" in 
-            self.driver.find_element(
+        assert (
+            "Selenium Test"
+            in self.driver.find_element(
                 By.CSS_SELECTOR, ".card:nth-child(2) .card-title"
             ).text
         )
@@ -110,8 +111,9 @@ class Test_selenium:
 
         time.sleep(0.5)
 
-        assert (
-            self.driver.find_element(By.CSS_SELECTOR, "#replies-1 .card-subtitle").text.startswith("Reply by"))
+        assert self.driver.find_element(
+            By.CSS_SELECTOR, "#replies-1 .card-subtitle"
+        ).text.startswith("Reply by")
 
         self.driver.find_element(
             By.CSS_SELECTOR, ".card:nth-child(5) .d-flex .btn:nth-child(3)"
@@ -119,15 +121,19 @@ class Test_selenium:
 
         time.sleep(0.5)
 
-        assert (self.driver.find_element(By.CSS_SELECTOR, "#replies-2 .card-subtitle").text.startswith("Reply by"))
-        
+        assert self.driver.find_element(
+            By.CSS_SELECTOR, "#replies-2 .card-subtitle"
+        ).text.startswith("Reply by")
+
         self.driver.find_element(
             By.CSS_SELECTOR, ".card:nth-child(8) .d-flex .btn:nth-child(3)"
         ).click()
 
         time.sleep(0.5)
 
-        assert (self.driver.find_element(By.CSS_SELECTOR, "#replies-3 .card-subtitle").text.startswith("Reply by"))
+        assert self.driver.find_element(
+            By.CSS_SELECTOR, "#replies-3 .card-subtitle"
+        ).text.startswith("Reply by")
 
     def test_passwordChange(self):
         self.driver.get("http://localhost:5000/")
@@ -255,17 +261,12 @@ class Test_selenium:
         )
 
         numresp = self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(3) > .buttons"
-            ).text[-1]
-        
+            By.CSS_SELECTOR, ".card:nth-child(3) > .buttons"
+        ).text[-1]
 
-
-        assert (
-            self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(3) > .buttons"
-            ).text
-            == "Responses {0}".format(numresp)
-        )
+        assert self.driver.find_element(
+            By.CSS_SELECTOR, ".card:nth-child(3) > .buttons"
+        ).text == "Responses {0}".format(numresp)
 
         time.sleep(0.5)
 
@@ -273,9 +274,10 @@ class Test_selenium:
 
         time.sleep(0.5)
 
-
-        for i in range(int(numresp)-1):
-            self.driver.find_element(By.CSS_SELECTOR, ".alert:nth-child(2) span").click()
+        for i in range(int(numresp) - 1):
+            self.driver.find_element(
+                By.CSS_SELECTOR, ".alert:nth-child(2) span"
+            ).click()
 
             time.sleep(0.5)
 
@@ -283,7 +285,6 @@ class Test_selenium:
                 self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
                 == "Notification dismissed.\n×"
             )
-
 
         self.driver.find_element(By.CSS_SELECTOR, "form span").click()
 
@@ -316,14 +317,15 @@ class Test_selenium:
 
         time.sleep(2)
 
-
         assert (
-            "Alice's Love Letter #1" in self.driver.find_element(
+            "Alice's Love Letter #1"
+            in self.driver.find_element(
                 By.CSS_SELECTOR, ".card:nth-child(2) .card-title"
             ).text
         )
         assert (
-            "Bob's Love Letter #1" in self.driver.find_element(
+            "Bob's Love Letter #1"
+            in self.driver.find_element(
                 By.CSS_SELECTOR, ".card:nth-child(17) .card-title"
             ).text
         )
@@ -333,26 +335,28 @@ class Test_selenium:
         time.sleep(2)
 
         assert (
-            "Carol's Love Letter #1" in self.driver.find_element(
+            "Carol's Love Letter #1"
+            in self.driver.find_element(
                 By.CSS_SELECTOR, ".card:nth-child(33) .card-title"
             ).text
         )
         assert (
-            "David's Love Letter #1" in self.driver.find_element(
+            "David's Love Letter #1"
+            in self.driver.find_element(
                 By.CSS_SELECTOR, ".card:nth-child(48) .card-title"
             ).text
         )
 
         self.driver.execute_script("window.scrollTo(0,5500)")
-        
+
         time.sleep(2)
 
         assert (
-            "Eve's Love Letter #1" in self.driver.find_element(
+            "Eve's Love Letter #1"
+            in self.driver.find_element(
                 By.CSS_SELECTOR, ".card:nth-child(63) .card-title"
             ).text
         )
-
 
     def test_makeReplies(self):
         self.driver.get("http://127.0.0.1:5000")
@@ -608,22 +612,19 @@ class Test_selenium:
 
         time.sleep(2)
 
-        likenum = int(self.driver.find_element(
+        likenum = int(
+            self.driver.find_element(
                 By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
-            ).text[-2])
-        
-
+            ).text[-2]
+        )
 
         if self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
-            ).text.startswith("Like"):
+            By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
+        ).text.startswith("Like"):
 
-            assert (
-                self.driver.find_element(
-                    By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
-                ).text
-                == "Like ({0})".format(str(likenum))
-            )
+            assert self.driver.find_element(
+                By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
+            ).text == "Like ({0})".format(str(likenum))
 
             time.sleep(0.5)
 
@@ -635,12 +636,9 @@ class Test_selenium:
 
             time.sleep(0.5)
 
-        assert (
-            self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
-            ).text
-            == "Unlike ({0})".format(str(likenum))
-        )
+        assert self.driver.find_element(
+            By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
+        ).text == "Unlike ({0})".format(str(likenum))
         self.driver.find_element(By.LINK_TEXT, "Log Out").click()
 
         time.sleep(0.5)
@@ -672,15 +670,12 @@ class Test_selenium:
         time.sleep(2)
 
         if self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
-            ).text.startswith("Like"):
+            By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
+        ).text.startswith("Like"):
 
-            assert (
-                self.driver.find_element(
-                    By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
-                ).text
-                == "Like ({0})".format(str(likenum))
-            )
+            assert self.driver.find_element(
+                By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
+            ).text == "Like ({0})".format(str(likenum))
 
             self.driver.find_element(
                 By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
@@ -690,12 +685,9 @@ class Test_selenium:
 
             time.sleep(0.5)
 
-        assert (
-            self.driver.find_element(
-                By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
-            ).text
-            == "Unlike ({0})".format(str(likenum))
-        )
+        assert self.driver.find_element(
+            By.CSS_SELECTOR, ".card:nth-child(2) .btn-group > .btn:nth-child(2)"
+        ).text == "Unlike ({0})".format(str(likenum))
 
     def test_notLoggedIn(self):
         self.driver.get("http://127.0.0.1:5000")
