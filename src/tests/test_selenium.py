@@ -76,7 +76,6 @@ class Test_selenium:
 
         self.driver.get("http://127.0.0.1:5000/post/create")
 
-
         time.sleep(2)
 
         self.driver.find_element(By.NAME, "title").click()

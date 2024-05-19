@@ -34,12 +34,12 @@ body {
 }
 
 #account_modal_border {
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 
 #account_modal_background {
-  border-top-left-radius: .5rem;
-  border-bottom-left-radius: .5rem;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
 }
 
 #profile-avatar {
@@ -51,11 +51,11 @@ body {
 }
 
 #missingSocialError {
-  display:none;
+  display: none;
 }
 
 #passwordError {
-  display:none;
+  display: none;
 }
 
 #particles-js {
@@ -73,14 +73,14 @@ body {
 }
 
 #notif_form {
-  display:inline;
+  display: inline;
 }
 
 #post_container {
   height: 80vh;
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
 }
 
 #post_animation {
