@@ -424,7 +424,7 @@ select:focus {
 /* Heart Animation Styling */
 .hearts {
   position: absolute;
-  background-color: transparent;
+  background-color: #ffb3ba; /* Darker shade of pink */
   height: 50px;
   width: 50px;
   opacity: 0;
