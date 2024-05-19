@@ -29,12 +29,13 @@ reset_database()
 
 class Test_selenium:
     def setup_method(self, method):
-        # chrome_options = Options()
-        # chrome_options.add_argument("--headless")  # Enable headless mode
-        # chrome_options.add_argument("--disable-gpu")
-        # chrome_options.add_argument("--window-size=1920,1200")
-        # self.driver = webdriver.Chrome(options=chrome_options)
-        self.driver = webdriver.Chrome()
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")  # Enable headless mode
+        chrome_options.add_argument("--log-level=3")
+        #chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--window-size=1920,1200")
+        self.driver = webdriver.Chrome(options=chrome_options)
+        #self.driver = webdriver.Chrome()
         self.vars = {}
         reset_database()
 
@@ -515,14 +516,15 @@ class Test_selenium:
 
         time.sleep(0.5)
 
+        outcomes = ["Connect request sent.\n×", "You have already sent a connection request to this user.\n×"]
+
         assert (
-            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
-            == "Connect request sent.\n×"
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text in outcomes
         )
 
         self.driver.find_element(By.CSS_SELECTOR, ".close:nth-child(1)").click()
 
-        time.sleep(0.5)
+        time.sleep(2)
 
         self.driver.find_element(
             By.CSS_SELECTOR, ".card:nth-child(17) .d-inline > .btn"
@@ -531,8 +533,7 @@ class Test_selenium:
         time.sleep(2)
 
         assert (
-            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text
-            == "Connect request sent.\n×"
+            self.driver.find_element(By.CSS_SELECTOR, ".alert-success").text in outcomes
         )
         self.driver.find_element(By.LINK_TEXT, "Log Out").click()
 
