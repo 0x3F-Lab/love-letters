@@ -19,18 +19,14 @@
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <!--Font Awesome-->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
   </head>
 
-  <body style="background: linear-gradient(to right, lightblue, rgb(255, 210, 217))">
-
+  <body style="background: linear-gradient(to top right, white, rgb(255, 210, 217, 0.5))">
     {% include 'components/navbar.html' %}
-
     {% include 'components/signup.html' %}
-
-    {% include 'components/login.html' %}    
+    {% include 'components/login.html' %}
     <div id="particles-js" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;"></div>
 
     <!-- Flash messages container -->
@@ -57,7 +53,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-4">
-          <div class="sidebar" style="width: 30%;">
+          <div class="sidebar">
             <div class="card love" onclick="location.href='{{ url_for('post.browse') }}';">
               <button type="button" class="buttons">Browse Letters</button>
               <div id="heart1" class="hearts"></div>
@@ -76,7 +72,7 @@
             </div>
             {% if current_user.is_authenticated %}
               <div class="card love" onclick="location.href='{{ url_for('auth.notifications') }}';">
-                <button type="button" class="buttons">Responses <span class="badge" style="background-color: rgb(19, 150, 194);">{{ notification_count|default(0) }}</span></button>
+                <button type="button" class="buttons">Responses <span class="badge">{{ notification_count|default(0) }}</span></button>
                 <div id="heart1" class="hearts"></div>
                 <div id="heart2" class="hearts"></div>
                 <div id="heart3" class="hearts"></div>
@@ -101,14 +97,6 @@
                 <div id="heart5" class="hearts"></div>
               </div>
             {% endif %}
-            <div class="card love">
-              <button type="button" class="buttons">Love Calculator</button>
-              <div id="heart1" class="hearts"></div>
-              <div id="heart2" class="hearts"></div>
-              <div id="heart3" class="hearts"></div>
-              <div id="heart4" class="hearts"></div>
-              <div id="heart5" class="hearts"></div>
-            </div>
           </div>
         </div>
 
@@ -120,7 +108,6 @@
     </div>
 
     {% include 'components/user.html' %}
-
     {% include 'components/footer.html' %}
 
     <!-- Bootstrap JS and Popper.js -->
@@ -138,6 +125,5 @@
     </script>
     <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
   </body>
 </html>
