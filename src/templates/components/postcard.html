@@ -10,7 +10,10 @@
             {% elif post.post_type == 'General Broadcast' %}
                 <i class="fas fa-bullhorn"></i>
             {% endif %}
-            {{ post.title }}
+            &nbsp;&nbsp;{{ post.title }}&nbsp;
+            <small class="text-muted">
+                {{ post.created_at.strftime('%d/%m') }}
+            </small>
         </h5>
         <h6 class="card-subtitle text-muted">
             by {% if post.is_anonymous %}Anonymous{% else %}<a href="#" data-toggle="modal" data-target="#account_modal" onclick="loadUserProfile({{ post.user_id }})" class="author-link"> 
@@ -18,11 +21,7 @@
             </a>{% endif %}
         </h6>
         <p class="card-text my-5">{{ post.content }}</p>
-        <div class="d-flex justify-content-between align-items-center post-meta">
-            <small class="text-muted post-type">Post type: {{ post.post_type }}</small>
-            <small class="text-muted">
-                {{ post.created_at.strftime('%Y-%m-%d at %H:%M') }}
-            </small>
+        <div class="d-flex justify-content-center align-items-center post-meta">
             <div class="btn-group">
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#replyModal" onclick="setPostId({{ post.post_id }})">
                     <i class="fas fa-reply"></i> <span class="btn-text">Reply</span>
