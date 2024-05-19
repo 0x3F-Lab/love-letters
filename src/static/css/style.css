@@ -406,6 +406,11 @@ select:focus {
   position: relative;
 }
 
+.header-text {
+  font-size: 16px;
+  font-weight: normal !important;
+}
+
 .sidebar .buttons {
   transition-duration: 0.5s;
   width: 100%;
@@ -414,7 +419,7 @@ select:focus {
   border: 2px solid #f2c2c8;
   border-radius: 10px;
   background: white;
-  font-weight: light;
+  font-weight: normal;
   font-size: 20px;
   color: black;
   outline: none;
@@ -867,7 +872,7 @@ select:focus {
 
 .animated-text {
   position: relative;
-  height: 40px; /* Adjust based on your text height */
+  height: 40px;
   overflow: hidden;
   font-weight: lighter;
 }
@@ -878,7 +883,7 @@ select:focus {
   height: 100%;
   line-height: 40px; /* Same as the height */
   text-align: center;
-  font-size: 0.75em;
+  font-size: 1em;
   animation: textAnimation 9s linear infinite 0s;
 }
 
