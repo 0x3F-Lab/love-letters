@@ -29,6 +29,7 @@ reset_database()
 
 class Test_selenium:
     def setup_method(self, method):
+        reset_database()
         chrome_options = Options()
         chrome_options.add_argument("--headless")  # Enable headless mode
         chrome_options.add_argument("--log-level=3")
@@ -74,8 +75,6 @@ class Test_selenium:
         )
 
         self.driver.get("http://127.0.0.1:5000/post/create")
-
-        # self.driver.find_element(By.LINK_TEXT, "Create Post").click()
 
         time.sleep(2)
 
