@@ -1,3 +1,5 @@
+# Playwright tests, now outdated after many changes.
+
 # Playwright imports
 import re
 from playwright.sync_api import Page, expect
