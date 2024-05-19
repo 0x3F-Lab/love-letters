@@ -1,56 +1,59 @@
 # CITS3403-Project
-Agile Web Dev Project
+Agile Web Development Project
 
-Taskboard: [https://github.com/users/Alex-Hawking/projects/2](https://github.com/users/Alex-Hawking/projects/2)
+Welcome to Love Letters, a heartfelt platform where you can share your stories, connect with others, and find love or friendship. To get started, simply create an account, browse through the posts, and don't forget to share your own love letter or friendship request!
+
+| Name      | Student ID | Github Username |
+| ----------- | ----------- | ----------- |
+| Alex Hawking | 23354512 | Alex-Hawking |
+| Akhil Gorasia | 23424609 | AkhilG4 |
+| Martin Mitanoski | 23385544 | Mitan4E |
+| Connor Grayden | 23349066 | Connor2803 |
+
 
 # Set up
 ```
-git clone https://github.com/Alex-Hawking/CITS3403-Project.git
+Clone the Repository:
 
-start virtual env (all within src):
+  git clone https://github.com/Alex-Hawking/CITS3403-Project.git
 
-python3 -m venv env
 
-source env/bin/activate
+Start and Initialise Virtual Environment:
 
-(when done: deactivate)
+  cd src
 
-pip install -r requirements.txt (from src/)
+  python3 -m venv env
 
-python3 app.py
+  source env/bin/activate
+
+  pip install -r requirements.txt
+
+
+Run the app:
+
+  python3 app.py
+
+
+Can connect via localhost:5000
 ```
 
-Will be on localhost (idk which port)
+# Testing
+```
+Start and Initialise Virtual Environment:
 
-## Workflow
+  cd src
 
-- New task in project (click on name of issue will open edit panel, make sure to add description)
-- Assign yourself (click on name of issue will open edit panel, assign to you)
-- Turn into issue
-- Create branch from issue (MAKE SURE SOURCE IS DEVELOPMENT, should be change source option)
-- Drag to in progress column
-- Do code for issue (remember auto format on push so pull after)
-- Pull request into development
-- Pull request into main
-- Close the issue with comments
-- Drag into done column
+  python3 -m venv env
 
-## ACTIONS
+  source env/bin/activate
 
-**on push** to any branch, will automatically format code, so if you do a push (which you should only be doing for big changes), make sure to pull the formatted code a little bit after, this will ensure that the code we are storing on the repo is easy to read and looks good (also make sure you comment your code)
+  pip install -r requirements.txt
 
-**on pull request** to any branch, will message the discord and will also request everyone to approve changes, ensure AT LEAST 2 approvals before merging (please review properly) 
 
-# What we need to add
+Reset database and run the testing:
 
-a description of the purpose of the application, explaining the its design and use.
+  python3 generate_example_db.py
 
-a table with with each row containing the i) UWA ID ii) name and iii) Github user name of the group members.
+  pytest src/tests/test_selenium.py
+```
 
-a brief summary of the architecture of the application.
-
-instructions for how to launch the application.
-
-instructions for how to run the tests for the application.
-
-3 intermediates through git tags 
