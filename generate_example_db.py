@@ -95,7 +95,7 @@ def add_posts():
         "You're my soulmate, my everything.",
         "I love you more than words can say.",
         "You light up my life in ways I never thought possible.",
-        "I am so grateful to have you in my life."
+        "I am so grateful to have you in my life.",
     ]
 
     for user in users:
@@ -160,11 +160,11 @@ def add_replies():
         "Thank you for sharing this.",
         "This made my day better.",
         "You're amazing!",
-        "Let's talk more."
+        "Let's talk more.",
     ]
 
     for post in posts:
-        for i in range(random.randint(1,5)):
+        for i in range(random.randint(1, 5)):
             possible_repliers = [user for user in users if user.user_id != post.user_id]
             if not possible_repliers:
                 continue
@@ -194,15 +194,21 @@ def add_likes():
     for post in posts:
         for _ in range(random.randint(0, len(users))):
             user = random.choice(users)
-            if not LikePost.query.filter_by(user_id=user.user_id, post_id=post.post_id).first():
+            if not LikePost.query.filter_by(
+                user_id=user.user_id, post_id=post.post_id
+            ).first():
                 new_like_post = LikePost(user_id=user.user_id, post_id=post.post_id)
                 db.session.add(new_like_post)
 
     for reply in replies:
         for _ in range(random.randint(0, len(users))):
             user = random.choice(users)
-            if not LikeReply.query.filter_by(user_id=user.user_id, reply_id=reply.reply_id).first():
-                new_like_reply = LikeReply(user_id=user.user_id, reply_id=reply.reply_id)
+            if not LikeReply.query.filter_by(
+                user_id=user.user_id, reply_id=reply.reply_id
+            ).first():
+                new_like_reply = LikeReply(
+                    user_id=user.user_id, reply_id=reply.reply_id
+                )
                 db.session.add(new_like_reply)
 
     try:
