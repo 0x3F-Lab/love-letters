@@ -28,7 +28,7 @@ def add_users():
             "password": "password123",
             "gender": "Female",
             "phone_number": "123-456-7890",
-            "socials": json.dumps({"instagram": "alice_j"}),
+            "socials": json.dumps({"instagram": "alice_j", "snapchat": "alice_j"}),
         },
         {
             "first_name": "Bob",
@@ -37,7 +37,7 @@ def add_users():
             "password": "password123",
             "gender": "Male",
             "phone_number": "987-654-3210",
-            "socials": json.dumps({"twitter": "bobsmith", "instagram": "freakyman69"}),
+            "socials": json.dumps({"facebook": "bobsmith", "instagram": "freakyman69"}),
         },
         {
             "first_name": "Carol",
@@ -46,7 +46,7 @@ def add_users():
             "password": "password123",
             "gender": "Female",
             "phone_number": "555-444-3333",
-            "socials": json.dumps({"twitter": "carolm"}),
+            "socials": json.dumps({"instagram": "carolm"}),
         },
         {
             "first_name": "David",

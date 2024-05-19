@@ -1,8 +1,8 @@
 {% extends "base.html" %} 
 {% block title %}Love Letters | Post{% endblock %} 
 {% block content %}
-<div class="centered-content" style="height: 80vh; display: flex; align-items: center; justify-content: center;">
-  <div class="card card-animation my-3" style="max-width: 800px; margin: 0 auto;">
+<div id="post_container" class="centered-content">
+  <div id="post_animation" class="card card-animation my-3">
     <div class="card-body">
       <h5 class="card-title"><i class="fas fa-pencil-alt"></i> Create Post</h5>
       <form method="POST" action="{{ url_for('post.create_post') }}">

@@ -27,6 +27,70 @@ body {
   margin: 20px;
 }
 
+#replyError {
+  color: red;
+  display: none;
+}
+
+#errorMessages {
+  color: red;
+}
+
+#account_modal_border {
+  border-radius: 0.5rem;
+}
+
+#account_modal_background {
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+#profile-avatar {
+  width: 80px;
+}
+
+#social_buttons {
+  margin-top: 10px;
+}
+
+#missingSocialError {
+  display: none;
+}
+
+#passwordError {
+  display: none;
+}
+
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+#realbody {
+  background: linear-gradient(to top right, white, rgb(255, 210, 217, 0.5));
+  overflow-x: hidden;
+}
+
+#notif_form {
+  display: inline;
+}
+
+#post_container {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#post_animation {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 /* Modal Styling */
 .modal-content {
   background: none;
@@ -34,8 +98,8 @@ body {
 }
 
 .modal-header {
-  background-color: transparent !important; 
-  border-bottom: none !important; 
+  background-color: transparent !important;
+  border-bottom: none !important;
 }
 
 .modal-body {
@@ -43,8 +107,8 @@ body {
 }
 
 .modal-body img {
-  width: 100%; 
-  height: auto; 
+  width: 100%;
+  height: auto;
   display: block; /* Remove any extra space beneath the image */
 }
 
@@ -177,7 +241,6 @@ select:focus {
   color: #343a40; /* Darker shade on hover for better interaction feedback */
 }
 
-
 /* User Info Styling */
 .user-info {
   font-family: "Arial", sans-serif; /* Ensuring a clean, readable font */
@@ -292,17 +355,17 @@ select:focus {
 }
 
 .skeleton-header {
-  width: 70%; 
-  height: 30px; 
+  width: 70%;
+  height: 30px;
 }
 
 .skeleton-body {
-  width: 90%; 
-  height: 100px; 
+  width: 90%;
+  height: 100px;
 }
 
 .skeleton-footer {
-  width: 50%; 
+  width: 50%;
   height: 20px; /* Adjusted height to match metadata */
 }
 
@@ -586,14 +649,14 @@ select:focus {
 /* Flash Messages Styling */
 .flash-messages {
   position: fixed;
-  top: 60px; 
+  top: 60px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10; /* Ensure flash messages are above the sidebar */
   width: calc(100% - 20px);
   max-width: 600px;
   pointer-events: none; /* Allow interactions to pass through */
-  text-align: center; 
+  text-align: center;
 }
 
 .flash-messages .alert {
@@ -747,21 +810,21 @@ select:focus {
   }
 
   .hearts {
-    height: 45px; 
-    width: 45px; 
+    height: 45px;
+    width: 45px;
   }
 
   .hearts:before {
-    width: 45px; 
-    height: 45px; 
-    top: -22.5px; 
+    width: 45px;
+    height: 45px;
+    top: -22.5px;
   }
 
   .hearts:after {
-    width: 45px; 
-    height: 45px; 
+    width: 45px;
+    height: 45px;
     top: 0;
-    left: 22.5px; 
+    left: 22.5px;
   }
 }
 
@@ -834,7 +897,7 @@ select:focus {
 
 /* Hyperlink color */
 .author-link {
-  color: #ff69b4 !important; 
+  color: #ff69b4 !important;
 }
 
 .main-title {
@@ -858,7 +921,7 @@ select:focus {
   position: absolute;
   width: 100%;
   height: 100%;
-  line-height: 40px; 
+  line-height: 40px;
   text-align: center;
   font-size: 1em;
   animation: textAnimation 9s linear infinite 0s;
