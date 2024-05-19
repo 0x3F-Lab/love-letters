@@ -1,3 +1,4 @@
+/* Global Styles */
 html,
 body {
   height: 100%;
@@ -9,7 +10,6 @@ body {
 }
 
 /* Navigation Cards */
-
 .card {
   text-align: center;
   border-radius: 15px;
@@ -17,21 +17,22 @@ body {
 }
 
 .card:hover {
-  background-color: #cacaca;
+  background-color: white !important;
 }
 
 .posts {
   margin: 20px;
 }
 
+/* Modal Styling */
 .modal-content {
   background: none;
   border: none;
 }
 
 .modal-header {
-  background-color: transparent !important; /* Makes the background transparent */
-  border-bottom: none !important; /* Removes the bottom border if not needed */
+  background-color: transparent !important; 
+  border-bottom: none !important; 
 }
 
 .modal-body {
@@ -39,8 +40,8 @@ body {
 }
 
 .modal-body img {
-  width: 100%; /* Full width */
-  height: auto; /* Maintain aspect ratio */
+  width: 100%; 
+  height: auto; 
   display: block; /* Remove any extra space beneath the image */
 }
 
@@ -175,9 +176,6 @@ select:focus {
   color: #343a40; /* Darker shade on hover for better interaction feedback */
 }
 
-.card:hover {
-  background-color: white !important;
-}
 
 /* User Info Styling */
 .user-info {
@@ -235,6 +233,7 @@ select:focus {
   opacity: 0.8;
 }
 
+/* Skeleton loading effect styling */
 .post-skeleton {
   max-width: 800px; /* Same as the post card */
   margin: 0 auto 20px; /* Same margin as the post card */
@@ -260,17 +259,17 @@ select:focus {
 }
 
 .skeleton-header {
-  width: 70%; /* Adjusted width */
-  height: 30px; /* Adjusted height to match title */
+  width: 70%; 
+  height: 30px; 
 }
 
 .skeleton-body {
-  width: 90%; /* Adjusted width */
-  height: 100px; /* Adjusted height to match content */
+  width: 90%; 
+  height: 100px; 
 }
 
 .skeleton-footer {
-  width: 50%; /* Adjusted width */
+  width: 50%; 
   height: 20px; /* Adjusted height to match metadata */
 }
 
@@ -307,13 +306,8 @@ select:focus {
 }
 
 .gradient-custom {
-  /* fallback for old browsers */
   background: white;
-
-  /* Chrome 10-25, Safari 5.1-6 */
   background: -webkit-linear-gradient(to right bottom, white, #ffc3cc);
-
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background: linear-gradient(to right bottom, white, #ffc3cc);
 }
 
@@ -340,33 +334,6 @@ select:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.swipe-card {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50%;
-  will-change: transform, opacity;
-  cursor: grab;
-  background: rgb(255, 228, 252);
-
-  border-radius: 10px;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  cursor: grab;
-  margin: 10px auto;
-}
-
-.swipe-card:nth-child(1) {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.swipe-card:not(:last-child) {
-  pointer-events: none;
 }
 
 /* Navbar Styling */
@@ -577,14 +544,14 @@ select:focus {
 /* Flash Messages Styling */
 .flash-messages {
   position: fixed;
-  top: 60px; /* Adjust this value based on your navbar height */
+  top: 60px; 
   left: 50%;
   transform: translateX(-50%);
   z-index: 10; /* Ensure flash messages are above the sidebar */
   width: calc(100% - 20px);
   max-width: 600px;
   pointer-events: none; /* Allow interactions to pass through */
-  text-align: center; /* Center align the text */
+  text-align: center; 
 }
 
 .flash-messages .alert {
@@ -593,7 +560,6 @@ select:focus {
 }
 
 /* Center Content */
-
 .centered-content {
   display: flex;
   flex-direction: column;
@@ -614,6 +580,7 @@ select:focus {
   background: rgba(255, 255, 255, 0.5);
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .centered-text div {
@@ -696,24 +663,7 @@ select:focus {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Navigation Cards */
-
-.card {
-  text-align: center;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card:hover {
-  background-color: #cacaca;
-}
-
-.posts {
-  margin: 20px;
-}
-
 /* Footer */
-
 .footer {
   margin-top: auto; /* Automatically adjusts margin to push footer at the bottom */
   width: 100%; /* Full width */
@@ -755,23 +705,24 @@ select:focus {
   }
 
   .hearts {
-    height: 45px; /* Adjusted for larger hearts on smaller screens */
-    width: 45px; /* Adjusted for larger hearts on smaller screens */
+    height: 45px; 
+    width: 45px; 
   }
 
   .hearts:before {
-    width: 45px; /* Adjusted for larger hearts on smaller screens */
-    height: 45px; /* Adjusted for larger hearts on smaller screens */
-    top: -22.5px; /* Adjusted for larger hearts on smaller screens */
+    width: 45px; 
+    height: 45px; 
+    top: -22.5px; 
   }
 
   .hearts:after {
-    width: 45px; /* Adjusted for larger hearts on smaller screens */
-    height: 45px; /* Adjusted for larger hearts on smaller screens */
+    width: 45px; 
+    height: 45px; 
     top: 0;
-    left: 22.5px; /* Adjusted for larger hearts on smaller screens */
+    left: 22.5px; 
   }
 }
+
 /* Custom styles for the post cards */
 .card.card-animation {
   border-radius: 10px !important;
@@ -835,21 +786,7 @@ select:focus {
 
 /* Hyperlink color */
 .author-link {
-  color: #ff69b4 !important; /* Hot pink color */
-}
-
-/* Mobile view adjustments */
-@media (max-width: 768px) {
-  .btn-group .btn .btn-text {
-    display: none !important; /* Hide button text on mobile */
-  }
-  .post-meta .post-type {
-    display: none !important; /* Hide post type on mobile */
-  }
-}
-
-.centered-text {
-  text-align: center;
+  color: #ff69b4 !important; 
 }
 
 .main-title {
@@ -864,7 +801,7 @@ select:focus {
 
 .animated-text {
   position: relative;
-  height: 40px; /* Adjust based on your text height */
+  height: 40px; 
   overflow: hidden;
   font-weight: lighter;
 }
@@ -873,7 +810,7 @@ select:focus {
   position: absolute;
   width: 100%;
   height: 100%;
-  line-height: 40px; /* Same as the height */
+  line-height: 40px; 
   text-align: center;
   font-size: 0.75em;
   animation: textAnimation 9s linear infinite 0s;
@@ -897,37 +834,41 @@ select:focus {
   }
 }
 
-/* Ensure the swipe cards have consistent styling */
+/* Swipe card styling */
 .swipe-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  will-change: transform, opacity;
+  cursor: grab;
+  background: rgb(255, 228, 252);
   border-radius: 10px !important;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  margin: 10px auto;
+  margin-bottom: 20px !important; /* Add margin between cards */
   transition: transform 0.2s !important;
   padding: 20px !important; /* Added padding for more vertical space */
   background-color: #fff !important; /* Ensure background color matches the theme */
-  margin-bottom: 20px !important; /* Add margin between cards */
   width: 60%;
 }
 
-/* Hyperlink color */
-.author-link {
-  color: #ff69b4 !important; /* Hot pink color */
+.swipe-card:nth-child(1) {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Custom styles for post meta */
-.post-meta .post-type {
-  display: block !important;
-  margin-bottom: 10px !important; /* Add space between post type and date */
+.swipe-card:not(:last-child) {
+  pointer-events: none;
 }
 
-.post-meta small {
-  font-size: 0.9em !important; /* Slightly smaller text for post meta */
+.swipe-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Mobile view adjustments */
-@media (max-width: 768px) {
-  .post-meta .post-type {
-    display: none !important; /* Hide post type on mobile */
-  }
-}
+/* Notification styling */
 .notifications-title {
   text-align: center;
   font-size: 2em;
@@ -994,10 +935,6 @@ select:focus {
   }
 }
 
-.swipe-card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
-}
-
 /* Custom styles for post meta */
 .post-meta .post-type {
   display: block !important;
@@ -1010,6 +947,9 @@ select:focus {
 
 /* Mobile view adjustments */
 @media (max-width: 768px) {
+  .btn-group .btn .btn-text {
+    display: none !important; /* Hide button text on mobile */
+  }
   .post-meta .post-type {
     display: none !important; /* Hide post type on mobile */
   }
