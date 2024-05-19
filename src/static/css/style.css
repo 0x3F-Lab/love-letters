@@ -373,6 +373,11 @@ select:focus {
   position: relative;
 }
 
+.header-text {
+  font-size: 16px;
+  font-weight: normal !important;
+}
+
 .sidebar .buttons {
   transition-duration: 0.5s;
   width: 100%;
@@ -381,7 +386,7 @@ select:focus {
   border: 2px solid #f2c2c8;
   border-radius: 10px;
   background: white;
-  font-weight: light;
+  font-weight: normal;
   font-size: 20px;
   color: black;
   outline: none;
@@ -533,6 +538,9 @@ select:focus {
 
 /* Media Query to hide sidebar on smaller screens */
 @media (max-width: 768px) {
+  .swipe-card {
+    width: 90% !important;
+  }
   .sidebar {
     display: none;
   }
@@ -801,7 +809,11 @@ select:focus {
 
 .animated-text {
   position: relative;
+<<<<<<< HEAD
   height: 40px; 
+=======
+  height: 40px;
+>>>>>>> 53b79cac58a0480bca5242bc055c7f452878f986
   overflow: hidden;
   font-weight: lighter;
 }
@@ -812,7 +824,7 @@ select:focus {
   height: 100%;
   line-height: 40px; 
   text-align: center;
-  font-size: 0.75em;
+  font-size: 1em;
   animation: textAnimation 9s linear infinite 0s;
 }
 
@@ -924,6 +936,10 @@ select:focus {
   color: #666;
 }
 
+.navigation-links {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .notification-card {
     flex-direction: column;
@@ -932,6 +948,10 @@ select:focus {
 
   .notification-time {
     align-self: flex-end;
+  }
+
+  .navigation-links {
+    display: block;
   }
 }
 
