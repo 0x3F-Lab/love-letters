@@ -75,7 +75,7 @@ class Test_selenium:
 
         self.driver.get("http://127.0.0.1:5000/post/create")
 
-        #self.driver.find_element(By.LINK_TEXT, "Create Post").click()
+        # self.driver.find_element(By.LINK_TEXT, "Create Post").click()
 
         time.sleep(2)
 
@@ -105,7 +105,6 @@ class Test_selenium:
         self.driver.get("http://127.0.0.1:5000")
         self.driver.set_window_size(1245, 1040)
         self.driver.get("http://127.0.0.1:5000/post/browse")
-
 
         time.sleep(2)
 
@@ -280,8 +279,6 @@ class Test_selenium:
         time.sleep(0.5)
 
         self.driver.get("http://127.0.0.1:5000/auth/notifications")
-
-
 
         time.sleep(0.5)
 
