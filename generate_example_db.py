@@ -103,7 +103,11 @@ def add_posts():
             new_post = Post(
                 user_id=user.user_id,
                 title=f"{user.first_name}'s Love Letter #{i+1}",
-                content=random.choice(sample_posts) + " " + random.choice(sample_posts) + " " + random.choice(sample_posts),
+                content=random.choice(sample_posts)
+                + " "
+                + random.choice(sample_posts)
+                + " "
+                + random.choice(sample_posts),
                 is_anonymous=random.choice([True, False]),
                 post_type=random.choice(
                     ["Love Letter", "Friend Request", "General Broadcast"]
@@ -173,9 +177,11 @@ def add_replies():
             new_reply = Reply(
                 post_id=post.post_id,
                 user_id=replier.user_id,
-                content=random.choice(sample_replies) + " " +
-                + random.choice(sample_replies) + " " +
-                + random.choice(sample_replies),
+                content=random.choice(sample_replies)
+                + " "
+                + +random.choice(sample_replies)
+                + " "
+                + +random.choice(sample_replies),
                 is_anonymous=random.choice([True, False]),
             )
             db.session.add(new_reply)
