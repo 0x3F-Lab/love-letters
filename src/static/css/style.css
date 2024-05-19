@@ -809,11 +809,7 @@ select:focus {
 
 .animated-text {
   position: relative;
-<<<<<<< HEAD
   height: 40px; 
-=======
-  height: 40px;
->>>>>>> 53b79cac58a0480bca5242bc055c7f452878f986
   overflow: hidden;
   font-weight: lighter;
 }
