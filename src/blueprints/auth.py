@@ -219,7 +219,6 @@ def account():
         # Filter out None values
         errors = {k: v for k, v in errors.items() if v is not None}
 
-
         if errors:
             return jsonify({"status": "error", "message": errors}), 400
 

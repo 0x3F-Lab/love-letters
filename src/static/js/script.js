@@ -10,14 +10,14 @@ $(document).ready(function () {
 
   // Sign-up Form validation
   $("#signUpForm").submit(function (e) {
-    e.preventDefault(); 
-    const formData = $(this).serialize(); 
+    e.preventDefault();
+    const formData = $(this).serialize();
 
     $.post($(this).attr("action"), formData, function (response) {
       const redirectUrl = $("#signUpForm").data("redirect-url");
-      window.location.href = redirectUrl; 
+      window.location.href = redirectUrl;
     }).fail(function (xhr) {
-      $(".error-message").remove(); 
+      $(".error-message").remove();
 
       if (xhr.status === 500) {
         alert(
@@ -48,7 +48,7 @@ $(document).ready(function () {
     $.post($(this).attr("action"), formData, function (response) {
       if (response.status === "success") {
         const redirectUrl = $("#signUpForm").data("redirect-url");
-        window.location.href = redirectUrl; 
+        window.location.href = redirectUrl;
       }
     }).fail(function (xhr) {
       if (xhr.status === 401) {
