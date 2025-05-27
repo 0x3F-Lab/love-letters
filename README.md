@@ -3,19 +3,10 @@ Agile Web Development Project
 
 Welcome to Love Letters, a heartfelt platform where you can share your stories, connect with others, and find love or friendship. To get started, simply create an account, browse through the posts, and don't forget to share your own love letter or friendship request!
 
-| Name      | Student ID | Github Username |
-| ----------- | ----------- | ----------- |
-| Alex Hawking | 23354512 | Alex-Hawking |
-| Akhil Gorasia | 23424609 | AkhilG4 |
-| Martin Mitanoski | 23385544 | Mitan4E |
-| Connor Grayden | 23349066 | Connor2803 |
-
 
 # Set up
 ```
-Clone the Repository:
-
-  git clone https://github.com/Alex-Hawking/CITS3403-Project.git
+Clone the Repository
 
 
 Start and Initialise Virtual Environment:
